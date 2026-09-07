@@ -1,0 +1,19 @@
+---
+name: ADR proposal
+about: Propose an architectural decision or supersession
+title: "ADR: "
+labels: ""
+assignees: ""
+---
+
+## CONTEXT
+## DECISION PROPOSED
+## WHY THIS IS ARCHITECTURAL
+## OPTIONS CONSIDERED
+## CONSEQUENCES
+## REQUIREMENTS / MODULES AFFECTED
+## MIGRATION / COMPATIBILITY
+## SECURITY / RIGHTS IMPACT
+## EVIDENCE / BENCHMARK REQUIRED
+## DECISIONS LEDGER DELTA
+## CHECKPOINT IMPACT

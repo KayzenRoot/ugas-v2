@@ -1,0 +1,10 @@
+# Canonical project governance
+* @KayzenRoot
+
+# Canonical project memory
+/docs/checkpoint/ @KayzenRoot
+/docs/decisions/ @KayzenRoot
+/docs/adr/ @KayzenRoot
+/docs/SCOPE.md @KayzenRoot
+/docs/DEFINITION-OF-DONE.md @KayzenRoot
+/docs/ARCHITECTURE.md @KayzenRoot
