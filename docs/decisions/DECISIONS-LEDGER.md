@@ -14,5 +14,6 @@
 | DEC-010 | Provenance/rights are by-design. | ACCEPTED | ADR-0010 |
 | DEC-011 | Dashboard is primary operator interface. | ACCEPTED | ADR-0011 |
 | DEC-012 | V2 is conclusion-driven: NECESSARY automatic; IMPORTANT/FUTURE gated. | ACCEPTED | ADR-0012 |
+| DEC-013 | Security uses provider-independent zero-trust capability boundaries; restricted/high-risk ambiguity fails closed. | ACCEPTED | ADR-0013 |
 
 Only an accepted ADR or reviewed ledger change may supersede an ACCEPTED architectural decision.
