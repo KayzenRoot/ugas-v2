@@ -15,5 +15,6 @@
 | DEC-011 | Dashboard is primary operator interface. | ACCEPTED | ADR-0011 |
 | DEC-012 | V2 is conclusion-driven: NECESSARY automatic; IMPORTANT/FUTURE gated. | ACCEPTED | ADR-0012 |
 | DEC-013 | Security uses provider-independent zero-trust capability boundaries; restricted/high-risk ambiguity fails closed. | ACCEPTED | ADR-0013 |
+| DEC-014 | Storage separates logical metadata from content-addressed payloads; canonical state is never treated as disposable cache and cache reuse must prove correctness-relevant fingerprint equality. | ACCEPTED | ADR-0014 |
 
 Only an accepted ADR or reviewed ledger change may supersede an ACCEPTED architectural decision.
