@@ -69,6 +69,17 @@
 - REQ-SEC-002 Privileged/destructive actions SHALL have explicit authorization.
 - REQ-SEC-003 External content is untrusted input.
 - REQ-SEC-004 Restricted identity/voice operations SHALL record authorization evidence.
+- REQ-SEC-005 Authorization SHALL use explicit scoped capabilities rather than ambient process privilege for privileged/restricted actions.
+- REQ-SEC-006 Security-sensitive execution SHALL carry a versioned security context containing actor/service identity, policy version, capabilities, data class, secret references and audit correlation.
+- REQ-SEC-007 Provider/model routing SHALL apply hard security/data-policy filters before quality/cost optimization.
+- REQ-SEC-008 Retrieved content, prompt text, model output and plugins SHALL NOT grant or expand system/tool capabilities.
+- REQ-SEC-009 Restricted/high-risk ambiguity in authorization, rights/consent evidence or privileged scope SHALL fail closed unless an explicit reviewed policy defines a safe degraded path.
+- REQ-SEC-010 Workers/plugins SHALL authenticate or be enrolled before receiving privileged jobs and SHALL receive only scoped data/secrets/capabilities.
+- REQ-SEC-011 Repair, retry, localization and derivative workflows SHALL preserve or narrow the parent security restrictions.
+- REQ-SEC-012 Security decisions for privileged/restricted actions SHALL be auditable with policy version, rationale and evidence references.
+- REQ-SEC-013 Provenance/hash integrity failure SHALL support quarantine and containment rather than silent acceptance.
+- REQ-SEC-014 Security observability SHALL avoid leaking raw RESTRICTED data or secret values.
+- REQ-SEC-015 M23 SHALL remain authoritative for provenance/rights/consent; M24 SHALL enforce but not invent those records.
 
 ## UI/engineering
 - REQ-OBS-001 Dashboard SHALL expose project, production, model, compute, quality, cost and provenance states.

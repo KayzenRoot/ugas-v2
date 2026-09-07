@@ -24,16 +24,23 @@
 21. Render Cascade & Cost Optimization
 22. Memory & Multimodal RAG foundation
 23. Provenance, Rights & C2PA layer
-24. security/storage/observability/automation/export foundations needed by the above
+24. Security & Restricted Content foundation
+25. Storage & Cache Fabric foundation
+26. Observability & Dashboard foundation
+27. Automation & Agents foundation
+28. Export & Delivery foundation
 
 ## IMPORTANT
-Advanced multi-node compute; deep 3D automation; deep culturalization; advanced analytics; broad publishing integrations; bounded advanced agents.
+Advanced multi-node compute; deep 3D automation; deep culturalization; advanced analytics; broad publishing integrations; bounded advanced agents beyond the V2 foundation.
 
 ## FUTURE
 Fully autonomous channels/campaign economics; live autonomous virtual streamers; public DNA/asset marketplace; federated node marketplace; unrestricted multi-tenant SaaS.
 
 ## OUT OF SCOPE until authorized
 Product code before Source Pack approval; silent destructive operations; unbounded autonomous publishing/spending; bypassing consent/licensing; hard coupling to one model/provider/GPU.
+
+## Scope note
+Items 24–28 unpack the foundation categories that were previously compressed into one scope line. This is a planning decomposition, not an expansion of V2 scope.
 
 ## Change rule
 Expansion requires evidence, decision/ADR when architectural, updates to requirements/backlog and reviewed checkpoint delta.

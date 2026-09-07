@@ -39,18 +39,23 @@ jobs:
             "docs/UI-UX.md"
             "docs/MIGRATION-RECOVERY.md"
             "docs/modules/INDEX.md"
-            "docs/FUNCTIONAL-CATALOG-ROUNDS-01-23.md"
+            "docs/modules/24-security-restricted-content.md"
+            "docs/FUNCTIONAL-CATALOG-ROUNDS-01-24.md"
           )
           for f in "${required[@]}"; do
             test -f "$f" || { echo "Missing canonical file: $f"; exit 1; }
           done
 
           module_count="$(find docs/modules -maxdepth 1 -type f -regextype posix-extended -regex '.*/[0-9]{2}-.*\.md' | wc -l | tr -d ' ')"
-          test "$module_count" -eq 23 || { echo "Expected 23 module specs, got $module_count"; exit 1; }
+          index_count="$(grep -E '^\| M[0-9]{2} \|' docs/modules/INDEX.md | wc -l | tr -d ' ')"
+          test "$module_count" -eq "$index_count" || { echo "Module index/spec mismatch: index=$index_count specs=$module_count"; exit 1; }
+          test "$module_count" -ge 24 || { echo "Expected at least 24 module specs, got $module_count"; exit 1; }
 
           adr_count="$(find docs/adr -maxdepth 1 -type f -name 'ADR-*.md' | wc -l | tr -d ' ')"
-          test "$adr_count" -ge 12 || { echo "Expected at least 12 ADRs, got $adr_count"; exit 1; }
+          test "$adr_count" -ge 13 || { echo "Expected at least 13 ADRs, got $adr_count"; exit 1; }
 
-          grep -q "SOURCE_PACK_BOOTSTRAP_APPROVED" docs/checkpoint/CURRENT.md
+          grep -Fq "**Repository:** KayzenRoot/ugas-v2" docs/checkpoint/CURRENT.md
           grep -q "chat memory" docs/SOURCE-HIERARCHY.md
+          grep -q "M24" docs/planning/EPICS.md
+          grep -q "ADR-0013" docs/decisions/DECISIONS-LEDGER.md
           echo "Canonical source pack integrity: OK"

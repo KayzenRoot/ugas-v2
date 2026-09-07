@@ -1,4 +1,4 @@
-# UGAS V2 Module Index — Rounds 01–23
+# UGAS V2 Module Index — Rounds 01–24
 
 | ID | Module | Scope |
 |---|---|---|
@@ -25,6 +25,7 @@
 | M21 | Render Cascade & Cost Optimization | CORE |
 | M22 | Memory & Multimodal RAG | CORE foundation |
 | M23 | Provenance, Rights & C2PA | CORE |
+| M24 | Security & Restricted Content | CORE foundation |
 
 ## Rule
 Each module file is normative for module behavior only when consistent with higher-priority Checkpoint, Decisions, Scope, DoD, Architecture and Requirements.
