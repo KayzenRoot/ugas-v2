@@ -1,82 +1,65 @@
 # UGAS V2 — CURRENT CHECKPOINT
 
-**Status:** ROUND_27_PLANNING_APPROVED  
+**Status:** ROUND_28_PLANNING_READY_FOR_AUDIT  
 **Repository:** KayzenRoot/ugas-v2  
 **Canonical branch:** main  
-**Planning PR:** #38 — MERGED / APPROVED  
-**Round 27 merge SHA:** 49949880698636cea576a40c971bf2fd6ebc1cdd  
-**Implementation status:** NOT STARTED
+**Planning branch:** docs/round-28-export-delivery  
+**Implementation status:** NOT STARTED  
+**Last reconciled main SHA:** 45c3ba4f6b16501848480fd5d9546d71ad0d8add
 
 ## Canonical state established
 UGAS V2 uses repository state and canonical documentation as the source of truth. Chat memory remains non-authoritative.
 
-## Approved planning state
+## Previously approved planning
 - Source Pack bootstrap APPROVED;
 - Rounds 01–27 represented as M01–M27;
-- M27 EPIC #37;
+- M27 Automation & Agents APPROVED and checkpointed;
 - ADR-0001 through ADR-0016 ACCEPTED;
-- DEC-016 accepted;
-- REQ-AUT-001 through REQ-AUT-016 canonical;
 - repository governance and Source Pack Integrity CI active.
 
-## Round 27 result
-**M27 — Automation & Agents — APPROVED**
+## Active planning increment
+**Round 28 / M28 — Export & Delivery**
 
-### Canonical artifacts
-- `docs/modules/27-automation-agents.md`;
-- ADR-0016 — Bounded Automation, Deterministic First;
-- DEC-016 in Decisions Ledger;
-- REQ-AUT-001 through REQ-AUT-016;
-- M27 EPIC #37;
-- Module/EPIC indexes through M27;
-- `docs/FUNCTIONAL-CATALOG-ROUNDS-01-27.md`.
+### Planned artifacts in this increment
+- `docs/modules/28-export-delivery.md`;
+- ADR-0017 — Governed, Verifiable Delivery;
+- DEC-017 in Decisions Ledger;
+- REQ-DEL-001 through REQ-DEL-018;
+- M28 EPIC #40;
+- Module/EPIC indexes through M28;
+- functional catalog through Round 28.
 
-## Round 27 architectural position
-M27 is the governed orchestration layer for deterministic workflows, schedules/events and bounded reasoning agents. It does not create a parallel authority system: all consequential actions continue through canonical Production Graph/domain APIs, M24 security, M19 quality, M23 provenance/rights and M26 observability.
+## Round 28 architectural position
+M28 is the governed boundary that converts accepted Production Graph outputs into reproducible target-specific release bundles and verified deliveries. It separates canonical creative intent from destination-specific representation while preserving quality, lineage, rights, security, storage, automation and observability evidence.
 
 ### Hard invariants
-- deterministic workflow/state-machine execution is preferred when open-ended reasoning is unnecessary;
-- agent use requires explicit objective, scope, capabilities/tools, security context, budgets, approvals and stop conditions;
-- schedules/events/webhooks request work but never grant authority;
-- model/agent output cannot create, widen or transfer capabilities;
-- retries/duplicate triggers require idempotency or explicit equivalent safeguards;
-- recovery and non-transactional rollback use governed compensation semantics;
-- long-running workflow/agent state persists outside chat;
-- multi-agent messages do not transfer privileges;
-- agents cannot silently modify accepted governance/rights sources;
-- significant automated decisions/tool actions expose M26-compatible evidence/rationale.
+- governed final bundles contain accepted/authorized artifacts;
+- target/export-profile versions and source release identity are pinned;
+- artifact dependency closure is explicit;
+- unsupported required capabilities cannot disappear silently;
+- target downgrade/transform is explicit and lineage-preserving;
+- M23 remains authoritative for provenance/rights/consent;
+- M24 authorizes external egress/destination and secrets never enter manifests;
+- external retry after ambiguous outcome reconciles before replay;
+- delivery intent is idempotency-aware;
+- transfer completion and verified delivery are distinct states;
+- verification mismatch cannot become DELIVERED;
+- local export is first-class and external destinations remain replaceable adapters.
 
-## Round 27 audit evidence
-- Planning PR #38: MERGED / APPROVED;
-- final audited planning head: `9489a247fb7280f4801e9d337ca39d9a76f0bcf0`;
-- Source Pack Integrity run #21: SUCCESS;
-- merge SHA: `49949880698636cea576a40c971bf2fd6ebc1cdd`;
-- no unresolved HIGH/CRITICAL finding;
-- no product implementation introduced.
+## Active EPIC
+**#40 — [EPIC][M28] Export & Delivery**
 
-## Current blocker
-None for continuing planning.
+## Audit target
+Audit Round 28 planning against Source Hierarchy, Decisions, Scope, DoD, Architecture, Requirements and boundaries with M01, M04/M05, M07–M20, M23, M24, M25, M26 and M27.
 
-Product implementation remains NOT STARTED and must not begin without a governed implementation Work Order.
+## Blocking rule
+Do not advance to Round 29 while Round 28 requires correction or validation.
+Product implementation remains out of this planning increment.
 
-## Next necessary increment
-**Round 28 — Export & Delivery**
+## Next after Round 28 APPROVED
+**Round 29 — Cross-Domain Proprietary R&D.**
 
-Expected planning focus:
-- export packages and reusable presets;
-- target/platform delivery profiles;
-- format/codec/container validation;
-- image/video/audio/3D/game-engine/DCC delivery adapters;
-- release bundle manifests;
-- artifact dependency collection;
-- provenance/rights/C2PA attachment from M23;
-- M24 security/egress authorization;
-- M19 quality release gates;
-- M25 staging/storage integration;
-- M26 delivery telemetry/evidence;
-- M27 resumable automation;
-- resumable/retry-safe transfers;
-- delivery receipts and verification.
+Expected focus: consolidate candidate proprietary technologies across modules, detect overlaps/composable primitives, define prior-art research protocol, novelty/utility scoring, benchmark hypotheses, experimental gates, promotion/rejection criteria and a coherent UGAS proprietary R&D portfolio without making unsupported novelty claims.
 
 ## New-chat bootstrap
 When a new chat asks to continue UGAS V2:
