@@ -1,86 +1,81 @@
 # UGAS V2 — CURRENT CHECKPOINT
 
-**Status:** ROUND_24_PLANNING_APPROVED  
+**Status:** ROUND_25_PLANNING_READY_FOR_AUDIT  
 **Repository:** KayzenRoot/ugas-v2  
 **Canonical branch:** main  
-**Planning PR:** #29 — MERGED / APPROVED  
-**Round 24 merge SHA:** 75644c624f7dd7c56897dfc56be28f7fb7e51042  
-**Implementation status:** NOT STARTED
+**Planning branch:** docs/round-25-storage-cache-fabric  
+**Planning PR:** #32  
+**Implementation status:** NOT STARTED  
+**Last reconciled main SHA:** 23472460f9e16b556a1937cfd302009c2107fad0
 
 ## Canonical state established
 UGAS V2 uses repository state and canonical documentation as the source of truth. Chat memory remains non-authoritative.
 
-## Approved planning state
+## Previously approved planning
 - Source Pack bootstrap APPROVED;
 - Rounds 01–24 represented as M01–M24;
-- M01–M23 original EPICs #2–#24;
-- M24 EPIC #28;
+- M24 Security & Restricted Content APPROVED and checkpointed;
 - ADR-0001 through ADR-0013 ACCEPTED;
 - repository governance and Source Pack Integrity CI active.
 
-## Round 24 result
-**M24 — Security & Restricted Content — APPROVED**
+## Active planning increment
+**Round 25 / M25 — Storage & Cache Fabric**
 
-### Canonical artifacts
-- `docs/modules/24-security-restricted-content.md`;
-- ADR-0013 — zero-trust capability security;
-- DEC-013 in Decisions Ledger;
-- REQ-SEC-001 through REQ-SEC-015;
-- expanded canonical `docs/SECURITY.md`;
-- M24 EPIC #28;
-- Module/EPIC indexes through M24;
-- `docs/FUNCTIONAL-CATALOG-ROUNDS-01-24.md`;
-- explicit Scope decomposition of M24–M28;
-- future-proof module-index/spec integrity validation.
+### Planned artifacts in this increment
+- `docs/modules/25-storage-cache-fabric.md`;
+- ADR-0014 — content-addressed storage and cache correctness;
+- DEC-014 in Decisions Ledger;
+- REQ-STO-001 through REQ-STO-016;
+- M25 EPIC #31;
+- Module/EPIC indexes through M25;
+- functional catalog through Round 25.
 
-## Round 24 architectural position
-M24 is the cross-cutting security control plane. It governs trust boundaries, capability-scoped authorization, secrets, untrusted content, provider/worker/plugin trust, network egress, restricted identity/voice workflows, privileged/external actions, security audit and incident containment.
+## Round 25 architectural position
+M25 is the durable storage/cache substrate for UGAS V2. It separates logical artifact identity/metadata from large payload locations, uses cryptographic content identity for immutable payloads, distinguishes canonical state from rebuildable/disposable state, and makes cache/GC/tiering/recovery correctness-aware.
 
-M23 remains authoritative for provenance, rights and consent. M24 enforces those records and cannot invent rights or authorization.
+### Hard invariants
+- paths are locations, not canonical identity;
+- SOURCE/CANONICAL/EVIDENCE cannot be silently evicted as cache;
+- deduplicated bytes do not merge rights/security/provenance identities;
+- cache reuse must match all correctness-relevant fingerprints;
+- semantic cache cannot impersonate exact equality for final/provenance/security/rights outputs;
+- GC respects graph roots, shared references, holds, pins and leases;
+- M24 security/data-class policy constrains placement and replication;
+- recovery distinguishes irreplaceable state from safely rebuildable state.
 
-## Round 24 audit evidence
-- Planning PR #29: MERGED / APPROVED;
-- final planning head before merge: `bb9473819bf90cb601dd87c461b08d276c296d5e`;
-- merge SHA: `75644c624f7dd7c56897dfc56be28f7fb7e51042`;
-- final Source Pack Integrity on planning head: SUCCESS;
-- one CI design defect was found and corrected in the same PR: the integrity guard previously asserted a frozen historical checkpoint status;
-- no known HIGH/CRITICAL finding after correction.
+## Active EPIC
+**#31 — [EPIC][M25] Storage & Cache Fabric**
 
-## Scope sequence now explicit
-- M24 Security & Restricted Content;
-- M25 Storage & Cache Fabric;
-- M26 Observability & Dashboard;
-- M27 Automation & Agents;
-- M28 Export & Delivery.
+## Audit evidence so far
+- initial PR head `0c267dbff302647d0657c6ca7c18a7716a7b42f4` failed Source Pack Integrity;
+- finding: module spec count was 25 while `docs/modules/INDEX.md` still listed 24;
+- classification: CORRECTION REQUIRED / documentation-integrity finding;
+- correction: M25 added to canonical module index;
+- corrected head `0c6caaf9a757cdf689307fecb0f86c9c77cee168` passed Source Pack Integrity SUCCESS;
+- no product implementation is present in this planning increment.
 
-This decomposition does not expand V2 scope; it unpacks foundation categories already present in Scope.
+## Audit target
+Audit Round 25 planning against:
+1. Source Hierarchy;
+2. accepted ADRs / Decisions Ledger;
+3. Scope;
+4. Definition of Done;
+5. Architecture;
+6. Requirements;
+7. M01 Production Graph contracts;
+8. M22 memory/RAG derived-index behavior;
+9. M23 provenance/rights integrity;
+10. M24 security/data-class placement;
+11. M25 specification.
 
-## Current blocker
-None for continuing planning.
+## Blocking rule
+Do not advance to Round 26 while Round 25 requires correction or validation.
+Product implementation remains out of this planning increment.
 
-Product implementation remains NOT STARTED and must not begin without a governed implementation Work Order.
+## Next after Round 25 APPROVED
+**Round 26 — Observability & Dashboard.**
 
-## Next necessary increment
-**Round 25 — Storage & Cache Fabric**
-
-Expected planning focus:
-
-- canonical artifact/object storage;
-- metadata/object separation;
-- local-first storage with optional remote tiers;
-- HOT / WARM / COLD tiers;
-- content-addressed storage and hashing;
-- deduplication;
-- cache hierarchy;
-- model/asset/workflow caches;
-- lifecycle, retention and garbage collection;
-- eviction policies and storage budgets;
-- storage-pressure handling;
-- rebuildable derived data/vector indexes;
-- backup/recovery interactions;
-- storage-aware Production Graph invalidation and lineage;
-- security/data-class-aware placement from M24;
-- observability hooks for M26.
+Expected focus: unified telemetry, project/production health, decision rationale, model/worker/storage/quality/cost/security/provenance views, traces/events/metrics, alerts, drill-down and operator controls without leaking restricted data.
 
 ## New-chat bootstrap
 When a new chat asks to continue UGAS V2:
