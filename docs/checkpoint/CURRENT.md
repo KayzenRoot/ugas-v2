@@ -1,84 +1,62 @@
 # UGAS V2 — CURRENT CHECKPOINT
 
-**Status:** ROUND_25_PLANNING_APPROVED  
+**Status:** ROUND_26_PLANNING_READY_FOR_AUDIT  
 **Repository:** KayzenRoot/ugas-v2  
 **Canonical branch:** main  
-**Planning PR:** #32 — MERGED / APPROVED  
-**Round 25 merge SHA:** ebfb9afc7b6f512967f5254d8ab515e056243549  
-**Implementation status:** NOT STARTED
+**Planning branch:** docs/round-26-observability-dashboard  
+**Implementation status:** NOT STARTED  
+**Last reconciled main SHA:** e8c24d7bb25217f7ccc639fa01a61e5c63afe65c
 
 ## Canonical state established
 UGAS V2 uses repository state and canonical documentation as the source of truth. Chat memory remains non-authoritative.
 
-## Approved planning state
+## Previously approved planning
 - Source Pack bootstrap APPROVED;
 - Rounds 01–25 represented as M01–M25;
-- M25 EPIC #31;
+- M25 Storage & Cache Fabric APPROVED and checkpointed;
 - ADR-0001 through ADR-0014 ACCEPTED;
-- DEC-014 accepted;
-- REQ-STO-001 through REQ-STO-016 canonical;
 - repository governance and Source Pack Integrity CI active.
 
-## Round 25 result
-**M25 — Storage & Cache Fabric — APPROVED**
+## Active planning increment
+**Round 26 / M26 — Observability & Dashboard**
 
-### Canonical artifacts
-- `docs/modules/25-storage-cache-fabric.md`;
-- ADR-0014 — Content-Addressed Storage and Cache Correctness;
-- DEC-014 in Decisions Ledger;
-- REQ-STO-001 through REQ-STO-016;
-- M25 EPIC #31;
-- Module/EPIC indexes through M25;
-- `docs/FUNCTIONAL-CATALOG-ROUNDS-01-25.md`.
+### Planned artifacts in this increment
+- `docs/modules/26-observability-dashboard.md`;
+- ADR-0015 — Telemetry Is Not Canonical Truth;
+- DEC-015 in Decisions Ledger;
+- REQ-OBS-001 through REQ-OBS-015;
+- M26 EPIC #34;
+- Module/EPIC indexes through M26;
+- functional catalog through Round 26.
 
-## Round 25 architectural position
-M25 is the durable storage/cache substrate for UGAS V2. It separates logical artifact identity/metadata from large payload locations, uses cryptographic content identity for immutable payloads, distinguishes canonical state from rebuildable/disposable state, and makes cache/GC/tiering/recovery correctness-aware.
+## Round 26 architectural position
+M26 is the dashboard-first control room and observability fabric for UGAS V2. It connects typed metrics/events/traces/logs with canonical production/evidence references while explicitly preventing telemetry from becoming authoritative domain state.
 
 ### Hard invariants
-- paths are locations, not canonical identity;
-- SOURCE/CANONICAL/EVIDENCE cannot be silently evicted as cache;
-- deduplicated bytes do not merge rights/security/provenance identities;
-- cache reuse must match all correctness-relevant fingerprints;
-- semantic cache cannot impersonate exact equality for final/provenance/security/rights outputs;
-- GC respects graph roots, shared references, holds, pins and leases;
-- M24 security/data-class policy constrains placement and replication;
-- recovery distinguishes irreplaceable state from safely rebuildable state.
+- telemetry is derived operational evidence, not canonical production truth;
+- stale/missing evidence becomes UNKNOWN, not HEALTHY;
+- dashboard actions route through canonical APIs/state machines and M24 capability checks;
+- no raw secrets/RESTRICTED content in general telemetry;
+- high-cardinality identifiers are constrained away from metric labels;
+- important automated decisions expose explanation/evidence payloads;
+- visible status should drill down to exact node/run/artifact/evidence where applicable;
+- observability retention/sampling/storage cost is bounded;
+- external observability backends remain optional adapters.
 
-## Round 25 audit evidence
-- Planning PR #32: MERGED / APPROVED;
-- initial planning head `0c267dbff302647d0657c6ca7c18a7716a7b42f4` failed Source Pack Integrity;
-- finding: module spec count was 25 while `docs/modules/INDEX.md` still listed 24;
-- classification: CORRECTION REQUIRED / documentation-integrity finding;
-- correction: M25 added to canonical module index;
-- corrected intermediate head `0c6caaf9a757cdf689307fecb0f86c9c77cee168` passed Source Pack Integrity;
-- final audited planning head `5ed28e1ce34b38c99a554502f83a05e48f3980c1` passed Source Pack Integrity run #13 SUCCESS;
-- merge SHA: `ebfb9afc7b6f512967f5254d8ab515e056243549`;
-- no unresolved HIGH/CRITICAL finding;
-- no product implementation introduced.
+## Active EPIC
+**#34 — [EPIC][M26] Observability & Dashboard**
 
-## Current blocker
-None for continuing planning.
+## Audit target
+Audit Round 26 planning against Source Hierarchy, Decisions, Scope, DoD, Architecture, Requirements and cross-module boundaries with M01, M02, M03, M19, M20, M21, M22, M23, M24 and M25.
 
-Product implementation remains NOT STARTED and must not begin without a governed implementation Work Order.
+## Blocking rule
+Do not advance to Round 27 while Round 26 requires correction or validation.
+Product implementation remains out of this planning increment.
 
-## Next necessary increment
-**Round 26 — Observability & Dashboard**
+## Next after Round 26 APPROVED
+**Round 27 — Automation & Agents.**
 
-Expected planning focus:
-- unified metrics/events/traces/log architecture;
-- dashboard-first control surface integration;
-- project/production graph health;
-- model/provider/worker/hardware telemetry;
-- quality/repair/render economics;
-- M25 storage/caching/capacity/integrity views;
-- M24 security-safe observability and redaction;
-- M23 provenance/rights drill-down;
-- cost/budget telemetry;
-- decision rationale/explainability;
-- alerting and incident views;
-- operator drill-down from global health to exact node/run/artifact/evidence;
-- observability retention/cardinality/cost controls;
-- explicit separation of telemetry from canonical production truth.
+Expected focus: bounded agents/workflows, capability-scoped tool use, approval gates, schedules/triggers, recovery/retry, human oversight, agent observability, deterministic workflow preference and no opaque autonomous authority.
 
 ## New-chat bootstrap
 When a new chat asks to continue UGAS V2:
