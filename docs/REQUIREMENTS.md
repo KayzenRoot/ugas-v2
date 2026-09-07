@@ -156,6 +156,24 @@
 - REQ-DEL-017 M26 SHALL expose delivery readiness, progress, retry, verification, failure and evidence correlation without leaking restricted destination/secret data.
 - REQ-DEL-018 M27 SHALL orchestrate ordinary delivery deterministically by default and SHALL preserve budgets, approvals, cancellation, idempotency and recovery semantics.
 
+## Research & development
+- REQ-RND-001 Candidate Proprietary Technologies SHALL be recorded in a canonical registry with stable identity, aliases, originating modules and lifecycle state.
+- REQ-RND-002 Naming a candidate SHALL NOT imply novelty, proprietary status, patentability or defensibility.
+- REQ-RND-003 Candidate lifecycle SHALL distinguish at least CANDIDATE, TRIAGED, PRIOR_ART_RESEARCH, EXPERIMENT_DESIGNED, VALIDATING, VALIDATED, REJECTED, DEFERRED, DUPLICATE and MERGED.
+- REQ-RND-004 Prior-art research SHALL record search terms, source classes, dates, relevant sources, mechanism overlap and uncertainty.
+- REQ-RND-005 Absence of found prior art SHALL NOT be represented as legal novelty, patentability or freedom-to-operate proof.
+- REQ-RND-006 Validation hypotheses SHALL be falsifiable and SHALL define baseline(s), metrics, thresholds/effect bounds and failure criteria before VALIDATING.
+- REQ-RND-007 Stochastic validation SHALL record sufficient trials/seeds and model/provider/hardware/runtime versions for reproducibility claims.
+- REQ-RND-008 VALIDATED SHALL require reproducible evidence meeting predeclared criteria and no unresolved HIGH/CRITICAL governance/safety defect.
+- REQ-RND-009 Negative/falsifying experimental results SHALL be retained as evidence rather than silently discarded.
+- REQ-RND-010 Duplicate/overlapping candidates SHALL support aliasing, merge or rejection without losing provenance to source modules.
+- REQ-RND-011 Cross-domain compound candidates SHALL reference their source primitives and SHALL be validated as distinct hypotheses rather than inheriting validation automatically.
+- REQ-RND-012 Portfolio prioritization SHALL expose multi-objective rationale including impact, differentiation, feasibility, leverage, validation cost, evidence strength and risk; one opaque score SHALL NOT be authoritative.
+- REQ-RND-013 Technical defensibility/IP-disposition scoring SHALL be explicitly non-legal and SHALL NOT replace specialist patent/FTO/trade-secret advice.
+- REQ-RND-014 Experiment evidence SHOULD integrate M25 storage, M26 observability and M23 provenance where applicable; M24 security policy SHALL govern restricted research data.
+- REQ-RND-015 M27 automation MAY execute governed experiments but SHALL NOT auto-promote a technology to VALIDATED without the required evidence gates.
+- REQ-RND-016 R&D promotion/rejection/defer/merge decisions SHALL be auditable and linked to supporting evidence.
+
 ## Engineering
 - REQ-ENG-001 Domain logic SHALL be separable from adapters/UI.
 - REQ-ENG-002 Contracts SHALL be versioned.
