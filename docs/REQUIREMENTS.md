@@ -81,6 +81,24 @@
 - REQ-SEC-014 Security observability SHALL avoid leaking raw RESTRICTED data or secret values.
 - REQ-SEC-015 M23 SHALL remain authoritative for provenance/rights/consent; M24 SHALL enforce but not invent those records.
 
+## Storage/cache
+- REQ-STO-001 Logical artifact identity SHALL be independent from physical filesystem/object-store path.
+- REQ-STO-002 Large payload storage SHALL be separable from searchable artifact/graph metadata.
+- REQ-STO-003 Published immutable payloads SHALL have cryptographic content identity and integrity state.
+- REQ-STO-004 SOURCE/CANONICAL/EVIDENCE state SHALL be distinguishable from DERIVED/CACHE/TEMPORARY state and SHALL NOT be silently evicted as cache.
+- REQ-STO-005 Physical deduplication SHALL preserve independent logical rights, provenance, security and retention records.
+- REQ-STO-006 Cache reuse SHALL include every correctness-relevant dependency/version/fingerprint required by the cache class.
+- REQ-STO-007 Approximate/semantic cache reuse SHALL be limited to explicitly tolerant workloads and SHALL NOT substitute for exact provenance/security/rights/final-output equality.
+- REQ-STO-008 Storage placement SHALL support HOT/WARM/COLD semantics and local-first operation with backend-neutral optional remote tiers.
+- REQ-STO-009 RESTRICTED data placement/replication SHALL obey M24 policy and SHALL NOT broaden data visibility.
+- REQ-STO-010 Retention/GC SHALL respect Production Graph reachability, shared references, pins, holds and active leases before physical deletion.
+- REQ-STO-011 Storage pressure handling SHALL evict/reduce safe rebuildable state before blocking production and SHALL NOT silently delete canonical/evidence state.
+- REQ-STO-012 DERIVED state SHALL retain sufficient parent fingerprints and derivation contract/version to determine staleness and rebuild eligibility.
+- REQ-STO-013 Integrity mismatch or missing canonical object SHALL produce an explicit degraded/quarantine/recovery state rather than silent substitution.
+- REQ-STO-014 Backup/recovery SHALL preserve metadata plus required SOURCE/CANONICAL/EVIDENCE objects and SHALL explicitly identify safely rebuildable omissions.
+- REQ-STO-015 Storage backend implementations SHALL remain behind versioned domain contracts rather than leaking vendor/path semantics into the Production Graph.
+- REQ-STO-016 Storage decisions and health SHALL expose telemetry sufficient for M26 to report capacity, tiering, cache, dedup, integrity, GC and recovery state.
+
 ## UI/engineering
 - REQ-OBS-001 Dashboard SHALL expose project, production, model, compute, quality, cost and provenance states.
 - REQ-OBS-002 Decision rationale SHALL be visible.
