@@ -136,6 +136,26 @@
 - REQ-AUT-015 Automation definitions SHALL be versioned and running instances SHALL remain pinned or undergo explicit governed migration.
 - REQ-AUT-016 Agents SHALL NOT silently modify accepted ADRs, Scope, DoD, rights/consent records or other higher-authority governance sources.
 
+## Export / delivery
+- REQ-DEL-001 Governed delivery SHALL pin source release identity, ExportProfile version and DeliveryTarget version.
+- REQ-DEL-002 Final governed ReleaseBundles SHALL contain only accepted or explicitly authorized artifacts and derivatives.
+- REQ-DEL-003 Release assembly SHALL compute required artifact/dependency closure and SHALL block on missing or stale required dependencies.
+- REQ-DEL-004 Target capability incompatibility SHALL be explicit; required capability loss SHALL NOT be silently discarded.
+- REQ-DEL-005 Approved target transformations/downgrades SHALL preserve derivative lineage and applicable revalidation evidence.
+- REQ-DEL-006 ReleaseBundles SHALL expose machine-readable manifests with stable logical identities, content hashes, dependency/lineage and governing profile references.
+- REQ-DEL-007 M23 SHALL remain authoritative for provenance/rights/consent; M28 SHALL attach/reference required evidence according to target capability and policy.
+- REQ-DEL-008 External delivery SHALL pass M24 destination/egress/capability policy and SHALL NOT embed secrets/credentials in release manifests.
+- REQ-DEL-009 Delivery intents for retryable consequential transfers SHALL support idempotency or equivalent duplicate-delivery safeguards.
+- REQ-DEL-010 Ambiguous external side-effect outcomes SHALL be reconciled before automatic replay.
+- REQ-DEL-011 Supported transfer adapters SHALL persist resumable progress/checkpoints outside process/chat state.
+- REQ-DEL-012 Transfer completion SHALL be distinct from verified delivery; applicable post-delivery verification SHALL produce explicit evidence/receipt state.
+- REQ-DEL-013 Verification mismatch SHALL NOT transition a delivery to DELIVERED and SHALL support failure/quarantine/recovery handling.
+- REQ-DEL-014 Delivery adapters SHALL remain replaceable and platform/provider/DCC/game-engine specifics SHALL NOT become canonical creative intent.
+- REQ-DEL-015 Local filesystem/package export SHALL remain a first-class delivery path without mandatory cloud dependency.
+- REQ-DEL-016 M25 staging SHALL distinguish disposable transfer temporaries from canonical release manifests/evidence.
+- REQ-DEL-017 M26 SHALL expose delivery readiness, progress, retry, verification, failure and evidence correlation without leaking restricted destination/secret data.
+- REQ-DEL-018 M27 SHALL orchestrate ordinary delivery deterministically by default and SHALL preserve budgets, approvals, cancellation, idempotency and recovery semantics.
+
 ## Engineering
 - REQ-ENG-001 Domain logic SHALL be separable from adapters/UI.
 - REQ-ENG-002 Contracts SHALL be versioned.
