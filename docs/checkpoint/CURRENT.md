@@ -1,34 +1,35 @@
 # UGAS V2 — CURRENT CHECKPOINT
 
-**Status:** ROUND_25_PLANNING_READY_FOR_AUDIT  
+**Status:** ROUND_25_PLANNING_APPROVED  
 **Repository:** KayzenRoot/ugas-v2  
 **Canonical branch:** main  
-**Planning branch:** docs/round-25-storage-cache-fabric  
-**Planning PR:** #32  
-**Implementation status:** NOT STARTED  
-**Last reconciled main SHA:** 23472460f9e16b556a1937cfd302009c2107fad0
+**Planning PR:** #32 — MERGED / APPROVED  
+**Round 25 merge SHA:** ebfb9afc7b6f512967f5254d8ab515e056243549  
+**Implementation status:** NOT STARTED
 
 ## Canonical state established
 UGAS V2 uses repository state and canonical documentation as the source of truth. Chat memory remains non-authoritative.
 
-## Previously approved planning
+## Approved planning state
 - Source Pack bootstrap APPROVED;
-- Rounds 01–24 represented as M01–M24;
-- M24 Security & Restricted Content APPROVED and checkpointed;
-- ADR-0001 through ADR-0013 ACCEPTED;
+- Rounds 01–25 represented as M01–M25;
+- M25 EPIC #31;
+- ADR-0001 through ADR-0014 ACCEPTED;
+- DEC-014 accepted;
+- REQ-STO-001 through REQ-STO-016 canonical;
 - repository governance and Source Pack Integrity CI active.
 
-## Active planning increment
-**Round 25 / M25 — Storage & Cache Fabric**
+## Round 25 result
+**M25 — Storage & Cache Fabric — APPROVED**
 
-### Planned artifacts in this increment
+### Canonical artifacts
 - `docs/modules/25-storage-cache-fabric.md`;
-- ADR-0014 — content-addressed storage and cache correctness;
+- ADR-0014 — Content-Addressed Storage and Cache Correctness;
 - DEC-014 in Decisions Ledger;
 - REQ-STO-001 through REQ-STO-016;
 - M25 EPIC #31;
 - Module/EPIC indexes through M25;
-- functional catalog through Round 25.
+- `docs/FUNCTIONAL-CATALOG-ROUNDS-01-25.md`.
 
 ## Round 25 architectural position
 M25 is the durable storage/cache substrate for UGAS V2. It separates logical artifact identity/metadata from large payload locations, uses cryptographic content identity for immutable payloads, distinguishes canonical state from rebuildable/disposable state, and makes cache/GC/tiering/recovery correctness-aware.
@@ -43,39 +44,41 @@ M25 is the durable storage/cache substrate for UGAS V2. It separates logical art
 - M24 security/data-class policy constrains placement and replication;
 - recovery distinguishes irreplaceable state from safely rebuildable state.
 
-## Active EPIC
-**#31 — [EPIC][M25] Storage & Cache Fabric**
-
-## Audit evidence so far
-- initial PR head `0c267dbff302647d0657c6ca7c18a7716a7b42f4` failed Source Pack Integrity;
+## Round 25 audit evidence
+- Planning PR #32: MERGED / APPROVED;
+- initial planning head `0c267dbff302647d0657c6ca7c18a7716a7b42f4` failed Source Pack Integrity;
 - finding: module spec count was 25 while `docs/modules/INDEX.md` still listed 24;
 - classification: CORRECTION REQUIRED / documentation-integrity finding;
 - correction: M25 added to canonical module index;
-- corrected head `0c6caaf9a757cdf689307fecb0f86c9c77cee168` passed Source Pack Integrity SUCCESS;
-- no product implementation is present in this planning increment.
+- corrected intermediate head `0c6caaf9a757cdf689307fecb0f86c9c77cee168` passed Source Pack Integrity;
+- final audited planning head `5ed28e1ce34b38c99a554502f83a05e48f3980c1` passed Source Pack Integrity run #13 SUCCESS;
+- merge SHA: `ebfb9afc7b6f512967f5254d8ab515e056243549`;
+- no unresolved HIGH/CRITICAL finding;
+- no product implementation introduced.
 
-## Audit target
-Audit Round 25 planning against:
-1. Source Hierarchy;
-2. accepted ADRs / Decisions Ledger;
-3. Scope;
-4. Definition of Done;
-5. Architecture;
-6. Requirements;
-7. M01 Production Graph contracts;
-8. M22 memory/RAG derived-index behavior;
-9. M23 provenance/rights integrity;
-10. M24 security/data-class placement;
-11. M25 specification.
+## Current blocker
+None for continuing planning.
 
-## Blocking rule
-Do not advance to Round 26 while Round 25 requires correction or validation.
-Product implementation remains out of this planning increment.
+Product implementation remains NOT STARTED and must not begin without a governed implementation Work Order.
 
-## Next after Round 25 APPROVED
-**Round 26 — Observability & Dashboard.**
+## Next necessary increment
+**Round 26 — Observability & Dashboard**
 
-Expected focus: unified telemetry, project/production health, decision rationale, model/worker/storage/quality/cost/security/provenance views, traces/events/metrics, alerts, drill-down and operator controls without leaking restricted data.
+Expected planning focus:
+- unified metrics/events/traces/log architecture;
+- dashboard-first control surface integration;
+- project/production graph health;
+- model/provider/worker/hardware telemetry;
+- quality/repair/render economics;
+- M25 storage/caching/capacity/integrity views;
+- M24 security-safe observability and redaction;
+- M23 provenance/rights drill-down;
+- cost/budget telemetry;
+- decision rationale/explainability;
+- alerting and incident views;
+- operator drill-down from global health to exact node/run/artifact/evidence;
+- observability retention/cardinality/cost controls;
+- explicit separation of telemetry from canonical production truth.
 
 ## New-chat bootstrap
 When a new chat asks to continue UGAS V2:
@@ -90,3 +93,4 @@ When a new chat asks to continue UGAS V2:
 ## Historical evidence
 - `docs/checkpoint/history/WO-PRE-001-SOURCE-PACK-BOOTSTRAP.md`
 - `docs/checkpoint/history/ROUND-24-SECURITY-RESTRICTED-CONTENT.md`
+- `docs/checkpoint/history/ROUND-25-STORAGE-CACHE-FABRIC.md`
