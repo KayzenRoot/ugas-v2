@@ -1,68 +1,88 @@
 # UGAS V2 — CURRENT CHECKPOINT
 
-**Status:** ROUND_24_PLANNING_READY_FOR_AUDIT  
+**Status:** ROUND_24_PLANNING_APPROVED  
 **Repository:** KayzenRoot/ugas-v2  
 **Canonical branch:** main  
 **Planning branch:** docs/round-24-security-restricted-content  
+**Planning PR:** #29  
 **Implementation status:** NOT STARTED  
-**Last reconciled main SHA:** 81c1eabb3bfd9eb82942ed14e1d9787721f235f4
+**Last reconciled main SHA:** 81c1eabb3bfd9eb82942ed14e1d9787721f235f4  
+**Audited Round 24 head before checkpoint delta:** 7f24a62bae6ecc41cf0163451e158527d9ae95d5
 
 ## Canonical state established
 UGAS V2 uses repository state and canonical documentation as the source of truth. Chat memory remains non-authoritative.
 
-## Previously approved planning
+## Approved planning state
 - Source Pack bootstrap APPROVED;
-- Rounds 01–23 represented as M01–M23;
-- 23 original module EPICs #2–#24;
-- ADR-0001 through ADR-0012 ACCEPTED;
+- Rounds 01–24 represented as M01–M24;
+- M01–M23 original EPICs #2–#24;
+- M24 EPIC #28;
+- ADR-0001 through ADR-0013 ACCEPTED;
 - repository governance and Source Pack Integrity CI active.
 
-## Active planning increment
-**Round 24 / M24 — Security & Restricted Content**
+## Round 24 result
+**M24 — Security & Restricted Content — APPROVED**
 
-### Planned artifacts in this increment
+### Canonical artifacts
 - `docs/modules/24-security-restricted-content.md`;
 - ADR-0013 — zero-trust capability security;
 - DEC-013 in Decisions Ledger;
-- expanded REQ-SEC requirements;
-- canonical Security document update;
+- REQ-SEC-001 through REQ-SEC-015;
+- expanded canonical `docs/SECURITY.md`;
 - M24 EPIC #28;
 - Module/EPIC indexes through M24;
-- functional catalog through Round 24;
-- Scope decomposition that separates previously-compressed foundations into Rounds 24–28;
-- Source Pack Integrity CI upgraded to compare module index/spec counts.
+- `docs/FUNCTIONAL-CATALOG-ROUNDS-01-24.md`;
+- explicit Scope decomposition of M24–M28;
+- future-proof module-index/spec integrity validation.
 
 ## Round 24 architectural position
-M24 is a cross-cutting security control plane. It governs trust boundaries, capability-scoped authorization, secrets, untrusted content, provider/worker/plugin trust, network egress, restricted identity/voice workflows, privileged/external actions, security audit and incident containment.
+M24 is the cross-cutting security control plane. It governs trust boundaries, capability-scoped authorization, secrets, untrusted content, provider/worker/plugin trust, network egress, restricted identity/voice workflows, privileged/external actions, security audit and incident containment.
 
 M23 remains authoritative for provenance, rights and consent. M24 enforces those records and cannot invent rights or authorization.
 
+## Round 24 audit evidence
+- Planning PR: #29;
+- audited pre-checkpoint head: `7f24a62bae6ecc41cf0163451e158527d9ae95d5`;
+- Source Pack Integrity run #6: SUCCESS;
+- one CI design defect was found and corrected in the same PR: the integrity guard previously asserted a frozen historical checkpoint status;
+- no known HIGH/CRITICAL finding after correction.
+
 ## Scope effect
-No V2 scope expansion is introduced by separating M24–M28. The previous Scope already contained security/storage/observability/automation/export foundations in a single compressed item. This planning increment makes that sequence explicit.
+No V2 scope expansion was introduced by separating M24–M28. The previous Scope already contained security/storage/observability/automation/export foundations in a single compressed item. The sequence is now explicit:
 
-## Active EPIC
-**#28 — [EPIC][M24] Security & Restricted Content**
+- M24 Security & Restricted Content;
+- M25 Storage & Cache Fabric;
+- M26 Observability & Dashboard;
+- M27 Automation & Agents;
+- M28 Export & Delivery.
 
-## Audit target
-Audit the Round 24 planning PR against:
-1. Source Hierarchy;
-2. accepted ADRs / Decisions Ledger;
-3. Scope;
-4. Definition of Done;
-5. Architecture;
-6. Requirements;
-7. Security canonical source;
-8. M23 provenance/rights boundary;
-9. M24 specification.
+## Current blocker
+Round 24 is complete for planning. Do not start product implementation unless a governed implementation Work Order is explicitly selected.
 
-## Blocking rule
-Do not advance to Round 25 while Round 24 requires correction or validation.
-Product implementation remains out of this planning increment.
+The current user-directed program remains **planning continuation**, so the next necessary planning increment is M25.
 
-## Next after Round 24 APPROVED
-**Round 25 — Storage & Cache Fabric.**
+## Next necessary increment
+**Round 25 — Storage & Cache Fabric**
 
-Expected planning focus: artifact/object storage, metadata/object separation, HOT/WARM/COLD tiers, content-addressing, cache hierarchy, deduplication, lifecycle/retention, local/remote storage, rebuildable derived indexes, eviction and storage-aware Production Graph behavior.
+Expected planning focus:
+
+- canonical artifact/object storage;
+- metadata/object separation;
+- local-first storage with remote tier extensions;
+- HOT / WARM / COLD tiers;
+- content-addressed storage and hashes;
+- deduplication;
+- cache hierarchy;
+- model/asset/workflow caches;
+- lifecycle and retention;
+- eviction policies;
+- quotas/budgets;
+- storage pressure handling;
+- rebuildable derived data/vector indexes;
+- backup/recovery interactions;
+- storage-aware Production Graph invalidation and lineage;
+- security/data-class aware placement;
+- observability hooks for M26.
 
 ## New-chat bootstrap
 When a new chat asks to continue UGAS V2:
