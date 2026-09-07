@@ -54,7 +54,7 @@ jobs:
           adr_count="$(find docs/adr -maxdepth 1 -type f -name 'ADR-*.md' | wc -l | tr -d ' ')"
           test "$adr_count" -ge 13 || { echo "Expected at least 13 ADRs, got $adr_count"; exit 1; }
 
-          grep -q "SOURCE_PACK_BOOTSTRAP_APPROVED" docs/checkpoint/CURRENT.md
+          grep -q "Repository:** KayzenRoot/ugas-v2" docs/checkpoint/CURRENT.md
           grep -q "chat memory" docs/SOURCE-HIERARCHY.md
           grep -q "M24" docs/planning/EPICS.md
           grep -q "ADR-0013" docs/decisions/DECISIONS-LEDGER.md
