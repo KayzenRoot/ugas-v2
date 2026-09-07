@@ -1,0 +1,18 @@
+# Decisions Ledger
+
+| ID | Decision | Status | ADR |
+|---|---|---|---|
+| DEC-001 | Repository is canonical; chat memory is non-authoritative. | ACCEPTED | ADR-0001 |
+| DEC-002 | Architecture is local-first, not local-only. | ACCEPTED | ADR-0002 |
+| DEC-003 | Core is provider-independent. | ACCEPTED | ADR-0003 |
+| DEC-004 | Compute is hardware-agnostic and empirically adaptive. | ACCEPTED | ADR-0004 |
+| DEC-005 | Versioned Production Graph is orchestration nucleus. | ACCEPTED | ADR-0005 |
+| DEC-006 | Creative intent uses provider-independent multimodal IR. | ACCEPTED | ADR-0006 |
+| DEC-007 | Persistent identity uses DNA/invariants across modalities. | ACCEPTED | ADR-0007 |
+| DEC-008 | Generated output requires explicit quality/approval gates. | ACCEPTED | ADR-0008 |
+| DEC-009 | Repair prefers minimal regeneration and preserves lineage. | ACCEPTED | ADR-0009 |
+| DEC-010 | Provenance/rights are by-design. | ACCEPTED | ADR-0010 |
+| DEC-011 | Dashboard is primary operator interface. | ACCEPTED | ADR-0011 |
+| DEC-012 | V2 is conclusion-driven: NECESSARY automatic; IMPORTANT/FUTURE gated. | ACCEPTED | ADR-0012 |
+
+Only an accepted ADR or reviewed ledger change may supersede an ACCEPTED architectural decision.

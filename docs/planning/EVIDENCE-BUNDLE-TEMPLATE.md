@@ -1,0 +1,22 @@
+# Evidence Bundle — WO-XXX
+
+- Work Order:
+- Base SHA:
+- Head SHA:
+- Branch:
+- PR:
+- Files changed:
+- Decisions used:
+- Requirements covered:
+- Tests:
+- Lint/type/build:
+- Integration/E2E:
+- Security:
+- Migration/recovery:
+- Benchmarks:
+- Failures encountered and corrected:
+- Known risks:
+- Artifact/evidence links:
+- Proposed Checkpoint Delta:
+- Executor self-review:
+- Independent audit verdict:

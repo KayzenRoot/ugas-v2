@@ -1,0 +1,21 @@
+---
+name: Feature / Work Order
+about: Governed implementation increment
+title: "WO-XXX: "
+labels: ""
+assignees: ""
+---
+
+## OBJECTIVE
+## CONTEXT / CANONICAL SOURCES
+## SCOPE
+## OUT OF SCOPE
+## REQUIREMENTS
+## ARCHITECTURE / ADRS
+## CONTEXT LOCK
+## ACCEPTANCE CRITERIA
+## TESTS / BENCHMARKS
+## SECURITY / RECOVERY
+## DELIVERABLES
+## EVIDENCE BUNDLE
+## STOP CONDITION
