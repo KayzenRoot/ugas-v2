@@ -30,6 +30,7 @@
 | M26 Observability & Dashboard | #34 | docs/modules/26-observability-dashboard.md |
 | M27 Automation & Agents | #37 | docs/modules/27-automation-agents.md |
 | M28 Export & Delivery | #40 | docs/modules/28-export-delivery.md |
+| M29 Cross-Domain Proprietary R&D | #43 | docs/modules/29-cross-domain-proprietary-rd.md |
 
 ## Rule
 EPIC Issues define backlog containers, not executable increments. Every implementation change requires a Work Order, Context Lock, objective tests/evidence, PR and independent audit.

@@ -1,4 +1,4 @@
-# UGAS V2 Module Index — Rounds 01–28
+# UGAS V2 Module Index — Rounds 01–29
 
 | ID | Module | Scope |
 |---|---|---|
@@ -30,6 +30,7 @@
 | M26 | Observability & Dashboard | CORE foundation |
 | M27 | Automation & Agents | CORE foundation |
 | M28 | Export & Delivery | CORE foundation |
+| M29 | Cross-Domain Proprietary R&D | PROGRAM R&D |
 
 ## Rule
 Each module file is normative for module behavior only when consistent with higher-priority Checkpoint, Decisions, Scope, DoD, Architecture and Requirements.

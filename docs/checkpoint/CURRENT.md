@@ -1,82 +1,79 @@
 # UGAS V2 — CURRENT CHECKPOINT
 
-**Status:** ROUND_28_PLANNING_APPROVED  
+**Status:** ROUND_29_PLANNING_READY_FOR_AUDIT  
 **Repository:** KayzenRoot/ugas-v2  
 **Canonical branch:** main  
-**Planning PR:** #41 — MERGED / APPROVED  
-**Round 28 merge SHA:** d50550e07901210e5fa0a0e86a3fffd90ddb3835  
-**Implementation status:** NOT STARTED
+**Planning branch:** docs/round-29-cross-domain-rd  
+**Implementation status:** NOT STARTED  
+**Last reconciled main SHA:** 5b3869bd8cdcf171974e4547ecb2b260c5a4ddcd
 
 ## Canonical state established
 UGAS V2 uses repository state and canonical documentation as the source of truth. Chat memory remains non-authoritative.
 
-## Approved planning state
+## Previously approved planning
 - Source Pack bootstrap APPROVED;
 - Rounds 01–28 represented as M01–M28;
-- M28 EPIC #40;
+- M28 Export & Delivery APPROVED and checkpointed;
 - ADR-0001 through ADR-0017 ACCEPTED;
-- DEC-017 accepted;
-- REQ-DEL-001 through REQ-DEL-018 canonical;
 - repository governance and Source Pack Integrity CI active.
 
-## Round 28 result
-**M28 — Export & Delivery — APPROVED**
+## Active planning increment
+**Round 29 / M29 — Cross-Domain Proprietary R&D**
 
-### Canonical artifacts
-- `docs/modules/28-export-delivery.md`;
-- ADR-0017 — Governed, Verifiable Delivery;
-- DEC-017 in Decisions Ledger;
-- REQ-DEL-001 through REQ-DEL-018;
-- M28 EPIC #40;
-- Module/EPIC indexes through M28;
-- `docs/FUNCTIONAL-CATALOG-ROUNDS-01-28.md`.
+### Planned artifacts in this increment
+- `docs/modules/29-cross-domain-proprietary-rd.md`;
+- `docs/rnd/PROPRIETARY-TECHNOLOGY-REGISTRY.md`;
+- ADR-0018 — Evidence-Gated Cross-Domain R&D Portfolio;
+- DEC-018;
+- REQ-RND-001 through REQ-RND-016;
+- M29 EPIC #43;
+- Module/EPIC indexes through M29;
+- functional catalog through Round 29.
 
-## Round 28 architectural position
-M28 is the governed boundary that converts accepted Production Graph outputs into reproducible target-specific release bundles and verified deliveries while keeping destination-specific representation outside canonical creative intent.
+## Round 29 architectural position
+M29 is a governed R&D program layer, not a new end-user production capability. It consolidates named Candidate Proprietary Technologies from M01–M28 into one evidence-managed portfolio and defines how candidates are researched, experimentally tested, combined, promoted, rejected or deferred.
 
 ### Hard invariants
-- governed final bundles contain accepted/authorized artifacts;
-- target/export-profile versions and source release identity are pinned;
-- artifact dependency closure is explicit;
-- unsupported required capabilities cannot disappear silently;
-- target downgrade/transform is explicit and lineage-preserving;
-- M23 remains authoritative for provenance/rights/consent;
-- M24 authorizes external egress/destination and secrets never enter manifests;
-- ambiguous external results reconcile before replay;
-- delivery intent is idempotency-aware and resumable where supported;
-- transfer completion and verified delivery are distinct states;
-- verification mismatch cannot become DELIVERED;
-- local export is first-class and external destinations remain replaceable adapters.
+- naming does not establish novelty, proprietary status, patentability or defensibility;
+- one canonical registry tracks candidate identity, aliases, lifecycle and evidence;
+- prior-art overlap and uncertainty are explicit;
+- NONE_FOUND is not legal novelty/FTO proof;
+- validation hypotheses are falsifiable;
+- VALIDATED requires predeclared baselines/metrics/thresholds and reproducible evidence;
+- negative results are retained;
+- duplicate/merged candidates preserve source provenance;
+- compound cross-domain candidates do not inherit validation from their components;
+- portfolio priority is multi-objective and explainable;
+- technical IP disposition is not legal advice.
 
-## Round 28 audit evidence
-- Planning PR #41: MERGED / APPROVED;
-- final audited planning head: `e9950245052eb40ce72d58e565cf78cc040a8d14`;
-- Source Pack Integrity run #25: SUCCESS;
-- merge SHA: `d50550e07901210e5fa0a0e86a3fffd90ddb3835`;
-- no unresolved HIGH/CRITICAL finding;
-- no product implementation introduced.
+## Initial cross-domain candidate set
+XDT-001 Universal Decision Evidence Fabric  
+XDT-002 Production Digital Twin  
+XDT-003 Cross-Modal Identity Continuity Mesh  
+XDT-004 Evidence-Guided Adaptive Production Loop  
+XDT-005 Trust-Preserving Memory Retrieval  
+XDT-006 Reproducible Creative Build System  
+XDT-007 Quality-Causal Repair Graph  
+XDT-008 Predictive Resource-to-Quality Planner  
+XDT-009 Policy-Carrying Artifact  
+XDT-010 Autonomous Production Safety Kernel  
+XDT-011 Cross-Domain Drift Observatory  
+XDT-012 Creative Lineage Knowledge Graph
 
-## Current blocker
-None for continuing planning.
+## Active EPIC
+**#43 — [EPIC][M29] Cross-Domain Proprietary R&D**
 
-Product implementation remains NOT STARTED and must not begin without a governed implementation Work Order.
+## Audit target
+Audit Round 29 against Source Hierarchy, Decisions, Scope, DoD, Architecture, Requirements and candidate-technology statements across M01–M28. Confirm this round governs R&D evidence without silently expanding product V2 scope.
 
-## Next necessary increment
-**Round 29 — Cross-Domain Proprietary R&D**
+## Blocking rule
+Do not advance to Round 30 while Round 29 requires correction or validation.
+Product implementation remains out of this planning increment.
 
-Expected planning focus:
-- inventory and normalize Candidate Proprietary Technologies across M01–M28;
-- detect duplicates, overlaps and composable primitives;
-- technology-family graph and dependency map;
-- prior-art research protocol and evidence requirements;
-- novelty, defensibility, usefulness and feasibility scoring;
-- benchmark hypotheses and falsifiable success criteria;
-- experiment/ablation design;
-- promotion states such as CANDIDATE → VALIDATING → VALIDATED / REJECTED / DEFERRED;
-- patent/trade-secret/open-source decision support without unsupported legal claims;
-- cross-domain combinations that create leverage across image/video/audio/3D/narrative/agents/delivery;
-- portfolio prioritization by impact × uniqueness × feasibility × cost;
-- no unsupported claim that a candidate is proprietary/novel merely because UGAS named it.
+## Next after Round 29 APPROVED
+**Round 30 — R&D Portfolio Prioritization & Validation Roadmap.**
+
+Expected focus: choose the highest-value technology families/candidates for first validation waves, define concrete baselines/benchmarks/fixtures, dependency order, experimental budgets, evidence bundles, stop/go criteria and a staged validation roadmap before implementation prompts begin.
 
 ## New-chat bootstrap
 When a new chat asks to continue UGAS V2:
@@ -84,7 +81,7 @@ When a new chat asks to continue UGAS V2:
 2. reconcile current main SHA;
 3. follow Source Hierarchy;
 4. inspect active planning/implementation PR and EPIC;
-5. read relevant ADRs, Scope, DoD, Architecture, Requirements and module specs;
+5. read relevant ADRs, Scope, DoD, Architecture, Requirements and module/R&D specs;
 6. never overwrite accepted repository decisions from chat memory;
 7. continue only the current necessary increment.
 

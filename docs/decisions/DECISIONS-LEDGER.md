@@ -19,5 +19,6 @@
 | DEC-015 | Telemetry is derived operational evidence, not canonical production truth; dashboard actions must use canonical APIs/security boundaries. | ACCEPTED | ADR-0015 |
 | DEC-016 | Automation is deterministic-first; agentic reasoning is bounded by explicit goal, scope, capabilities, budgets, approvals and stop conditions. | ACCEPTED | ADR-0016 |
 | DEC-017 | Export/delivery is a governed, versioned and verifiable boundary; transport completion alone is not delivery proof, target degradation is explicit and external retries reconcile ambiguous side effects. | ACCEPTED | ADR-0017 |
+| DEC-018 | Candidate proprietary technologies are evidence-gated R&D hypotheses in one governed portfolio; VALIDATED requires reproducible evidence and prior-art uncertainty must remain explicit. | ACCEPTED | ADR-0018 |
 
 Only an accepted ADR or reviewed ledger change may supersede an ACCEPTED architectural decision.
