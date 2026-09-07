@@ -1,33 +1,35 @@
 # UGAS V2 — CURRENT CHECKPOINT
 
-**Status:** ROUND_27_PLANNING_READY_FOR_AUDIT  
+**Status:** ROUND_27_PLANNING_APPROVED  
 **Repository:** KayzenRoot/ugas-v2  
 **Canonical branch:** main  
-**Planning branch:** docs/round-27-automation-agents  
-**Implementation status:** NOT STARTED  
-**Last reconciled main SHA:** a70d92aa48facee5afe8e2b1c391b160cb334e3b
+**Planning PR:** #38 — MERGED / APPROVED  
+**Round 27 merge SHA:** 49949880698636cea576a40c971bf2fd6ebc1cdd  
+**Implementation status:** NOT STARTED
 
 ## Canonical state established
 UGAS V2 uses repository state and canonical documentation as the source of truth. Chat memory remains non-authoritative.
 
-## Previously approved planning
+## Approved planning state
 - Source Pack bootstrap APPROVED;
-- Rounds 01–26 represented as M01–M26;
-- M26 Observability & Dashboard APPROVED and checkpointed;
-- ADR-0001 through ADR-0015 ACCEPTED;
+- Rounds 01–27 represented as M01–M27;
+- M27 EPIC #37;
+- ADR-0001 through ADR-0016 ACCEPTED;
+- DEC-016 accepted;
+- REQ-AUT-001 through REQ-AUT-016 canonical;
 - repository governance and Source Pack Integrity CI active.
 
-## Active planning increment
-**Round 27 / M27 — Automation & Agents**
+## Round 27 result
+**M27 — Automation & Agents — APPROVED**
 
-### Planned artifacts in this increment
+### Canonical artifacts
 - `docs/modules/27-automation-agents.md`;
 - ADR-0016 — Bounded Automation, Deterministic First;
 - DEC-016 in Decisions Ledger;
 - REQ-AUT-001 through REQ-AUT-016;
 - M27 EPIC #37;
 - Module/EPIC indexes through M27;
-- functional catalog through Round 27.
+- `docs/FUNCTIONAL-CATALOG-ROUNDS-01-27.md`.
 
 ## Round 27 architectural position
 M27 is the governed orchestration layer for deterministic workflows, schedules/events and bounded reasoning agents. It does not create a parallel authority system: all consequential actions continue through canonical Production Graph/domain APIs, M24 security, M19 quality, M23 provenance/rights and M26 observability.
@@ -44,20 +46,37 @@ M27 is the governed orchestration layer for deterministic workflows, schedules/e
 - agents cannot silently modify accepted governance/rights sources;
 - significant automated decisions/tool actions expose M26-compatible evidence/rationale.
 
-## Active EPIC
-**#37 — [EPIC][M27] Automation & Agents**
+## Round 27 audit evidence
+- Planning PR #38: MERGED / APPROVED;
+- final audited planning head: `9489a247fb7280f4801e9d337ca39d9a76f0bcf0`;
+- Source Pack Integrity run #21: SUCCESS;
+- merge SHA: `49949880698636cea576a40c971bf2fd6ebc1cdd`;
+- no unresolved HIGH/CRITICAL finding;
+- no product implementation introduced.
 
-## Audit target
-Audit Round 27 planning against Source Hierarchy, Decisions, Scope, DoD, Architecture, Requirements and cross-module boundaries with M01, M02, M03, M19, M20, M21, M22, M23, M24, M25 and M26.
+## Current blocker
+None for continuing planning.
 
-## Blocking rule
-Do not advance to Round 28 while Round 27 requires correction or validation.
-Product implementation remains out of this planning increment.
+Product implementation remains NOT STARTED and must not begin without a governed implementation Work Order.
 
-## Next after Round 27 APPROVED
-**Round 28 — Export & Delivery.**
+## Next necessary increment
+**Round 28 — Export & Delivery**
 
-Expected focus: export packages/presets, platform/channel targets, validation, manifests, codecs/formats, game-engine/DCC delivery adapters, release bundles, rights/provenance credential attachment, resumable transfer and delivery evidence.
+Expected planning focus:
+- export packages and reusable presets;
+- target/platform delivery profiles;
+- format/codec/container validation;
+- image/video/audio/3D/game-engine/DCC delivery adapters;
+- release bundle manifests;
+- artifact dependency collection;
+- provenance/rights/C2PA attachment from M23;
+- M24 security/egress authorization;
+- M19 quality release gates;
+- M25 staging/storage integration;
+- M26 delivery telemetry/evidence;
+- M27 resumable automation;
+- resumable/retry-safe transfers;
+- delivery receipts and verification.
 
 ## New-chat bootstrap
 When a new chat asks to continue UGAS V2:
@@ -74,3 +93,4 @@ When a new chat asks to continue UGAS V2:
 - `docs/checkpoint/history/ROUND-24-SECURITY-RESTRICTED-CONTENT.md`
 - `docs/checkpoint/history/ROUND-25-STORAGE-CACHE-FABRIC.md`
 - `docs/checkpoint/history/ROUND-26-OBSERVABILITY-DASHBOARD.md`
+- `docs/checkpoint/history/ROUND-27-AUTOMATION-AGENTS.md`
