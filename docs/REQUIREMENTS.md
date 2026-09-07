@@ -118,6 +118,24 @@
 - REQ-UI-001 Dashboard is primary operator interface.
 - REQ-UI-002 Standard workflows + advanced controls SHALL coexist.
 
+## Automation / agents
+- REQ-AUT-001 Automation SHALL prefer deterministic workflow/state-machine execution when open-ended reasoning is not necessary.
+- REQ-AUT-002 Agent runs SHALL bind explicit objective, scope, capabilities/tools, security context, budgets, approval policy and stop conditions.
+- REQ-AUT-003 Schedules, events and webhooks SHALL be treated as execution requests/inputs and SHALL NOT grant authorization or additional capabilities.
+- REQ-AUT-004 Agent/model output SHALL NOT create, widen or transfer capabilities; all tool calls SHALL pass M24 authorization.
+- REQ-AUT-005 Consequential/destructive/external side effects SHALL use canonical APIs/state machines and applicable approval policy.
+- REQ-AUT-006 Retryable external side effects SHALL use explicit idempotency or equivalent duplicate-execution safeguards.
+- REQ-AUT-007 Workflows SHALL define retry/backoff/recovery behavior and compensation where non-transactional side effects require it.
+- REQ-AUT-008 Operators SHALL be able to inspect, pause, cancel and, where safe, resume governed automation runs.
+- REQ-AUT-009 Long-running workflow/agent state SHALL persist outside chat context and be correlated with canonical Production Graph/run identities.
+- REQ-AUT-010 Agent memory SHALL follow M22 authority/security boundaries and SHALL distinguish observations from accepted canonical facts.
+- REQ-AUT-011 Automation-generated media/output SHALL remain subject to M19 quality/approval gates and M23/M24 provenance/rights/security rules.
+- REQ-AUT-012 Agent/workflow cost, time, tool-call/step and other configured budgets SHALL be enforceable; budget exhaustion SHALL not silently expand limits.
+- REQ-AUT-013 Significant automated decisions/tool actions SHALL expose M26-compatible rationale/evidence/telemetry.
+- REQ-AUT-014 Multi-agent messages SHALL NOT transfer privileges; each participant SHALL retain its independently scoped capability envelope.
+- REQ-AUT-015 Automation definitions SHALL be versioned and running instances SHALL remain pinned or undergo explicit governed migration.
+- REQ-AUT-016 Agents SHALL NOT silently modify accepted ADRs, Scope, DoD, rights/consent records or other higher-authority governance sources.
+
 ## Engineering
 - REQ-ENG-001 Domain logic SHALL be separable from adapters/UI.
 - REQ-ENG-002 Contracts SHALL be versioned.
