@@ -25,6 +25,7 @@
 | M21 Render Cascade & Cost | #22 | docs/modules/21-render-cascade-cost-optimization.md |
 | M22 Memory & Multimodal RAG | #23 | docs/modules/22-memory-multimodal-rag.md |
 | M23 Provenance, Rights & C2PA | #24 | docs/modules/23-provenance-rights-c2pa.md |
+| M24 Security & Restricted Content | #28 | docs/modules/24-security-restricted-content.md |
 
 ## Rule
 EPIC Issues define backlog containers, not executable increments. Every implementation change requires a Work Order, Context Lock, objective tests/evidence, PR and independent audit.
