@@ -99,11 +99,26 @@
 - REQ-STO-015 Storage backend implementations SHALL remain behind versioned domain contracts rather than leaking vendor/path semantics into the Production Graph.
 - REQ-STO-016 Storage decisions and health SHALL expose telemetry sufficient for M26 to report capacity, tiering, cache, dedup, integrity, GC and recovery state.
 
-## UI/engineering
+## Observability / dashboard
 - REQ-OBS-001 Dashboard SHALL expose project, production, model, compute, quality, cost and provenance states.
 - REQ-OBS-002 Decision rationale SHALL be visible.
+- REQ-OBS-003 Canonical production state SHALL remain distinct from sampled/derived telemetry state.
+- REQ-OBS-004 Metrics, events, traces and logs SHALL have explicit roles and versioned schemas where applicable.
+- REQ-OBS-005 Significant telemetry SHALL support correlation to applicable Project, Production, Graph Node, Run/Attempt and Artifact identities.
+- REQ-OBS-006 Health SHALL support HEALTHY, DEGRADED, BLOCKED, FAILED and UNKNOWN with reason/freshness evidence; missing/stale data SHALL NOT imply HEALTHY.
+- REQ-OBS-007 Significant automated decisions from compute, model routing, quality, repair, render, security, storage and agents SHALL expose a machine-readable explanation/evidence contract where technically feasible.
+- REQ-OBS-008 Dashboard actions SHALL invoke canonical APIs/state machines/capability checks and SHALL NOT bypass M24 authorization.
+- REQ-OBS-009 Telemetry SHALL apply M24 data-class, redaction, access and external-egress policy.
+- REQ-OBS-010 Metric dimensions SHALL control cardinality; high-cardinality identifiers SHOULD use events/traces rather than metric labels.
+- REQ-OBS-011 Logs/traces SHALL support sampling/retention/aggregation policies so observability cost/storage is bounded.
+- REQ-OBS-012 Alerts SHALL be stateful/deduplicated and retain severity, scope, evidence, acknowledgement and resolution state.
+- REQ-OBS-013 Operator drill-down SHALL link visible health/alerts/decisions to the exact canonical/evidence records that justify them.
+- REQ-OBS-014 Core observability SHALL function local-first and external observability backends SHALL remain replaceable adapters.
+- REQ-OBS-015 Telemetry backend degradation SHALL NOT corrupt canonical production state; affected health SHALL become DEGRADED/UNKNOWN as appropriate.
 - REQ-UI-001 Dashboard is primary operator interface.
 - REQ-UI-002 Standard workflows + advanced controls SHALL coexist.
+
+## Engineering
 - REQ-ENG-001 Domain logic SHALL be separable from adapters/UI.
 - REQ-ENG-002 Contracts SHALL be versioned.
 - REQ-ENG-003 Migrations SHALL be reversible or have roll-forward recovery.
