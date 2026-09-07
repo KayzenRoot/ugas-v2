@@ -44,6 +44,13 @@ All 23 module EPIC Issues exist as #2–#24.
 ## Architectural decisions
 ADR-0001 through ADR-0012 are ACCEPTED and indexed in the Decisions Ledger.
 
+## Repository governance
+- CONTRIBUTING.md defines governed contribution flow;
+- CODEOWNERS covers canonical governance paths;
+- ADR and bug Issue templates are available;
+- Source Pack Integrity CI verifies required canonical sources, 23 initial module specs and ADR baseline;
+- repository-admin settings not writable through the current integration are tracked in Issue #26.
+
 ## Current blockers
 None for planning the first implementation Work Order.
 Product implementation still requires a new Work Order, Context Lock, branch/PR, tests/evidence and audit.
