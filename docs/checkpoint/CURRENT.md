@@ -1,33 +1,35 @@
 # UGAS V2 — CURRENT CHECKPOINT
 
-**Status:** ROUND_26_PLANNING_READY_FOR_AUDIT  
+**Status:** ROUND_26_PLANNING_APPROVED  
 **Repository:** KayzenRoot/ugas-v2  
 **Canonical branch:** main  
-**Planning branch:** docs/round-26-observability-dashboard  
-**Implementation status:** NOT STARTED  
-**Last reconciled main SHA:** e8c24d7bb25217f7ccc639fa01a61e5c63afe65c
+**Planning PR:** #35 — MERGED / APPROVED  
+**Round 26 merge SHA:** 70515e9f1add162109cb5eb3d6890435d89439a4  
+**Implementation status:** NOT STARTED
 
 ## Canonical state established
 UGAS V2 uses repository state and canonical documentation as the source of truth. Chat memory remains non-authoritative.
 
-## Previously approved planning
+## Approved planning state
 - Source Pack bootstrap APPROVED;
-- Rounds 01–25 represented as M01–M25;
-- M25 Storage & Cache Fabric APPROVED and checkpointed;
-- ADR-0001 through ADR-0014 ACCEPTED;
+- Rounds 01–26 represented as M01–M26;
+- M26 EPIC #34;
+- ADR-0001 through ADR-0015 ACCEPTED;
+- DEC-015 accepted;
+- REQ-OBS-001 through REQ-OBS-015 canonical;
 - repository governance and Source Pack Integrity CI active.
 
-## Active planning increment
-**Round 26 / M26 — Observability & Dashboard**
+## Round 26 result
+**M26 — Observability & Dashboard — APPROVED**
 
-### Planned artifacts in this increment
+### Canonical artifacts
 - `docs/modules/26-observability-dashboard.md`;
 - ADR-0015 — Telemetry Is Not Canonical Truth;
 - DEC-015 in Decisions Ledger;
 - REQ-OBS-001 through REQ-OBS-015;
 - M26 EPIC #34;
 - Module/EPIC indexes through M26;
-- functional catalog through Round 26.
+- `docs/FUNCTIONAL-CATALOG-ROUNDS-01-26.md`.
 
 ## Round 26 architectural position
 M26 is the dashboard-first control room and observability fabric for UGAS V2. It connects typed metrics/events/traces/logs with canonical production/evidence references while explicitly preventing telemetry from becoming authoritative domain state.
@@ -43,20 +45,36 @@ M26 is the dashboard-first control room and observability fabric for UGAS V2. It
 - observability retention/sampling/storage cost is bounded;
 - external observability backends remain optional adapters.
 
-## Active EPIC
-**#34 — [EPIC][M26] Observability & Dashboard**
+## Round 26 audit evidence
+- Planning PR #35: MERGED / APPROVED;
+- final audited planning head: `2dffce4b157c2d0a808880bd0a5d9f4d48e98b32`;
+- Source Pack Integrity run #17: SUCCESS;
+- merge SHA: `70515e9f1add162109cb5eb3d6890435d89439a4`;
+- no unresolved HIGH/CRITICAL finding;
+- no product implementation introduced.
 
-## Audit target
-Audit Round 26 planning against Source Hierarchy, Decisions, Scope, DoD, Architecture, Requirements and cross-module boundaries with M01, M02, M03, M19, M20, M21, M22, M23, M24 and M25.
+## Current blocker
+None for continuing planning.
 
-## Blocking rule
-Do not advance to Round 27 while Round 26 requires correction or validation.
-Product implementation remains out of this planning increment.
+Product implementation remains NOT STARTED and must not begin without a governed implementation Work Order.
 
-## Next after Round 26 APPROVED
-**Round 27 — Automation & Agents.**
+## Next necessary increment
+**Round 27 — Automation & Agents**
 
-Expected focus: bounded agents/workflows, capability-scoped tool use, approval gates, schedules/triggers, recovery/retry, human oversight, agent observability, deterministic workflow preference and no opaque autonomous authority.
+Expected planning focus:
+- bounded automation and agent execution;
+- deterministic workflow preference where possible;
+- schedules, triggers and event-driven runs;
+- capability-scoped tool use through M24;
+- approval gates for consequential actions;
+- human supervision/interrupt/cancel/resume;
+- retries, recovery and compensation semantics;
+- agent/workflow state machines;
+- agent memory boundaries with M22;
+- Production Graph integration with M01;
+- M26 observability/explainability for automated decisions;
+- cost/storage/model routing constraints;
+- no opaque autonomous authority.
 
 ## New-chat bootstrap
 When a new chat asks to continue UGAS V2:
@@ -72,3 +90,4 @@ When a new chat asks to continue UGAS V2:
 - `docs/checkpoint/history/WO-PRE-001-SOURCE-PACK-BOOTSTRAP.md`
 - `docs/checkpoint/history/ROUND-24-SECURITY-RESTRICTED-CONTENT.md`
 - `docs/checkpoint/history/ROUND-25-STORAGE-CACHE-FABRIC.md`
+- `docs/checkpoint/history/ROUND-26-OBSERVABILITY-DASHBOARD.md`
