@@ -3,11 +3,9 @@
 **Status:** ROUND_24_PLANNING_APPROVED  
 **Repository:** KayzenRoot/ugas-v2  
 **Canonical branch:** main  
-**Planning branch:** docs/round-24-security-restricted-content  
-**Planning PR:** #29  
-**Implementation status:** NOT STARTED  
-**Last reconciled main SHA:** 81c1eabb3bfd9eb82942ed14e1d9787721f235f4  
-**Audited Round 24 head before checkpoint delta:** 7f24a62bae6ecc41cf0163451e158527d9ae95d5
+**Planning PR:** #29 — MERGED / APPROVED  
+**Round 24 merge SHA:** 75644c624f7dd7c56897dfc56be28f7fb7e51042  
+**Implementation status:** NOT STARTED
 
 ## Canonical state established
 UGAS V2 uses repository state and canonical documentation as the source of truth. Chat memory remains non-authoritative.
@@ -41,25 +39,26 @@ M24 is the cross-cutting security control plane. It governs trust boundaries, ca
 M23 remains authoritative for provenance, rights and consent. M24 enforces those records and cannot invent rights or authorization.
 
 ## Round 24 audit evidence
-- Planning PR: #29;
-- audited pre-checkpoint head: `7f24a62bae6ecc41cf0163451e158527d9ae95d5`;
-- Source Pack Integrity run #6: SUCCESS;
+- Planning PR #29: MERGED / APPROVED;
+- final planning head before merge: `bb9473819bf90cb601dd87c461b08d276c296d5e`;
+- merge SHA: `75644c624f7dd7c56897dfc56be28f7fb7e51042`;
+- final Source Pack Integrity on planning head: SUCCESS;
 - one CI design defect was found and corrected in the same PR: the integrity guard previously asserted a frozen historical checkpoint status;
 - no known HIGH/CRITICAL finding after correction.
 
-## Scope effect
-No V2 scope expansion was introduced by separating M24–M28. The previous Scope already contained security/storage/observability/automation/export foundations in a single compressed item. The sequence is now explicit:
-
+## Scope sequence now explicit
 - M24 Security & Restricted Content;
 - M25 Storage & Cache Fabric;
 - M26 Observability & Dashboard;
 - M27 Automation & Agents;
 - M28 Export & Delivery.
 
-## Current blocker
-Round 24 is complete for planning. Do not start product implementation unless a governed implementation Work Order is explicitly selected.
+This decomposition does not expand V2 scope; it unpacks foundation categories already present in Scope.
 
-The current user-directed program remains **planning continuation**, so the next necessary planning increment is M25.
+## Current blocker
+None for continuing planning.
+
+Product implementation remains NOT STARTED and must not begin without a governed implementation Work Order.
 
 ## Next necessary increment
 **Round 25 — Storage & Cache Fabric**
@@ -68,20 +67,19 @@ Expected planning focus:
 
 - canonical artifact/object storage;
 - metadata/object separation;
-- local-first storage with remote tier extensions;
+- local-first storage with optional remote tiers;
 - HOT / WARM / COLD tiers;
-- content-addressed storage and hashes;
+- content-addressed storage and hashing;
 - deduplication;
 - cache hierarchy;
 - model/asset/workflow caches;
-- lifecycle and retention;
-- eviction policies;
-- quotas/budgets;
-- storage pressure handling;
+- lifecycle, retention and garbage collection;
+- eviction policies and storage budgets;
+- storage-pressure handling;
 - rebuildable derived data/vector indexes;
 - backup/recovery interactions;
 - storage-aware Production Graph invalidation and lineage;
-- security/data-class aware placement;
+- security/data-class-aware placement from M24;
 - observability hooks for M26.
 
 ## New-chat bootstrap
@@ -96,3 +94,4 @@ When a new chat asks to continue UGAS V2:
 
 ## Historical evidence
 - `docs/checkpoint/history/WO-PRE-001-SOURCE-PACK-BOOTSTRAP.md`
+- `docs/checkpoint/history/ROUND-24-SECURITY-RESTRICTED-CONTENT.md`
