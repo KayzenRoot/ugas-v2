@@ -1,4 +1,4 @@
-# UGAS V2 Module Index — Rounds 01–25
+# UGAS V2 Module Index — Rounds 01–26
 
 | ID | Module | Scope |
 |---|---|---|
@@ -27,6 +27,7 @@
 | M23 | Provenance, Rights & C2PA | CORE |
 | M24 | Security & Restricted Content | CORE foundation |
 | M25 | Storage & Cache Fabric | CORE foundation |
+| M26 | Observability & Dashboard | CORE foundation |
 
 ## Rule
 Each module file is normative for module behavior only when consistent with higher-priority Checkpoint, Decisions, Scope, DoD, Architecture and Requirements.
