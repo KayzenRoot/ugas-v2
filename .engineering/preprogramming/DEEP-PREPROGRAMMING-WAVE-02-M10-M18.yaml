@@ -1,0 +1,79 @@
+version: 1
+status: PREPROGRAMMING_SPEC_COMPLETE
+wave: 2
+modules: M10-M18
+global_rule: Codex completes prepared contracts only; architecture changes require a correction delta.
+modules:
+  M10:
+    package: m10_spatial_3d
+    contracts: [SpatialAssetIntent, CanonicalMultiView, SpatialMaster, MeshTopology, UVSet, MaterialSet, TargetCameraProfile, RuntimeDerivative, SpatialQualityDossier]
+    services: [SpatialAssetCompiler, TargetCameraCompiler, RuntimeDerivativeService, SpatialAcceptanceService]
+    ports: [ReconstructionProvider, DccPort, RendererPort, SpatialEvaluator]
+    flow: [brief_to_multiview, reconstruct_master, dcc_refine, topology_uv_material, target_camera_compile, runtime_derivative, quality_court]
+    errors: [GeometryFailure, TopologyFailure, CameraReadabilityFailure, RuntimeBudgetFailure]
+    tests: [source_and_screenspace_acceptance, target_camera_readability, derivative_lineage]
+  M11:
+    package: m11_voice
+    contracts: [VoiceIdentity, VoiceIntent, UtterancePlan, VoiceCandidate, VoiceEvaluation, VoiceMaster]
+    services: [VoicePlanningService, VoiceSynthesisService, VoiceIdentityService]
+    ports: [VoiceProvider, VoiceEvaluator, ConsentRegistry]
+    flow: [verify_rights, bind_identity, compile_utterance, synthesize, evaluate_identity_prosody, accept_or_repair]
+    errors: [VoiceConsentMissing, VoiceIdentityDrift, SynthesisFailure]
+    tests: [consent_gate, identity_lock, bounded_resynthesis]
+  M12:
+    package: m12_music
+    contracts: [MusicIntent, CuePlan, StemSet, MusicCandidate, MusicEvaluation, MusicMaster]
+    services: [MusicPlanningService, MusicGenerationService, StemAssemblyService]
+    ports: [MusicProvider, MusicEvaluator, RightsRegistry]
+    flow: [compile_cue, verify_rights, generate_candidates, assemble_stems, evaluate_structure_mix, commit_master]
+    errors: [RightsViolation, CueMismatch, MusicQualityRejected]
+    tests: [cue_structure_preserved, rights_gate, stems_trace_to_master]
+  M13:
+    package: m13_sound
+    contracts: [SoundIntent, FoleyEvent, AmbienceBed, SfxAsset, AudioScene, SoundEvaluation]
+    services: [SoundSceneCompiler, FoleyService, SfxService, AmbienceService]
+    ports: [AudioProvider, SoundLibrary, SoundEvaluator]
+    flow: [extract_events, plan_layers, source_or_generate, align_timeline, mix_preview, evaluate]
+    errors: [SyncFailure, MissingSoundAsset, AudioQualityRejected]
+    tests: [timeline_alignment, layer_lineage, missing_asset_explicit]
+  M14:
+    package: m14_narrative
+    contracts: [CanonState, CharacterState, WorldFact, NarrativeBeat, SceneIntent, ContinuityConstraint, NarrativeDecision]
+    services: [CanonService, NarrativePlanner, ContinuityService]
+    ports: [CanonRepository, NarrativeModelPort, RetrievalPort]
+    flow: [load_canon, retrieve_relevant_state, propose_beats, enforce_constraints, record_decision, persist_state_delta]
+    errors: [CanonConflict, ContinuityViolation, UnsupportedRetcon]
+    tests: [canon_not_silently_rewritten, continuity_across_scene, decision_lineage]
+  M15:
+    package: m15_faceless_content
+    contracts: [ChannelIdentity, ContentRecipe, HookPlan, SegmentPlan, FacelessProductionPlan, ChannelVariant]
+    services: [FacelessPlanner, SegmentCompiler, ChannelConsistencyService]
+    ports: [NarrativePort, MediaAssemblyPort, DeliveryProfilePort]
+    flow: [load_channel_identity, compile_recipe, plan_hook_segments, request_media, assemble, evaluate_channel_fit]
+    errors: [ChannelIdentityDrift, RecipeViolation, AssemblyFailure]
+    tests: [channel_identity_preserved, recipe_constraints, derivative_traceability]
+  M16:
+    package: m16_ads_ugc
+    contracts: [CampaignIntent, Claim, EvidenceBinding, AdConcept, UGCVariant, ConversionObjective, AdEvaluation]
+    services: [AdPlanningService, ClaimGovernanceService, UGCCompiler]
+    ports: [BrandPort, EvidenceRegistry, MediaProductionPort]
+    flow: [compile_objective, validate_claims, bind_brand, generate_concepts, produce_variants, evaluate_truth_brand_quality]
+    errors: [UnsupportedClaim, BrandViolation, DeceptivePatternRejected]
+    tests: [claim_requires_evidence, brand_lock, no_unapproved_claim_mutation]
+  M17:
+    package: m17_brand_ip
+    contracts: [BrandDNA, BrandLock, TrademarkAsset, UsageRule, RightsGrant, BrandEvaluation]
+    services: [BrandGovernanceService, RightsService, BrandConsistencyService]
+    ports: [RightsRepository, BrandAssetStore, BrandEvaluator]
+    flow: [load_brand, resolve_rights, apply_usage_rules, validate_output, record_usage]
+    errors: [RightsMissing, BrandLockViolation, TrademarkMisuse]
+    tests: [rights_required, locked_brand_trait, usage_audit]
+  M18:
+    package: m18_localization
+    contracts: [LocaleProfile, LocalizedText, CulturalConstraint, DubPlan, SubtitlePlan, LocalizationEvaluation]
+    services: [LocalizationPlanner, TranslationService, CulturalValidationService, DubSubtitleService]
+    ports: [TranslationProvider, LocaleKnowledgePort, VoicePort]
+    flow: [resolve_locale, translate_intent, enforce_constraints, compile_dub_subtitle, evaluate_semantics_timing]
+    errors: [SemanticDrift, LocaleUnsupported, TimingOverflow, CulturalConstraintViolation]
+    tests: [meaning_preserved, subtitle_timing, locale_constraints]
+stop_condition: M10-M18 implementation contracts are explicit enough for file-level CODEX-TASK generation.
