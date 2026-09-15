@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "1.0",
+  "project": "UGAS V2",
+  "repository": "KayzenRoot/ugas-v2",
+  "promptMode": "GEF_V1",
+  "reviewMode": "HEDS_DELTA",
+  "sourcePackRoot": "docs",
+  "checkpoint": "docs/checkpoint/CURRENT.md",
+  "decisionsLedger": "docs/decisions/DECISIONS-LEDGER.md",
+  "workOrders": ".engineering/work-orders",
+  "contextLocks": ".engineering/context-locks",
+  "evidence": ".engineering/evidence",
+  "reviews": ".engineering/reviews",
+  "corrections": ".engineering/corrections",
+  "checkpointDeltas": ".engineering/checkpoint-deltas",
+  "exactHeadRequired": true,
+  "failClosedUnknown": true,
+  "sameWorkOrderCorrections": true,
+  "noAdvanceBeforeApproval": true,
+  "qualityEvidenceRequiredForProductionAssets": true
+}
