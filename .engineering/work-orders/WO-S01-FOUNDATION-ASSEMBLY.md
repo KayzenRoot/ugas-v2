@@ -1,49 +1,40 @@
-# WO-S01 — Foundation Assembly
+# WO-S01 Foundation Assembly
 
-Status: PREPARED, DO NOT EXECUTE BEFORE S00 SYNC/MATERIALIZATION
+Status: PREPARED / EXECUTE ONLY AFTER S00 PROVEN
 Executor: Codex
-Authority: repository canon + GEF/HEDS
+Authority: repository canon + GEF/HEDS + MODULE-MAP-FROZEN-v1
 
-## Objective
-Complete the already-preprogrammed M01-M05 foundation. Do not redesign UGAS.
+## Mission
+Complete the preprogrammed M01-M05 foundation without redesigning UGAS.
 
 ## Preconditions
-1. Local repository is synchronized to the exact approved head.
-2. `scripts/materialize_preprogrammed_modules.py` and `scripts/materialize_deep_preprogramming.py` have run successfully.
-3. Working tree is clean before implementation branch/work begins.
-4. S01 Implementation Manifest and Context Pack are present.
+- local checkout synchronized to exact approved HEAD
+- S00 Evidence Bundle reports kernel A1 green and contract fingerprint
+- materializers completed successfully if generated surfaces are absent
+- clean working tree
 
 ## Required reading
-Read only the files listed by `.engineering/preprogramming/shards/S01-FOUNDATION-IMPLEMENTATION-MANIFEST.yaml` initially. Expand context only after recording the concrete missing contract that requires it.
+Only S01 manifest/context pack, S00 evidence/fingerprint, prepared M01-M05 targets and directly referenced kernel contracts. Expand context only after recording a concrete unresolved contract.
 
 ## Execution
-1. Run A0 syntax/import checks for generated M01-M05 surfaces.
-2. Implement M04 bounded CODEX-TASKs and focused tests.
-3. Implement M01 bounded CODEX-TASKs and focused tests.
-4. Implement M05 bounded CODEX-TASKs and focused tests.
-5. Implement M02 bounded CODEX-TASKs and focused tests.
-6. Implement M03 bounded CODEX-TASKs and focused tests.
-7. Build the Golden foundation integration slice: `IRDocument -> ProductionGraph -> AssetDNA -> ResourceEnvelope -> RouteDecision`.
-8. Run only A0/A1 plus the impacted A2 foundation slice.
-9. Write Evidence Bundle including test commands/results, changed files, proof reuse/invalidation and remaining blockers.
+1. A0 for M01-M05 imports/surfaces.
+2. Complete M04 bounded tasks + A1.
+3. Complete M01 bounded tasks + A1.
+4. Complete M05 bounded tasks + A1.
+5. Complete M02 bounded tasks + A1.
+6. Complete M03 bounded tasks + A1.
+7. Prove `IRDocument -> ProductionGraph -> AssetDNA -> ResourceEnvelope -> RouteDecision`.
+8. Run impacted A2 only.
+9. Emit exact-head Evidence Bundle and STOP.
 
-## Non-goals
-No M06+ implementation. No dashboard. No model/GPU downloads. No provider SDK integration. No repository-wide cleanup. No speculative abstractions not required by prepared contracts.
+## Kernel compatibility
+Use kernel Evidence Graph/failure/adapter/observability semantics. Do not duplicate them. If a legacy S01 type conflicts, add the narrowest bridge and focused test. Kernel changes require STOP and a Correction Request, not silent modification.
 
 ## Acceptance
-- deterministic fingerprints for canonical inputs
-- invalid IR/graph transitions rejected
-- graph cycles rejected
-- canonical DNA locks preserved
-- hardware unknown/degraded state explicit
-- unqualified model route rejected
-- deterministic model route tie-break
-- no circular M01-M05 imports
-- no provider SDK in domain/services
-- focused evidence passes
+Deterministic canonical fingerprints; invalid IR/transitions/cycles rejected; DNA locks preserved; unknown hardware explicit; unqualified model route rejected; deterministic route tie-break; no circular imports/provider SDK leakage; proof invalidation limited to causal delta.
 
 ## Failure protocol
-On failure, classify the smallest failing contract/test. Correct only its dependency cone and rerun the smallest relevant test. Do not restart the complete S01 suite after every tiny correction. Escalate only a genuine architecture contradiction as a Correction Request.
+Classify the smallest failure, fix only its dependency cone and rerun the smallest relevant scope. No full-suite loop after tiny fixes.
 
 ## STOP CONDITION
-Stop when S01 acceptance is evidenced or a concrete blocker is documented. Do not proceed to S02 automatically.
+S01 acceptance evidenced or one concrete blocker documented. Never proceed to S02 in this execution.
