@@ -1,0 +1,78 @@
+version: 1
+status: PREPROGRAMMING_SPEC_COMPLETE
+wave: 3
+modules: M19-M27
+modules:
+  M19:
+    package: m19_quality_court
+    contracts: [QualityDimension, JudgeResult, Defect, QualityDossier, AcceptancePolicy, CourtDecision]
+    services: [QualityCourt, JudgeRouter, AcceptanceAggregator]
+    ports: [QualityJudge, EvaluationStore, PolicyRepository]
+    flow: [resolve_policy, route_judges, collect_evidence, normalize_scores, localize_defects, decide]
+    errors: [JudgeUnavailable, InsufficientEvidence, PolicyConflict]
+    tests: [hard_gate_cannot_be_weighted_away, defect_localization, reproducible_decision]
+  M20:
+    package: m20_repair
+    contracts: [DefectMap, RepairPlan, RepairRegion, RepairAttempt, RepairEvaluation]
+    services: [RepairPlanner, SelectiveRepairService, RevalidationService]
+    ports: [RepairProvider, DependencyGraphPort, QualityCourtPort]
+    flow: [classify_defect, compute_minimal_repair_scope, repair, invalidate_impacted_proofs, revalidate]
+    errors: [RepairNotPossible, RepairRegression, RepairBudgetExceeded]
+    tests: [minimal_scope, unaffected_proof_reused, regression_detected]
+  M21:
+    package: m21_render_cost
+    contracts: [CostEstimate, RenderPlan, RouteEconomics, BudgetEnvelope, FailureAdjustedCost]
+    services: [CostPlanner, RenderPlanner, EconomicRouteService]
+    ports: [PricingRegistry, HardwarePort, ModelIntelligencePort]
+    flow: [estimate_routes, include_failure_probability, apply_budget, choose_frontier, explain]
+    errors: [BudgetImpossible, PricingStale, NoEconomicRoute]
+    tests: [failure_adjusted_cost, budget_hard_limit, quality_floor_preserved]
+  M22:
+    package: m22_memory_rag
+    contracts: [MemoryEntry, MemoryScope, RetrievalQuery, RetrievalResult, MemoryFingerprint, ContextPack]
+    services: [MemoryService, RetrievalService, ContextPackCompiler]
+    ports: [VectorIndex, MetadataStore, EmbeddingPort]
+    flow: [scope_query, retrieve, rerank, enforce_project_boundary, compile_context, record_provenance]
+    errors: [ScopeLeakage, RetrievalUnavailable, StaleMemory]
+    tests: [project_isolation, deterministic_context_budget, provenance_present]
+  M23:
+    package: m23_provenance
+    contracts: [ProvenanceRecord, RightsRecord, TransformationRecord, ContentCredential, LineageEdge]
+    services: [ProvenanceService, RightsValidationService, CredentialService]
+    ports: [ProvenanceStore, RightsRegistry, CredentialSigner]
+    flow: [collect_sources, verify_rights, record_transformations, build_lineage, issue_or_update_credentials]
+    errors: [RightsUnresolved, BrokenLineage, CredentialFailure]
+    tests: [artifact_lineage_complete, unresolved_rights_blocks_promotion, transformation_auditable]
+  M24:
+    package: m24_security
+    contracts: [SecurityPolicy, SecretRef, TrustBoundary, Permission, AuditEvent, ThreatFinding]
+    services: [PolicyEnforcementService, SecretBoundaryService, ThreatEvaluationService]
+    ports: [SecretStore, AuditSink, SecurityScanner]
+    flow: [resolve_identity, authorize, resolve_secret_by_reference, execute_boundary, audit]
+    errors: [Unauthorized, SecretExposureRisk, BoundaryViolation]
+    tests: [secret_not_domain_data, least_privilege, denied_action_audited]
+  M25:
+    package: m25_storage_cache
+    contracts: [ArtifactKey, BlobRef, CacheKey, CachePolicy, ArtifactFingerprint, RetentionPolicy]
+    services: [ArtifactStoreService, CacheService, RetentionService]
+    ports: [ObjectStore, CacheBackend, MetadataRepository]
+    flow: [fingerprint, resolve_cache, verify_integrity, store_or_reuse, record_metadata]
+    errors: [IntegrityFailure, CacheCorruption, StorageUnavailable]
+    tests: [content_addressed_reuse, cache_disposable, integrity_check]
+  M26:
+    package: m26_dashboard
+    contracts: [DashboardView, RealtimeEvent, MetricPoint, Diagnostic, ControlCommand, UserPreference]
+    services: [DashboardQueryService, RealtimeProjectionService, ControlCommandService]
+    ports: [EventStream, MetricsStore, ControlPlanePort]
+    flow: [subscribe_events, project_state, serve_queries, validate_control_command, dispatch, observe_result]
+    errors: [ProjectionStale, CommandUnauthorized, StreamUnavailable]
+    tests: [realtime_projection, command_governance, diagnostic_trace]
+  M27:
+    package: m27_agents
+    contracts: [AgentRole, AgentCapability, AgentTask, AgentDecision, ToolGrant, AgentEvidence]
+    services: [AgentOrchestrator, CapabilityBroker, AgentGovernanceService]
+    ports: [AgentRuntime, ToolRegistry, PolicyPort]
+    flow: [resolve_task, select_role, grant_minimal_tools, execute_bounded_step, validate_output, record_evidence]
+    errors: [CapabilityDenied, ToolGrantViolation, AgentLoopDetected]
+    tests: [bounded_autonomy, minimal_tool_grant, loop_budget]
+stop_condition: M19-M27 contracts cover quality, repair, economics, memory, provenance, security, storage, dashboard and agents with focused proof targets.
