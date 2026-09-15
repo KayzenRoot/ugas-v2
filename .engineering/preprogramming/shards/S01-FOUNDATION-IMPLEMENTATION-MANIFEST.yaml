@@ -1,0 +1,59 @@
+version: 1
+status: CODEX_PREPARED_CANDIDATE
+shard: S01_FOUNDATION
+modules: [M01,M02,M03,M04,M05]
+objective: implement the smallest coherent UGAS foundation without repository-wide architecture discovery.
+read_exactly:
+  - AGENTS.md
+  - .engineering/gef/CODEX-PREPROGRAMMED-IMPLEMENTATION-POLICY.md
+  - .engineering/preprogramming/CODEX-CONTEXT-BUDGET-AND-EXECUTION-SHARDS.yaml
+  - .engineering/preprogramming/DEEP-PREPROGRAMMING-WAVE-01-M01-M09.yaml
+  - packages/py/ugas/modules/m01_product_production_os/contracts_deep.py
+  - packages/py/ugas/modules/m01_product_production_os/ports_deep.py
+  - packages/py/ugas/modules/m01_product_production_os/services_deep.py
+  - packages/py/ugas/modules/m02_hardware_intelligence/contracts_deep.py
+  - packages/py/ugas/modules/m02_hardware_intelligence/ports_deep.py
+  - packages/py/ugas/modules/m02_hardware_intelligence/services_deep.py
+  - packages/py/ugas/modules/m03_model_intelligence/contracts_deep.py
+  - packages/py/ugas/modules/m03_model_intelligence/ports_deep.py
+  - packages/py/ugas/modules/m03_model_intelligence/services_deep.py
+  - packages/py/ugas/modules/m04_multimodal_ir/contracts_deep.py
+  - packages/py/ugas/modules/m04_multimodal_ir/ports_deep.py
+  - packages/py/ugas/modules/m04_multimodal_ir/services_deep.py
+  - packages/py/ugas/modules/m05_asset_dna/contracts_deep.py
+  - packages/py/ugas/modules/m05_asset_dna/ports_deep.py
+  - packages/py/ugas/modules/m05_asset_dna/services_deep.py
+implementation_order:
+  - M04
+  - M01
+  - M05
+  - M02
+  - M03
+rationale:
+  M04: canonical IR is the provider-independent intent envelope.
+  M01: production graph/state/invalidation consumes canonical intent and controls lifecycle.
+  M05: identity/DNA attaches persistent creative identity to graph artifacts.
+  M02: hardware capabilities define execution envelopes.
+  M03: model routing consumes task requirements plus M02 resource envelope.
+shared_invariants:
+  - immutable identifiers and deterministic fingerprints
+  - no provider SDK imports in domain/contracts/services
+  - accepted canonical state is changed only through explicit governed transitions
+  - every derivative records lineage
+  - retries cannot duplicate committed domain mutations
+  - project boundaries are explicit
+  - hard gates cannot be converted into soft scores
+forbidden:
+  - repository-wide search unless a listed contract is demonstrably missing
+  - implementation of M06+
+  - UI/dashboard work
+  - GPU/model downloads
+  - provider credentials
+  - broad refactors
+  - changing architecture ownership without Correction Request
+proof_plan:
+  A0: compile/import only touched foundation packages
+  A1: module contract + fake-port service tests
+  A2: one foundation integration slice IR -> graph -> DNA -> hardware envelope -> route decision
+  A3: not required until promotion checkpoint
+stop_condition: foundation integration slice is deterministic, focused tests pass, evidence bundle exists, unresolved tasks are explicitly listed.
