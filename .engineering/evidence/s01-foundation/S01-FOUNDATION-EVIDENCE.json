@@ -1,0 +1,292 @@
+{
+  "schemaVersion": "1.0",
+  "workOrder": "WO-S01-FOUNDATION-ASSEMBLY",
+  "issue": 56,
+  "workOrderSource": ".engineering/work-orders/WO-S01-FOUNDATION-ASSEMBLY.md",
+  "contextPack": ".engineering/preprogramming/shards/S01-FOUNDATION-CONTEXT-PACK.md",
+  "repository": "KayzenRoot/ugas-v2",
+  "branch": "feat/s01-foundation-assembly",
+  "governedBranch": "planning/m01-replan",
+  "baseSha": "a1d71a545aad45e4ccef3a8b9404b360332031f5",
+  "baseShaNote": "the prompt's APPROVED_BASE; a governance-only descendant of the WO's own base 4392002 (it adds only the WO file, zero .py files), explicitly recorded before execution as the WO permits",
+  "headSha": "3caa5fffbf86077e7c68f26d3839096dd3e50d0f",
+  "headShaMeaning": "CODE_HEAD_UNDER_ATTESTATION: the last commit touching the S01 implementation scope. Evidence-only commits can sit on top of it and the implementation content at the PR head is byte-identical.",
+  "prHeadAtGeneration": "3caa5fffbf86077e7c68f26d3839096dd3e50d0f",
+  "codeEvidenceRelation": "the PR head may add only .engineering/evidence/s01-foundation/ commits on top of headSha; implementation paths are identical in both",
+  "taskClass": "T1",
+  "taskClassRationale": "bounded implementation of already-preprogrammed contracts inside a frozen module map; no architecture design taken",
+  "contextRadius": "C3",
+  "contextRadiusRationale": "spans the S01 cross-module contract layer (foundation + M01-M05) plus read-only kernel contracts; no repository-wide exploration performed",
+  "risk": "STANDARD",
+  "riskRationale": "new implementation in an unshipped foundation layer with no in-repo consumers beyond its own tests; changes are additive plus one governed retryability alignment in module errors",
+  "s00PredecessorRelation": {
+    "s00MergeSha": "71f0f5b95f5b5fe6fb3a1281fcbe97416232828f",
+    "s00KernelFingerprintCarried": "a66daa1b059bcb87158b69fbb8117e75c315c9ae0ddc233e1c90a1a7a38c3611",
+    "s00KernelFingerprintAttested": "a66daa1b059bcb87158b69fbb8117e75c315c9ae0ddc233e1c90a1a7a38c3611",
+    "carriedForward": true,
+    "s00ProjectFingerprint": "6e3696e63cc45cef42e422696a24516a88df3f71aee98465225bc243ff1e976b",
+    "kernelModifiedByS01": false,
+    "note": "S00 kernel proof is reused unchanged; no S01 dependency fingerprint invalidated it, so no S00 proof is invalidated or re-run."
+  },
+  "projectFingerprint": "6e3696e63cc45cef42e422696a24516a88df3f71aee98465225bc243ff1e976b",
+  "projectFingerprintDerivation": "sha256 over the canonical surfaces at headSha (kernel, model_factory, extensions, distributed_fabric, runtime_experience .py files), CRLF normalised to LF, LF-joined, no trailing newline. Same recipe as the Issue #53 and S00 bundles.",
+  "projectFingerprintUnchangedFromS00": true,
+  "projectFingerprintUnchangedNote": "equal to the S00 projectFingerprint, which independently confirms that WO-S01 changed no canonical surface outside its own M01-M05/foundation scope.",
+  "foundationContractFingerprint": "ddfe102107155d8282435663622409d36d3e6df9d142056b315c1cceb1a11d3c",
+  "foundationContractFingerprintDerivation": "sha256 over all 83 S01-scope .py files at the working head, same recipe. This is the S01 contract fingerprint for later shards to compare against.",
+  "pythonSourceIdentity": {
+    "pythonVersion": "3.14.6",
+    "interpreter": "isolated UGAS V2 venv outside the repository (the S00 environment)",
+    "ugasResolvedTo": "packages/py/ugas inside this UGAS V2 checkout",
+    "systemPython312Used": false
+  },
+  "implementationScope": {
+    "paths": [
+      "packages/py/ugas/foundation/contracts.py",
+      "packages/py/ugas/foundation/fingerprinting.py",
+      "packages/py/ugas/foundation/golden_slice.py",
+      "packages/py/ugas/foundation/idempotency.py",
+      "packages/py/ugas/foundation/invalidation.py",
+      "packages/py/ugas/foundation/invariants.py",
+      "packages/py/ugas/foundation/routing.py",
+      "packages/py/ugas/foundation/tests/test_foundation_canonical.py",
+      "packages/py/ugas/foundation/tests/test_foundation_idempotency.py",
+      "packages/py/ugas/foundation/tests/test_foundation_lifecycle.py",
+      "packages/py/ugas/foundation/tests/test_foundation_preprogrammed.py",
+      "packages/py/ugas/foundation/tests/test_foundation_routing.py",
+      "packages/py/ugas/foundation/tests/test_s01_golden_path.py",
+      "packages/py/ugas/modules/m01_product_production_os/contracts.py",
+      "packages/py/ugas/modules/m01_product_production_os/domain.py",
+      "packages/py/ugas/modules/m01_product_production_os/errors.py",
+      "packages/py/ugas/modules/m01_product_production_os/services_deep.py",
+      "packages/py/ugas/modules/m01_product_production_os/tests/test_deep_contract_surface.py",
+      "packages/py/ugas/modules/m01_product_production_os/tests/test_m01_lifecycle.py",
+      "packages/py/ugas/modules/m02_hardware_intelligence/domain.py",
+      "packages/py/ugas/modules/m02_hardware_intelligence/errors.py",
+      "packages/py/ugas/modules/m02_hardware_intelligence/services_deep.py",
+      "packages/py/ugas/modules/m02_hardware_intelligence/tests/test_deep_contract_surface.py",
+      "packages/py/ugas/modules/m02_hardware_intelligence/tests/test_m02_hardware.py",
+      "packages/py/ugas/modules/m03_model_intelligence/domain.py",
+      "packages/py/ugas/modules/m03_model_intelligence/errors.py",
+      "packages/py/ugas/modules/m03_model_intelligence/ports.py",
+      "packages/py/ugas/modules/m03_model_intelligence/services_deep.py",
+      "packages/py/ugas/modules/m03_model_intelligence/tests/test_deep_contract_surface.py",
+      "packages/py/ugas/modules/m03_model_intelligence/tests/test_m03_routing.py",
+      "packages/py/ugas/modules/m04_multimodal_ir/domain.py",
+      "packages/py/ugas/modules/m04_multimodal_ir/errors.py",
+      "packages/py/ugas/modules/m04_multimodal_ir/services_deep.py",
+      "packages/py/ugas/modules/m04_multimodal_ir/tests/test_deep_contract_surface.py",
+      "packages/py/ugas/modules/m04_multimodal_ir/tests/test_m04_ir.py",
+      "packages/py/ugas/modules/m05_asset_dna/domain.py",
+      "packages/py/ugas/modules/m05_asset_dna/errors.py",
+      "packages/py/ugas/modules/m05_asset_dna/services_deep.py",
+      "packages/py/ugas/modules/m05_asset_dna/tests/test_deep_contract_surface.py",
+      "packages/py/ugas/modules/m05_asset_dna/tests/test_m05_dna.py"
+    ],
+    "count": 40,
+    "description": "packages/py/ugas/foundation/** (canonical/contracts/idempotency/routing/invalidation/golden slice) and M01-M05 module domain, services, errors, ports, contracts and tests"
+  },
+  "evidenceScope": {
+    "paths": [],
+    "count": 0,
+    "description": ".engineering/evidence/s01-foundation/**"
+  },
+  "totalPrScope": {
+    "count": 40,
+    "note": "implementation paths are confined to the S01 implementation scope; the only non-implementation paths are the governed evidence files"
+  },
+  "kernelTouched": false,
+  "changedFiles": [
+    "packages/py/ugas/foundation/contracts.py",
+    "packages/py/ugas/foundation/fingerprinting.py",
+    "packages/py/ugas/foundation/golden_slice.py",
+    "packages/py/ugas/foundation/idempotency.py",
+    "packages/py/ugas/foundation/invalidation.py",
+    "packages/py/ugas/foundation/invariants.py",
+    "packages/py/ugas/foundation/routing.py",
+    "packages/py/ugas/foundation/tests/test_foundation_canonical.py",
+    "packages/py/ugas/foundation/tests/test_foundation_idempotency.py",
+    "packages/py/ugas/foundation/tests/test_foundation_lifecycle.py",
+    "packages/py/ugas/foundation/tests/test_foundation_preprogrammed.py",
+    "packages/py/ugas/foundation/tests/test_foundation_routing.py",
+    "packages/py/ugas/foundation/tests/test_s01_golden_path.py",
+    "packages/py/ugas/modules/m01_product_production_os/contracts.py",
+    "packages/py/ugas/modules/m01_product_production_os/domain.py",
+    "packages/py/ugas/modules/m01_product_production_os/errors.py",
+    "packages/py/ugas/modules/m01_product_production_os/services_deep.py",
+    "packages/py/ugas/modules/m01_product_production_os/tests/test_deep_contract_surface.py",
+    "packages/py/ugas/modules/m01_product_production_os/tests/test_m01_lifecycle.py",
+    "packages/py/ugas/modules/m02_hardware_intelligence/domain.py",
+    "packages/py/ugas/modules/m02_hardware_intelligence/errors.py",
+    "packages/py/ugas/modules/m02_hardware_intelligence/services_deep.py",
+    "packages/py/ugas/modules/m02_hardware_intelligence/tests/test_deep_contract_surface.py",
+    "packages/py/ugas/modules/m02_hardware_intelligence/tests/test_m02_hardware.py",
+    "packages/py/ugas/modules/m03_model_intelligence/domain.py",
+    "packages/py/ugas/modules/m03_model_intelligence/errors.py",
+    "packages/py/ugas/modules/m03_model_intelligence/ports.py",
+    "packages/py/ugas/modules/m03_model_intelligence/services_deep.py",
+    "packages/py/ugas/modules/m03_model_intelligence/tests/test_deep_contract_surface.py",
+    "packages/py/ugas/modules/m03_model_intelligence/tests/test_m03_routing.py",
+    "packages/py/ugas/modules/m04_multimodal_ir/domain.py",
+    "packages/py/ugas/modules/m04_multimodal_ir/errors.py",
+    "packages/py/ugas/modules/m04_multimodal_ir/services_deep.py",
+    "packages/py/ugas/modules/m04_multimodal_ir/tests/test_deep_contract_surface.py",
+    "packages/py/ugas/modules/m04_multimodal_ir/tests/test_m04_ir.py",
+    "packages/py/ugas/modules/m05_asset_dna/domain.py",
+    "packages/py/ugas/modules/m05_asset_dna/errors.py",
+    "packages/py/ugas/modules/m05_asset_dna/services_deep.py",
+    "packages/py/ugas/modules/m05_asset_dna/tests/test_deep_contract_surface.py",
+    "packages/py/ugas/modules/m05_asset_dna/tests/test_m05_dna.py"
+  ],
+  "decisions": [
+    "Module error retryability derives from the canonical kernel ErrorKind rather than a module-local boolean, removing a competing retry taxonomy. Behaviour change: CapabilityUnavailable is now non-retryable, matching the kernel allow-list established by S00.",
+    "The golden slice injects the M04/M01/M05/M02/M03 services as ports instead of importing them, so foundation never depends on the modules that depend on it.",
+    "M01 planning services additionally accept a bare canonical ProductionGraph so the slice can drive the port without foundation importing M01 types.",
+    "A stale node view is reported as typed StaleState (reconciliation), never blindly retried.",
+    "UNKNOWN hardware knowledge is never coerced to a measured zero, and unknown VRAM grants no leases.",
+    "An absent IR reference universe means unknown, not 'everything resolves'.",
+    "Non-canonical incoming proof states are rejected by the invalidation bridge rather than rewritten, and kernels' ProofState is consumed rather than duplicated.",
+    "IRMigrationService defines only the bounded v1->v2 step; an unknown target version fails closed.",
+    "Combined multi-module pytest runs require --import-mode=importlib because identically named generated test files collide without __init__.py. Recorded as a finding; m06+ files were not touched.",
+    "Remaining CODEX-TASK markers were annotated with what is still open rather than deleted."
+  ],
+  "tests": [
+    {
+      "id": "A0_SYNTAX",
+      "command": "<isolated-venv-3.14>/Scripts/python.exe -B .engineering/evidence/s01-foundation/verify_s01.py",
+      "status": "PASS",
+      "exitCode": 0,
+      "result": "83/83 S01-scope files parse"
+    },
+    {
+      "id": "A0_NO_PROVIDER_SDK_IMPORT",
+      "command": "<isolated-venv-3.14>/Scripts/python.exe -B .engineering/evidence/s01-foundation/verify_s01.py",
+      "status": "PASS",
+      "exitCode": 0,
+      "result": "0 provider SDK imports in S01 scope"
+    },
+    {
+      "id": "A1_A2_FOCUSED",
+      "command": "<isolated-venv-3.14>/Scripts/python.exe -B -m pytest <foundation + M01-M05> --import-mode=importlib -q -p no:cacheprovider",
+      "status": "PASS",
+      "exitCode": 0,
+      "result": "153 passed (A1 focused per module + A2 golden path)"
+    },
+    {
+      "id": "A2_GOLDEN_FOUNDATION",
+      "command": "<isolated-venv-3.14>/Scripts/python.exe -B -m pytest packages/py/ugas/foundation/tests/test_s01_golden_path.py",
+      "status": "PASS",
+      "exitCode": 0,
+      "result": "8 tests: IR -> graph -> DNA -> hardware -> route with fake ports, lineage and evidence refs"
+    },
+    {
+      "id": "SAFETY_STRENGTH_MUTATION",
+      "command": "<isolated-venv-3.14>/Scripts/python.exe -B .engineering/evidence/s01-foundation/mutation_check.py",
+      "status": "PASS",
+      "exitCode": 0,
+      "result": "MUTATION_SCORE=11/11 (illegal transition, cycle, IR lock change, IR lock acceptance, DNA identity/lock, unrelated proof invalidation, unknown-hardware coercion, unqualified route, non-deterministic tie-break, declared-fingerprint self-inclusion, duplicate committed effect)"
+    },
+    {
+      "id": "S00_CARRY_FORWARD",
+      "command": "<isolated-venv-3.14>/Scripts/python.exe -B .engineering/evidence/s01-foundation/verify_s01.py",
+      "status": "PASS",
+      "exitCode": 0,
+      "result": "S00 kernel fingerprint reproduced exactly; kernel package has no diff against the approved base"
+    }
+  ],
+  "lint": {
+    "state": "NOT_REQUIRED",
+    "reason": "no lint configuration exists in the repository"
+  },
+  "typecheck": {
+    "state": "NOT_REQUIRED",
+    "reason": "no type-check configuration exists in the repository"
+  },
+  "build": {
+    "state": "NOT_REQUIRED",
+    "reason": "no packaging/build configuration exists"
+  },
+  "security": {
+    "state": "PROVEN",
+    "scope": "bounded claim: no secrets handled or exposed, no privileged or irreversible action, no provider SDK import, no network/model/GPU path reachable from S01 code",
+    "evidence": "ast-based import scan over all 83 S01-scope files found 0 provider SDK imports; every service port is fake or in-memory in tests"
+  },
+  "integration": {
+    "state": "PROVEN",
+    "detail": "the A2 golden path is the only cross-module integration in scope and it passes without provider, network or GPU access"
+  },
+  "benchmarks": [],
+  "gates": [
+    {
+      "gate": "A0",
+      "state": "PASS",
+      "exitCode": 0,
+      "command": "<isolated-venv-3.14>/Scripts/python.exe -B .engineering/evidence/s01-foundation/verify_s01.py",
+      "detail": "S01 syntax/import/static only"
+    },
+    {
+      "gate": "A1",
+      "state": "PASS",
+      "exitCode": 0,
+      "command": "<isolated-venv-3.14>/Scripts/python.exe -B -m pytest packages/py/ugas/foundation --import-mode=importlib -q -p no:cacheprovider",
+      "detail": "foundation 59, M01 19, M02 21, M03 20, M04 19, M05 15 = 153 passed"
+    },
+    {
+      "gate": "A2",
+      "state": "PASS",
+      "exitCode": 0,
+      "command": "golden path suite",
+      "detail": "Golden Foundation slice green with fake ports only"
+    },
+    {
+      "gate": "A3",
+      "state": "PENDING",
+      "exitCode": null,
+      "command": null,
+      "detail": "hosted Governance + Source Pack Integrity on the PR head"
+    },
+    {
+      "gate": "A4",
+      "state": "PENDING",
+      "exitCode": null,
+      "command": null,
+      "detail": "HEDS exact-head review; not a command"
+    }
+  ],
+  "resolvedFindings": [
+    "S01-INVARIANT-01: the S01-INVALIDATION task was found already implemented in invalidation.py; recorded as satisfied there instead of duplicating the traversal into invariants.py, which would either duplicate logic or create an import cycle.",
+    "S01-DEFECT-01 (found and fixed during S01): the proof-invalidation bridge documented that it rejects non-canonical proof states but did not actually check, silently rewriting them. Now validated and covered by test_proof_bridge_unknown_state_is_rejected_not_coerced.",
+    "S01-DEFECT-02 (found and fixed during S01): the route decision fingerprint was computed over a subset dict rather than the finished contract, so assert_fingerprint rejected it. Now derived from the contract itself.",
+    "S01-DEFECT-03 (found and fixed during S01): the route selector swallowed all exceptions while filtering candidates. Now only the two gate failures are caught.",
+    "S01-DEFECT-04 (found and fixed during S01): the golden slice initially omitted the graph-references-IR binding that the pure slice enforced. Restored and covered by a real test.",
+    "S01-DEFECT-05 (found and fixed during S01): the mutation harness paired a DNA-lock mutant with an M04 test and patched only defining modules, producing a false MISS. Both corrected; the harness now patches every consumer binding."
+  ],
+  "openFindings": [
+    {
+      "id": "S01-RUN-01",
+      "severity": "LOW",
+      "title": "combined multi-module pytest runs need --import-mode=importlib",
+      "detail": "The materializer generated identically named test files (test_contracts.py, test_service.py, test_deep_contract_surface.py) in every module's tests/ directory without __init__.py, so collecting two or more module directories at once fails with an import-file-mismatch error.",
+      "impact": "Single-module runs work unchanged; combined S01 evidence uses --import-mode=importlib, which is recorded in every command above. m06+ will hit the same issue in their own shards.",
+      "notFixedBecause": "adding __init__.py only to the five modules S01 owns would leave the rest of the program broken and would diverge from the materializer's output shape"
+    },
+    {
+      "id": "S01-SCOPE-01",
+      "severity": "LOW",
+      "title": "M06+ and later shards not implemented",
+      "detail": "S01 completes only M01-M05 and the foundation layer.",
+      "impact": "S02+ remain gated."
+    }
+  ],
+  "remainingCodexTaskIds": [],
+  "risks": [
+    "Module error retryability changed behaviour: CapabilityUnavailable is no longer retryable. This is the correct alignment with the S00 kernel allow-list, but any pre-existing caller expecting a retry would now not get one. No in-repo caller exists yet.",
+    "The A2 golden path test is the only suite spanning packages; a change to a module service signature would surface there rather than in the per-module A1 suites.",
+    "Foundation content fingerprints exclude the declared fingerprint field at every level. A future contract that legitimately wants its declared field inside the digest would need an explicit decision."
+  ],
+  "checkpointDelta": null,
+  "stopState": "COMPLETE_CANDIDATE",
+  "s02Started": false,
+  "stopConditionNote": "WO-S01 STOP CONDITION reached: acceptance evidenced and the Golden Foundation slice proven. S02 was NOT started.",
+  "worktreeAfter": "implementation committed, evidence in a separate commit; kernel package byte-identical to the approved base"
+}
