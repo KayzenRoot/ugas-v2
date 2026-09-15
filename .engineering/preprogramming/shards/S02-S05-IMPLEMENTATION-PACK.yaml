@@ -1,0 +1,37 @@
+version: 1
+status: CODEX_PREPARED_CANDIDATE
+policy: each shard is executed only after previous required contracts are PROVEN; no repository-wide exploration.
+shards:
+  S02_CORE_MEDIA:
+    modules: [M06,M07,M08,M09,M10]
+    dependency_read: [M04,M05,M19]
+    implementation_order: [M05_contract_boundary,M06,M07,M09,M08,M10]
+    golden_path: HumanIdentity -> ImageMaster -> MotionClip -> VideoMaster -> SpatialMaster -> RuntimeDerivative
+    invariants: [identity_lock_across_modalities, consent_before_human_generation, canonical_intent_provider_independent, temporal_repairs_are_selective, spatial_master_distinct_from_runtime_derivative]
+    tests: [identity_cross_modal, image_candidate_budget, animation_contact, video_temporal_repair, spatial_target_camera_quality]
+    forbidden: [provider_sdk_in_domain, full_sequence_regeneration_without_reason, production_master_from_rejected_candidate]
+  S03_AUDIO_NARRATIVE:
+    modules: [M11,M12,M13,M14]
+    dependency_read: [M05,M17,M19]
+    implementation_order: [M14,M11,M12,M13]
+    golden_path: CanonState -> SceneIntent -> VoiceMaster + MusicMaster + AudioScene
+    invariants: [canon_not_silently_rewritten, voice_rights_and_identity_locked, music_rights_resolved, timeline_alignment_evidenced]
+    tests: [canon_continuity, voice_identity, music_cue_structure, audio_timeline]
+    forbidden: [unapproved_retcon, voice_clone_without_consent, unresolved_music_rights]
+  S04_CONTENT_BRAND:
+    modules: [M15,M16,M17,M18]
+    dependency_read: [M14,M19,M23]
+    implementation_order: [M17,M18,M15,M16]
+    golden_path: BrandDNA + CanonState -> Localized ContentRecipe -> CampaignIntent -> governed ChannelVariant/UGCVariant
+    invariants: [brand_locks_hard, claims_evidence_bound, localization_preserves_meaning, channel_derivative_has_lineage]
+    tests: [brand_lock, claim_evidence, locale_semantics, channel_identity]
+    forbidden: [unsupported_claim, trademark_misuse, deceptive_pattern, silent_brand_mutation]
+  S05_QUALITY_REPAIR:
+    modules: [M19,M20,M21]
+    dependency_read: [M01,M03,M25]
+    implementation_order: [M19,M20,M21]
+    golden_path: Artifact -> QualityDossier -> DefectMap -> RepairPlan -> revalidated Artifact + FailureAdjustedCost
+    invariants: [hard_quality_gate_not_weighted_away, minimal_repair_scope, unaffected_proof_carried_forward, cost_never_overrides_quality_floor]
+    tests: [court_hard_gate, defect_localization, selective_repair, proof_reuse, budget_quality_floor]
+    forbidden: [global_regeneration_as_default, clickthrough_quality_bypass, stale_pricing_silent_use]
+execution_rule: Codex receives one shard Context Pack/WO at a time; this pack is canonical planning input, not permission to execute all shards in one run.
