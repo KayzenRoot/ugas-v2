@@ -14,6 +14,8 @@ contracts untouched.
 
 Deliberately duck-typed: the kernel must not import product modules, so the adapters read the shared legacy
 attribute shape (proof_id, subject_fingerprint, dimensions, state, evidence_ref) instead of importing it.
+
+Lineage is fail-closed: an unresolved legacy causal_ref raises rather than being dropped.
 """
 
 CANONICAL_STATE_BY_VALUE: dict[str,ProofState]={s.value:s for s in ProofState}
@@ -42,8 +44,11 @@ def evidence_graph_from_legacy_bundle(bundle:Any,*,producer_ref:str)->EvidenceGr
     """Adapt a legacy module evidence bundle into the canonical evidence graph.
 
     Legacy causal_refs point at other proofs; canonical dependencies are node ids, so a causal reference to
-    proof X expands to every canonical node derived from X. References that resolve to nothing are dropped
-    rather than fabricated, because dangling dependency ids would make the graph unvalidatable.
+    proof X expands to every canonical node derived from X.
+
+    Fail-closed on lineage: a causal reference that resolves to no canonical node raises ValueError naming the
+    proof and the unresolved refs. Silently dropping it would convert missing causal evidence into a
+    valid-looking graph, which is exactly the failure this bridge exists to prevent.
     """
     project_id=bundle.project_id
     per_proof:list[tuple[Any,tuple[EvidenceNode,...]]]=[]
@@ -54,7 +59,11 @@ def evidence_graph_from_legacy_bundle(bundle:Any,*,producer_ref:str)->EvidenceGr
         node_ids_by_proof.setdefault(proof.proof_id,[]).extend(n.id for n in nodes)
     linked:list[EvidenceNode]=[]
     for proof,nodes in per_proof:
-        resolvable=tuple(sorted({nid for c in getattr(proof,"causal_refs",()) for nid in node_ids_by_proof.get(c,())}))
+        refs=tuple(getattr(proof,"causal_refs",()) or ())
+        unresolved=sorted({c for c in refs if c not in node_ids_by_proof})
+        if unresolved:
+            raise ValueError(f"unresolved causal reference(s) in proof {proof.proof_id!r}: {unresolved}")
+        resolvable=tuple(sorted({nid for c in refs for nid in node_ids_by_proof[c]}))
         linked.extend(replace(n,dependency_refs=resolvable) for n in nodes)
     return EvidenceGraph(project_id,tuple(linked))
 

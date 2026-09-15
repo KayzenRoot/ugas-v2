@@ -76,12 +76,31 @@ def test_legacy_causal_lineage_becomes_dependency_edges():
     by_id={n.id:n for n in graph.nodes}
     assert by_id["m2::temporal"].dependency_refs==("m1::identity",), "resolvable causal ref must become a real dependency"
 
-def test_unresolvable_causal_refs_are_dropped_not_fabricated():
+def test_unresolvable_causal_refs_fail_closed():
+    """Silently dropping lineage would turn missing causal evidence into a valid-looking graph."""
     bundle=MediaEvidenceBundle("p","id-fp",(),(
         MediaProof("m1","asset:v1",MediaProofState.PROVEN,"proof:m1",frozenset({"identity"}),("does-not-exist",)),),"cmd",(5,))
+    try: evidence_graph_from_legacy_bundle(bundle,producer_ref="m07")
+    except ValueError as exc:
+        assert "unresolved causal reference" in str(exc) and "m1" in str(exc) and "does-not-exist" in str(exc)
+    else: raise AssertionError("an unresolved causal reference must not be silently dropped")
+
+def test_partially_unresolvable_causal_refs_fail_closed():
+    """A resolvable ref must not mask an unresolvable one in the same proof."""
+    bundle=MediaEvidenceBundle("p","id-fp",(),(
+        MediaProof("m1","asset:v1",MediaProofState.PROVEN,"proof:m1",frozenset({"identity"})),
+        MediaProof("m2","video:v1",MediaProofState.PROVEN,"proof:m2",frozenset({"temporal"}),("m1","ghost")),),"cmd",(5,))
+    try: evidence_graph_from_legacy_bundle(bundle,producer_ref="m07")
+    except ValueError as exc: assert "ghost" in str(exc) and "m2" in str(exc)
+    else: raise AssertionError("one resolvable ref must not excuse another unresolved one")
+
+def test_no_causal_refs_is_valid():
+    """Absent lineage is not broken lineage: a bundle with no causal refs still adapts."""
+    bundle=MediaEvidenceBundle("p","id-fp",(),(
+        MediaProof("m1","asset:v1",MediaProofState.PROVEN,"proof:m1",frozenset({"identity"})),),"cmd",(5,))
     graph=evidence_graph_from_legacy_bundle(bundle,producer_ref="m07")
     validate_graph(graph)
-    assert graph.nodes[0].dependency_refs==(), "unresolvable lineage must be dropped rather than dangle"
+    assert graph.nodes[0].dependency_refs==()
 
 def test_audio_narrative_and_content_brand_bundles_adapt():
     audio=AudioNarrativeEvidenceBundle("p","canon-fp","scene",(

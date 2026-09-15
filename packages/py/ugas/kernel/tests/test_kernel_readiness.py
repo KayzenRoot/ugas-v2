@@ -117,17 +117,55 @@ def test_retry_classification_never_retries_hard_rejections():
         assert is_retryable(kind) is False, f"{kind} must never be retryable"
 
 def test_transient_provider_and_resource_failures_are_retryable():
-    for kind in (ErrorKind.TRANSIENT_FAILURE,ErrorKind.PROVIDER_FAILURE,ErrorKind.RESOURCE_EXHAUSTED,ErrorKind.STALE_STATE):
-        assert is_retryable(kind) is True, f"{kind} must be retryable"
+    for kind in (ErrorKind.TRANSIENT_FAILURE,ErrorKind.PROVIDER_FAILURE,ErrorKind.RESOURCE_EXHAUSTED):
+        assert is_retryable(kind) is True, f"{kind} must be a generic retry candidate"
+
+def test_stale_state_is_not_generically_retryable():
+    """A stale state needs reconciliation/refetch/new causal state before retry, so it fails closed."""
+    assert is_retryable(ErrorKind.STALE_STATE) is False
+    r=FailureRecord("f","p","trace","op",ErrorKind.STALE_STATE,True,"stale","evidence")
+    try: validate_failure(r)
+    except ValueError as exc: assert "non-retryable" in str(exc)
+    else: raise AssertionError("STALE_STATE must not be marked retryable")
+
+def test_retry_allowlist_is_exhaustive_over_error_kinds():
+    """Every ErrorKind is classified; only the three allow-listed kinds are retry candidates."""
+    assert {k for k in ErrorKind if is_retryable(k)}=={ErrorKind.TRANSIENT_FAILURE,ErrorKind.PROVIDER_FAILURE,ErrorKind.RESOURCE_EXHAUSTED}
+    assert {k for k in ErrorKind if not is_retryable(k)}=={ErrorKind.POLICY_REJECTION,ErrorKind.QUALITY_REJECTION,ErrorKind.CAPABILITY_DENIED,ErrorKind.INTEGRITY_FAILURE,ErrorKind.STALE_STATE}
 
 def test_secret_like_keys_are_rejected_and_redacted():
-    payload={"operation":"render","api_key":"sk-live-123","nested":{"token":"abc"}}
+    payload={"operation":"render","api_key":"sk-live-123"}
     assert assert_secret_free({"operation":"render"}) is None
     try: assert_secret_free(payload)
     except ValueError as exc: assert "api_key" in str(exc)
     else: raise AssertionError("secret-like key must be rejected")
     safe=redact_secrets(payload)
     assert safe["api_key"]=="***REDACTED***" and safe["operation"]=="render"
+
+def test_nested_secret_keys_are_rejected_and_redacted():
+    """The boundary must not stop at the top level: a nested structured secret must be caught."""
+    payload={"operation":"render","nested":{"token":"abc"},"deep":{"a":{"b":{"client_secret":"x"}}}}
+    try: assert_secret_free(payload)
+    except ValueError as exc: assert "nested.token" in str(exc)
+    else: raise AssertionError("nested secret-like key must be rejected")
+    safe=redact_secrets(payload)
+    assert safe["nested"]["token"]=="***REDACTED***" and safe["nested"] is not payload["nested"]
+    assert safe["deep"]["a"]["b"]["client_secret"]=="***REDACTED***"
+    assert safe["operation"]=="render", "non-secret structure must be preserved"
+
+def test_secret_in_sequence_of_mappings_is_rejected_and_redacted():
+    payload={"attempts":[{"provider":"a"},{"authorization":"Bearer xyz"}],"note":"ok"}
+    try: assert_secret_free(payload)
+    except ValueError as exc: assert "attempts[1].authorization" in str(exc)
+    else: raise AssertionError("a secret-like key inside a sequence must be rejected")
+    safe=redact_secrets(payload)
+    assert safe["attempts"][1]["authorization"]=="***REDACTED***"
+    assert safe["attempts"][0]["provider"]=="a" and safe["note"]=="ok"
+    assert isinstance(safe["attempts"],list), "container types must be preserved"
+
+def test_redaction_preserves_tuple_containers():
+    safe=redact_secrets({"pair":({"password":"x"},{"token":"y"})})
+    assert isinstance(safe["pair"],tuple) and safe["pair"][0]["password"]=="***REDACTED***" and safe["pair"][1]["token"]=="***REDACTED***"
 
 def test_secret_free_assertion_is_required_on_failure_records():
     r=FailureRecord("f","p","trace","op",ErrorKind.TRANSIENT_FAILURE,True,"timeout","evidence",secret_free=False)
