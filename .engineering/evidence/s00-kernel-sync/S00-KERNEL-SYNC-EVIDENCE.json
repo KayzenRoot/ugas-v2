@@ -8,8 +8,14 @@
   "branch": "feat/wo-s00-kernel-sync",
   "governedBranch": "planning/m01-replan",
   "baseSha": "f0d3eadbd822b4a59966a38a4f2df3ad92c3d3d1",
-  "headSha": "31ed20444b9e1ecb9803882682ec2b73a4d7da10",
-  "headShaMeaning": "S00-CR-001 correction commit under attestation; the PR head adds only .engineering/evidence/s00-kernel-sync/ on top",
+  "headSha": "453de252177dddf33b5d03e69c100c118ebc3c3b",
+  "headShaMeaning": "CODE_HEAD_UNDER_ATTESTATION: the last commit that touched packages/py/ugas/kernel. Evidence-only commits carry this bundle on top of it, and the kernel content at the PR head is byte-identical to this commit. A bundle cannot contain its own commit SHA, so this field deliberately names the code head rather than the evidence commit.",
+  "prHeadAtGeneration": "db856da880f62270268eb3bd67d2329e7fd9dd77",
+  "evidenceOnlyCommitsAfterCodeHead": [
+    "db856da880f62270268eb3bd67d2329e7fd9dd77",
+    "31ed20444b9e1ecb9803882682ec2b73a4d7da10"
+  ],
+  "kernelUnchangedBetweenCodeHeadAndPrHead": true,
   "supersededReviewedHead": "b4a8e629a7e7677e2c5d94ab65517e74fe693936",
   "supersededNote": "the HEDS review of b4a8e629 returned CORRECTION REQUIRED with findings RETRY-01, SECRET-01 and LINEAGE-01; this bundle describes the corrected head",
   "taskClass": "T1",
@@ -125,7 +131,7 @@
     "id": "S00-CR-001",
     "authority": "HEDS Delta Review of PR #55, verdict CORRECTION REQUIRED",
     "reviewedHeadSuperseded": "b4a8e629a7e7677e2c5d94ab65517e74fe693936",
-    "newHead": "31ed20444b9e1ecb9803882682ec2b73a4d7da10",
+    "newHead": "db856da880f62270268eb3bd67d2329e7fd9dd77",
     "filesChanged": [
       "packages/py/ugas/kernel/observability.py",
       "packages/py/ugas/kernel/legacy_evidence_bridge.py",

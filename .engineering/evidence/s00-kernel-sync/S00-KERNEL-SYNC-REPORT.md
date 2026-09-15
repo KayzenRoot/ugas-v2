@@ -7,8 +7,9 @@ Execution date: 2026-09-15
 - Work Order: `WO-S00-KERNEL-SYNC` (`.engineering/work-orders/WO-S00-KERNEL-SYNC.md`)
 - Context Pack: `.engineering/preprogramming/S00-KERNEL-SYNC-CONTEXT-PACK.md`
 - Base SHA: `f0d3eadbd822b4a59966a38a4f2df3ad92c3d3d1` (`planning/m01-replan`, post Issue #53 merge)
-- Head SHA (correction commit under attestation): `453de252177dddf33b5d03e69c100c118ebc3c3b`
-- Superseded reviewed head: `b4a8e629a7e7677e2c5d94ab65517e74fe693936` (HEDS verdict: CORRECTION REQUIRED)
+- Head SHA (`CODE_HEAD_UNDER_ATTESTATION`): `453de252177dddf33b5d03e69c100c118ebc3c3b` — the last commit touching `packages/py/ugas/kernel`. Evidence-only commits sit on top of it, and the kernel content at the PR head is byte-identical (`kernelUnchangedBetweenCodeHeadAndPrHead=true`). A bundle cannot contain its own commit SHA, so this field deliberately names the code head rather than the evidence commit that carries it.
+- PR head at bundle generation: `db856da880f62270268eb3bd67d2329e7fd9dd77`; evidence-only commits after the code head: `31ed2044`, `db856da8`
+- Superseded reviewed head: `b4a8e629a7e7677e2c5d94ab65517e74fe693936` (HEDS verdict: CORRECTION REQUIRED, CR-001)
 - Branch: `feat/wo-s00-kernel-sync` (PR #55)
 - Implementation scope: 6 paths under `packages/py/ugas/kernel/` (4 modified, 2 added); 0 implementation paths outside the kernel package
 - Total PR scope: 10 paths — the 6 implementation/test paths plus 4 governed evidence paths under `.engineering/evidence/s00-kernel-sync/`
