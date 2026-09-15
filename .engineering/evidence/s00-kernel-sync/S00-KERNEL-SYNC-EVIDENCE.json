@@ -1,0 +1,344 @@
+{
+  "schemaVersion": "1.0",
+  "workOrder": "WO-S00-KERNEL-SYNC",
+  "issue": null,
+  "workOrderSource": ".engineering/work-orders/WO-S00-KERNEL-SYNC.md",
+  "contextPack": ".engineering/preprogramming/S00-KERNEL-SYNC-CONTEXT-PACK.md",
+  "repository": "KayzenRoot/ugas-v2",
+  "branch": "feat/wo-s00-kernel-sync",
+  "governedBranch": "planning/m01-replan",
+  "baseSha": "f0d3eadbd822b4a59966a38a4f2df3ad92c3d3d1",
+  "headSha": "453de252177dddf33b5d03e69c100c118ebc3c3b",
+  "headShaMeaning": "CODE_HEAD_UNDER_ATTESTATION: the last commit that touched packages/py/ugas/kernel. Evidence-only commits carry this bundle on top of it, and the kernel content at the PR head is byte-identical to this commit. A bundle cannot contain its own commit SHA, so this field deliberately names the code head rather than the evidence commit.",
+  "prHeadAtGeneration": "db856da880f62270268eb3bd67d2329e7fd9dd77",
+  "evidenceOnlyCommitsAfterCodeHead": [
+    "db856da880f62270268eb3bd67d2329e7fd9dd77",
+    "31ed20444b9e1ecb9803882682ec2b73a4d7da10"
+  ],
+  "kernelUnchangedBetweenCodeHeadAndPrHead": true,
+  "supersededReviewedHead": "b4a8e629a7e7677e2c5d94ab65517e74fe693936",
+  "supersededNote": "the HEDS review of b4a8e629 returned CORRECTION REQUIRED with findings RETRY-01, SECRET-01 and LINEAGE-01; this bundle describes the corrected head",
+  "taskClass": "T1",
+  "taskClassRationale": "bounded patch completing an existing frozen interface set; no new architecture",
+  "contextRadius": "C2",
+  "contextRadiusRationale": "one package's interfaces; no cross-module contract was reopened",
+  "risk": "STANDARD",
+  "riskRationale": "kernel is the shared contract for all later shards, but changes are additive and fail-closed and the kernel currently has zero in-repo importers, so today's blast radius is nil. The freeze-review risk (later shards depending on a wrong contract) is handled by A4 HEDS review.",
+  "environment": {
+    "interpreter": "C:/Users/csn19/.ugas/venvs/ugas-v2-py314/Scripts/python.exe",
+    "pythonVersion": "3.14.6",
+    "isolation": "dedicated venv outside the repository; system python 3.12 is NOT used",
+    "pytestVersion": "9.1.1",
+    "ugasResolutionGuard": "verify_kernel_sync.py exits 2 unless 'ugas' resolves inside this checkout; satisfied here"
+  },
+  "kernelContractFingerprintBefore": "99899c814e933c3cc29343fda5dc54ef3c06efa9ed05083b3c506a2b7a07c4a9",
+  "kernelContractFingerprintBeforeFiles": 6,
+  "kernelContractFingerprintAfter": "a66daa1b059bcb87158b69fbb8117e75c315c9ae0ddc233e1c90a1a7a38c3611",
+  "kernelContractFingerprintAfterFiles": 8,
+  "fingerprintRecipe": "sha256 over sorted 'path:sha256' lines, CRLF normalised to LF, joined by LF with no trailing newline. Verified to equal a direct committed-blob digest. The AFTER value was cross-checked against a direct committed-blob digest of the kernel .py files at headSha.",
+  "projectFingerprint": "6e3696e63cc45cef42e422696a24516a88df3f71aee98465225bc243ff1e976b",
+  "projectFingerprintDerivation": "sha256 over the canonical surfaces at headSha (the .py files under packages/py/ugas/kernel, model_factory, extensions, distributed_fabric and runtime_experience), CRLF normalised to LF, joined by LF with no trailing newline. Same recipe and same directory set as the Issue #53 bundle projectFingerprint; the value differs because the kernel gained two files under WO-S00.",
+  "projectFingerprintFileCount": 22,
+  "projectFingerprintAtBase": "a6aee211d94d22dc86210c7ba7e7681518c20d3f4774a02387c0385e0e5d4478",
+  "projectFingerprintAtBaseFileCount": 20,
+  "changedFiles": [
+    ".engineering/evidence/s00-kernel-sync/S00-KERNEL-SYNC-EVIDENCE.json",
+    ".engineering/evidence/s00-kernel-sync/S00-KERNEL-SYNC-REPORT.md",
+    ".engineering/evidence/s00-kernel-sync/mutation_check.py",
+    ".engineering/evidence/s00-kernel-sync/verify_kernel_sync.py",
+    "packages/py/ugas/kernel/adapter_qualification.py",
+    "packages/py/ugas/kernel/evidence_graph.py",
+    "packages/py/ugas/kernel/legacy_evidence_bridge.py",
+    "packages/py/ugas/kernel/observability.py",
+    "packages/py/ugas/kernel/tests/test_kernel_readiness.py",
+    "packages/py/ugas/kernel/tests/test_legacy_evidence_bridge.py"
+  ],
+  "changedFilesCount": 10,
+  "implementationScope": "6 paths under packages/py/ugas/kernel/ (4 modified, 2 added): adapter_qualification.py, evidence_graph.py, legacy_evidence_bridge.py, observability.py, tests/test_kernel_readiness.py, tests/test_legacy_evidence_bridge.py",
+  "implementationPathsOutsideKernel": 0,
+  "totalPrScope": "10 paths: the 6 kernel implementation/test paths above plus 4 governed evidence paths under .engineering/evidence/s00-kernel-sync/ (S00-KERNEL-SYNC-EVIDENCE.json, S00-KERNEL-SYNC-REPORT.md, mutation_check.py, verify_kernel_sync.py)",
+  "totalPrScopeNote": "Implementation writes are confined to packages/py/ugas/kernel/. The PR additionally carries governed evidence under .engineering/evidence/s00-kernel-sync/, so a claim of zero changed paths outside the kernel package would be false for the PR as a whole.",
+  "untouchedConfirmations": [
+    "packages/py/ugas/kernel/primitives.py unmodified - the ErrorKind taxonomy and primitives were not reopened",
+    "packages/py/ugas/kernel/envelopes.py unmodified",
+    "M01-M36 materialized surfaces unmodified (468 files)",
+    "M37-M40 packages unmodified",
+    "no provider, model, GPU, CI or release policy change"
+  ],
+  "acceptance": [
+    {
+      "criterion": "evidence graph detects cycles",
+      "state": "PROVEN",
+      "evidence": "detect_cycles() reports deterministic cycles incl. self-dependency; validate_graph() rejects cyclic graphs; 3 A1 tests"
+    },
+    {
+      "criterion": "evidence graph produces deterministic fingerprint",
+      "state": "PROVEN",
+      "evidence": "graph_fingerprint() is order-independent and content-sensitive; A1 test asserts both directions"
+    },
+    {
+      "criterion": "carry-forward checks dependency fingerprints",
+      "state": "PROVEN",
+      "evidence": "record_dependency_fingerprints() + carry_forward(); a node carries forward only when its own subject AND all dependency fingerprints are verified unchanged"
+    },
+    {
+      "criterion": "carry-forward cannot promote unverifiable work",
+      "state": "PROVEN",
+      "evidence": "fail-closed to INVALIDATED when the own fingerprint is unverifiable or the dependency snapshot is missing; 3 A1 tests; mutation M1 caught"
+    },
+    {
+      "criterion": "adapter qualification is version-specific and fail-closed",
+      "state": "PROVEN",
+      "evidence": "assert_usable(requested_version=...) rejects a qualification held for another version; A1 test; mutation M5 caught"
+    },
+    {
+      "criterion": "provider/version change invalidates only dependent proofs and returns to candidate",
+      "state": "PROVEN",
+      "evidence": "requalify_on_version_change() returns state CANDIDATE plus only this adapter's capability refs; unchanged version is a no-op; A1 test"
+    },
+    {
+      "criterion": "retry classification cannot retry policy/quality/capability/integrity rejection",
+      "state": "PROVEN",
+      "evidence": "explicit allow-list RETRYABLE_KINDS = {TRANSIENT_FAILURE, PROVIDER_FAILURE, RESOURCE_EXHAUSTED}; is_retryable() is True only for those three. A1 tests cover all four hard kinds, all three retry candidates, STALE_STATE as non-retryable, and exhaustiveness over every ErrorKind member; mutations M4/M7/M7b caught. Corrected under CR-001 RETRY-01: the previous deny-list form left STALE_STATE retryable and would have made a future ErrorKind member retryable by default."
+    },
+    {
+      "criterion": "telemetry records are secret-safe and trace/evidence correlated",
+      "state": "PROVEN",
+      "evidence": "recursive assert_secret_free()/redact_secrets() boundary over nested mappings and common sequences, reporting dotted paths, plus validate_telemetry() correlation+non-negativity; 5 A1 tests cover top-level, nested, sequence-of-mappings, tuple containers and non-secret structure preservation; mutations M8/M8b/M8c caught. Corrected under CR-001 SECRET-01: the boundary previously inspected top-level keys only."
+    },
+    {
+      "criterion": "compatibility bridges only where a focused test proves the mismatch",
+      "state": "PROVEN",
+      "evidence": "A2 suite proves media/audio_narrative/content_brand declare parallel ProofState objects (audio and content also omit NOT_REQUIRED) and that the bridge maps them by value; mutation M6 caught. Legacy causal lineage is fail-closed: an unresolved causal_ref raises ValueError naming the proof and refs (CR-001 LINEAGE-01); mutations M9/M9b caught."
+    },
+    {
+      "criterion": "kernel A0/A1 green",
+      "state": "PROVEN",
+      "evidence": "A0 8/8 syntax; 37/37 tests pass on the isolated 3.14 interpreter (A1 25 + A2 12)"
+    },
+    {
+      "criterion": "changed bridges have focused A2 proof",
+      "state": "PROVEN",
+      "evidence": "test_legacy_evidence_bridge.py imports the real module bundles rather than mocks"
+    },
+    {
+      "criterion": "exact-head evidence bundle produced",
+      "state": "PROVEN",
+      "evidence": "this bundle"
+    }
+  ],
+  "correctionDelta": {
+    "id": "S00-CR-001",
+    "authority": "HEDS Delta Review of PR #55, verdict CORRECTION REQUIRED",
+    "reviewedHeadSuperseded": "b4a8e629a7e7677e2c5d94ab65517e74fe693936",
+    "newHead": "db856da880f62270268eb3bd67d2329e7fd9dd77",
+    "filesChanged": [
+      "packages/py/ugas/kernel/observability.py",
+      "packages/py/ugas/kernel/legacy_evidence_bridge.py",
+      "packages/py/ugas/kernel/tests/test_kernel_readiness.py",
+      "packages/py/ugas/kernel/tests/test_legacy_evidence_bridge.py"
+    ],
+    "untouched": "primitives.py and envelopes.py were not modified and no failing focused test required it",
+    "findings": [
+      {
+        "finding": "RETRY-01",
+        "severity": "MEDIUM",
+        "state": "CORRECTED",
+        "was": "is_retryable() was a deny-list; STALE_STATE was retryable and a future ErrorKind member would have been retryable by default.",
+        "now": "Explicit allow-list of TRANSIENT_FAILURE, PROVIDER_FAILURE and RESOURCE_EXHAUSTED. STALE_STATE fails closed. validate_failure() rejects a STALE_STATE record marked retryable.",
+        "evidence": "test_stale_state_is_not_generically_retryable, test_retry_allowlist_is_exhaustive_over_error_kinds; mutations M7 and M7b caught."
+      },
+      {
+        "finding": "SECRET-01",
+        "severity": "MEDIUM",
+        "state": "CORRECTED",
+        "was": "assert_secret_free() and redact_secrets() inspected top-level keys only. The earlier test payload even contained nested={'token':'abc'} while asserting only the top-level key, so the leak case was present in the data but never asserted.",
+        "now": "Both traverse nested mappings and common sequences recursively, reporting dotted paths such as 'nested.token' and 'attempts[1].authorization'. Redaction preserves non-secret structure, container types and mapping key types.",
+        "evidence": "test_nested_secret_keys_are_rejected_and_redacted, test_secret_in_sequence_of_mappings_is_rejected_and_redacted, test_redaction_preserves_tuple_containers; mutations M8, M8b and M8c caught."
+      },
+      {
+        "finding": "LINEAGE-01",
+        "severity": "MEDIUM",
+        "state": "CORRECTED",
+        "was": "evidence_graph_from_legacy_bundle() silently dropped unresolvable causal_refs, and the A2 test explicitly approved that lineage loss, converting missing causal evidence into a valid-looking graph.",
+        "now": "Fails closed with a ValueError naming the proof and the unresolved refs. A partially resolvable proof still fails, so one good ref cannot excuse a lost one. A bundle with no causal refs remains valid - absent lineage is not broken lineage.",
+        "evidence": "test_unresolvable_causal_refs_fail_closed, test_partially_unresolvable_causal_refs_fail_closed, test_no_causal_refs_is_valid; mutations M9 and M9b caught."
+      }
+    ],
+    "regressionsIntroduced": "none - the three previously green invariants that the review confirmed as valid (cycle detection, graph fingerprinting, carry-forward) remain covered and their mutants M1/M2/M2b/M3 still pass"
+  },
+  "decisions": [
+    "Retry classification is an explicit allow-list (TRANSIENT_FAILURE, PROVIDER_FAILURE, RESOURCE_EXHAUSTED) rather than a deny-list, so STALE_STATE fails closed and any ErrorKind member added later is non-retryable by default.",
+    "The secret-safe telemetry boundary is recursive over nested mappings and common sequences rather than rejecting nested structures outright, so telemetry can still carry structured non-secret payloads.",
+    "Unresolved legacy causal_refs fail closed with ValueError rather than being dropped, because a dropped ref converts missing causal evidence into a valid-looking graph.",
+    "The legacy evidence bridge is duck-typed by value so the kernel never imports product modules, preserving the dependency direction.",
+    "carry_forward() verifies the node's own subject fingerprint in addition to its dependency fingerprints. This is stricter than the literal S00 wording and deliberate: promoting a node whose own subject changed would assert a proof over changed content.",
+    "Duplicate ProofState definitions in media, audio_narrative and content_brand are NOT removed; the bridge adapts them by value and migration belongs to each module's own shard.",
+    "primitives.py and envelopes.py were not modified; the ErrorKind taxonomy was not reopened.",
+    "Envelope adapters (KERNEL-ENVELOPE-ADAPTERS) were deliberately left out of scope as they are not one of the six required S00 implementation items.",
+    "WO-S00 ran only in an isolated Python 3.14 venv outside the repository; system python 3.12 (which resolves ugas to UGAS V1) was not used for any command.",
+    "Evidence was published on the governed branch feat/wo-s00-kernel-sync; the canonical branch planning/m01-replan was not advanced by the executor.",
+    "Remaining CODEX-TASK markers were annotated with what is still open rather than deleted, so no PREPROGRAMMED surface reads as IMPLEMENTED."
+  ],
+  "tests": [
+    {
+      "id": "A0_KERNEL_SYNTAX",
+      "command": "<isolated-venv-3.14>/Scripts/python.exe -B .engineering/evidence/s00-kernel-sync/verify_kernel_sync.py",
+      "status": "PASS",
+      "exitCode": 0,
+      "result": "A0_KERNEL_SYNTAX 8/8 kernel files parse"
+    },
+    {
+      "id": "A1_KERNEL_READINESS",
+      "command": "<isolated-venv-3.14>/Scripts/python.exe -B -m pytest packages/py/ugas/kernel/tests/test_kernel_readiness.py -q -p no:cacheprovider",
+      "status": "PASS",
+      "exitCode": 0,
+      "result": "25 tests (3 pre-existing retained + 22 added)"
+    },
+    {
+      "id": "A2_LEGACY_BRIDGE",
+      "command": "<isolated-venv-3.14>/Scripts/python.exe -B -m pytest packages/py/ugas/kernel/tests/test_legacy_evidence_bridge.py -q -p no:cacheprovider",
+      "status": "PASS",
+      "exitCode": 0,
+      "result": "12 tests against the real media/audio_narrative/content_brand bundles"
+    },
+    {
+      "id": "A1_A2_COMBINED",
+      "command": "<isolated-venv-3.14>/Scripts/python.exe -B -m pytest packages/py/ugas/kernel/tests/ -q -p no:cacheprovider",
+      "status": "PASS",
+      "exitCode": 0,
+      "result": "37 passed"
+    },
+    {
+      "id": "TEST_STRENGTH",
+      "command": "<isolated-venv-3.14>/Scripts/python.exe -B .engineering/evidence/s00-kernel-sync/mutation_check.py",
+      "status": "PASS",
+      "exitCode": 0,
+      "result": "MUTATION_SCORE=14/14 - every deliberately broken invariant was caught, including all three CR-001 corrections"
+    },
+    {
+      "id": "PINNED_BASE_GUARD",
+      "command": "<isolated-venv-3.14>/Scripts/python.exe -B .engineering/evidence/s00-kernel-sync/verify_kernel_sync.py (in a shallow clone lacking the pinned base)",
+      "status": "PASS",
+      "exitCode": 2,
+      "result": "negative control: exits 2 with 'pinned base commit ... is unavailable' rather than deriving a baseline from a moving branch ref"
+    }
+  ],
+  "lint": {
+    "state": "NOT_REQUIRED",
+    "reason": "no lint configuration exists in the repository"
+  },
+  "typecheck": {
+    "state": "NOT_REQUIRED",
+    "reason": "no type-check configuration exists in the repository"
+  },
+  "build": {
+    "state": "NOT_REQUIRED",
+    "reason": "no packaging/build configuration exists"
+  },
+  "security": {
+    "state": "PROVEN",
+    "scope": "bounded claim: no secrets handled or exposed, no privileged or irreversible action, no unrelated paths touched",
+    "evidence": "implementationPathsOutsideKernel=0 (verified by git diff path scope over the kernel package); the only non-kernel paths in this PR are the 4 governed evidence files under .engineering/evidence/s00-kernel-sync/. The new secret boundary is itself a defensive control."
+  },
+  "integration": {
+    "state": "NOT_REQUIRED",
+    "reason": "no repository-wide suite authorized for S00; impact analysis shows zero in-repo importers of ugas.kernel outside its own tests, so there is no external regression surface"
+  },
+  "benchmarks": [],
+  "gates": [
+    {
+      "gate": "A0",
+      "state": "PASS",
+      "exitCode": 0,
+      "command": "<isolated-venv-3.14>/Scripts/python.exe -B .engineering/evidence/s00-kernel-sync/verify_kernel_sync.py",
+      "detail": "kernel syntax 8/8"
+    },
+    {
+      "gate": "A1",
+      "state": "PASS",
+      "exitCode": 0,
+      "command": "<isolated-venv-3.14>/Scripts/python.exe -B -m pytest packages/py/ugas/kernel/tests/test_kernel_readiness.py -q -p no:cacheprovider",
+      "detail": "kernel readiness suite green, 25 tests"
+    },
+    {
+      "gate": "A2",
+      "state": "PASS",
+      "exitCode": 0,
+      "command": "<isolated-venv-3.14>/Scripts/python.exe -B -m pytest packages/py/ugas/kernel/tests/test_legacy_evidence_bridge.py -q -p no:cacheprovider",
+      "detail": "focused bridge compatibility suite green against real module bundles, 12 tests"
+    },
+    {
+      "gate": "A3",
+      "state": "PENDING",
+      "exitCode": null,
+      "command": null,
+      "detail": "hosted CI on the PR; not executed at the time this bundle was generated, so no exit code is recorded"
+    },
+    {
+      "gate": "A4",
+      "state": "PENDING",
+      "exitCode": null,
+      "command": null,
+      "detail": "independent HEDS delta review of this exact head; not a command, no exit code applies"
+    }
+  ],
+  "resolvedFindings": [
+    "ENV-01 (MEDIUM, from Issue #53) is MITIGATED for this execution: WO-S00 ran in an isolated Python 3.14 venv containing no UGAS V1 editable .pth, and verify_kernel_sync.py refuses to produce evidence unless 'ugas' resolves inside this checkout. The underlying workstation condition is NOT globally fixed - running UGAS V2 with system python 3.12 still resolves to V1.",
+    "ENV-02 (LOW, from Issue #53) is RESOLVED for this execution: pytest 9.1.1 is installed in the isolated venv, so the kernel A1 gate ran as a real pytest run."
+  ],
+  "openFindings": [
+    {
+      "id": "KERNEL-ENVELOPE-ADAPTERS",
+      "severity": "LOW",
+      "title": "envelope adapters not implemented",
+      "detail": "envelopes.py still carries CODEX-TASK[KERNEL-ENVELOPE-ADAPTERS] (adapters from M01 graph events, M26 dashboard events, M27 agent actions, M32 world events, M40 job events). Deliberately out of scope: it is not one of the six required S00 implementation items.",
+      "impact": "No envelope adapter surface exists yet for later shards."
+    },
+    {
+      "id": "KERNEL-ADAPTER-REGISTRY",
+      "severity": "LOW",
+      "title": "unified adapter registry not implemented",
+      "detail": "requalify_on_version_change() now supplies the version-change semantics, but the single registry bridging M29/M30/M37/M39 is still open.",
+      "impact": "Version semantics are usable; the registry lookup is not."
+    },
+    {
+      "id": "KERNEL-OTEL-BRIDGE",
+      "severity": "LOW",
+      "title": "telemetry exporter adapter not implemented",
+      "detail": "validate_telemetry() and assert_secret_free() exist as the boundary; the OpenTelemetry exporter behind an adapter is still open.",
+      "impact": "Records can be validated; they cannot yet be exported."
+    },
+    {
+      "id": "KERNEL-EVIDENCE-DAG-REASONS",
+      "severity": "LOW",
+      "title": "reason-coded invalidation not implemented",
+      "detail": "invalidate() performs the causal closure without emitting reason codes for why each node was invalidated.",
+      "impact": "Invalidation is correct but not yet self-explaining."
+    },
+    {
+      "id": "KERNEL-PRIMITIVE-MIGRATION",
+      "severity": "LOW",
+      "title": "module-local primitive migration is incremental and unfinished",
+      "detail": "media, audio_narrative and content_brand still declare their own ProofState. The bridge adapts them by value; it does not remove the duplicates, per the explicit instruction not to perform a repo-wide blind rewrite.",
+      "impact": "Duplicate definitions persist until each module is migrated under its own shard."
+    },
+    {
+      "id": "ENV-01-RESIDUAL",
+      "severity": "MEDIUM",
+      "title": "workstation still shadows ugas for system python 3.12",
+      "detail": "The V1 editable install remains on the global 3.12 interpreter. Any future UGAS V2 command run with plain 'python' will silently execute V1.",
+      "impact": "Requires process discipline or a governance decision; not a repository defect."
+    }
+  ],
+  "risks": [
+    "carry_forward() checks a node's own subject fingerprint as well as its dependencies. This is stricter than the literal S00 wording ('dependency fingerprints') and is deliberate: promoting a node whose own subject changed would emit a proof claim for changed content, contradicting the canonical invariant that unchanged proofs carry forward by fingerprint.",
+    "The legacy bridge is duck-typed so the kernel does not import product modules; a change to the legacy attribute shape would only surface in the A2 suite.",
+    "Duplicate ProofState definitions remain in three modules until their own shards migrate them."
+  ],
+  "checkpointDelta": null,
+  "stopState": "COMPLETE_CANDIDATE",
+  "s01Started": false,
+  "stopConditionNote": "WO-S00 STOP CONDITION reached: kernel A1 green, changed bridge A2 green, contract fingerprint recorded, no blocker prevents S01. S01 was NOT started, as required.",
+  "worktreeAfter": "kernel changes committed on feat/wo-s00-kernel-sync; evidence added in a separate commit"
+}
