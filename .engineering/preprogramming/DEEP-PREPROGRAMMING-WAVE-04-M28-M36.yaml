@@ -1,0 +1,78 @@
+version: 1
+status: PREPROGRAMMING_SPEC_COMPLETE
+wave: 4
+modules: M28-M36
+modules:
+  M28:
+    package: m28_delivery
+    contracts: [DeliveryTarget, DeliveryProfile, ExportPlan, DeliveryPackage, DeliveryReceipt]
+    services: [DeliveryCompiler, ExportService, DeliveryValidationService]
+    ports: [Exporter, PlatformAdapter, ArtifactStore]
+    flow: [resolve_target, compile_profile, export, validate_package, attach_provenance, deliver_or_stage]
+    errors: [UnsupportedTarget, ExportFailure, DeliveryValidationFailure]
+    tests: [target_profile, provenance_attached, invalid_package_blocked]
+  M29:
+    package: m29_technology_foundry
+    contracts: [TechnologyCandidate, QualificationPlan, BenchmarkProtocol, BenchmarkEvidence, TechnologyDecision, AdapterRequirement]
+    services: [TechnologyRadar, QualificationService, BenchmarkService, PromotionService]
+    ports: [ResearchSourcePort, BenchmarkRunner, SecurityReviewPort, LicenseReviewPort]
+    flow: [discover, register_candidate, design_benchmark, run_bounded_evaluation, assess_license_security_hardware, promote_reject_or_hold]
+    errors: [InsufficientEvidence, LicenseRisk, SecurityRisk, HardwareIncompatible]
+    tests: [candidate_not_dependency_before_promotion, evidence_required, rollback_of_promoted_route]
+  M30:
+    package: m30_dcc_automation
+    contracts: [DccIR, DccOperation, SemanticSelector, DccTransaction, DccJob, DccResult, SceneFingerprint]
+    services: [DccCompiler, SceneTransactionEngine, BlenderWorkerService, DccQualityDossierService]
+    ports: [DccAdapter, BlenderHeadlessPort, RendererPort, ArtifactStore]
+    flow: [compile_dcc_ir, negotiate_capabilities, checkpoint_scene, execute_transaction, validate_result, commit_or_rollback, emit_dossier]
+    errors: [DccCapabilityMissing, SceneTransactionFailure, BlenderCrash, SceneValidationFailure]
+    tests: [transaction_rollback, semantic_selector_stability, headless_job_contract, scene_fingerprint]
+  M31:
+    package: m31_creative_director
+    contracts: [CreativeIntentKernel, CreativeConstraint, CreativeDecision, VisualEmotionMap, CreativeWorldModel, DirectionBrief]
+    services: [CreativeDirector, ConstraintLedgerService, DirectionCompiler, CreativeEvaluationService]
+    ports: [NarrativePort, QualityCourtPort, ProductionPort]
+    flow: [load_intent_and_canon, derive_direction, lock_invariants, issue_bounded_brief, evaluate_result, record_decision]
+    errors: [CreativeInvariantViolation, CanonConflict, DirectionAmbiguous]
+    tests: [locked_intent_preserved, decision_evidence, bounded_authority]
+  M32:
+    package: m32_world_simulation
+    contracts: [WorldState, WorldSnapshot, SpatialState, TemporalState, ActorState, CausalEvent, SimulationBranch]
+    services: [WorldStateKernel, SimulationService, CausalityService, SnapshotService]
+    ports: [PhysicsPort, EnvironmentPort, ActorSimulationPort, StateRepository]
+    flow: [load_snapshot, apply_actions, simulate_bounded_step, resolve_causality, validate_invariants, commit_new_snapshot]
+    errors: [InvalidWorldState, CausalityConflict, SimulationDivergence]
+    tests: [snapshot_determinism, branch_isolation, pixels_not_world_truth]
+  M33:
+    package: m33_virtual_production
+    contracts: [ProductionSessionIR, StageState, CameraPlan, LightingState, PerformanceIntent, Take, CoverageGraph, EditCandidate]
+    services: [StageManager, CinematographyDirector, LightingDirector, TakeFactory, ContinuitySupervisor, EditorialService, ReshootDirector]
+    ports: [WorldPort, DccPort, CastPort, AudioPostPort, QualityCourtPort]
+    flow: [resolve_world_snapshot, stage_readiness, compile_camera_light_performance, generate_bounded_coverage, supervise_continuity, select_edit, selective_reshoot, post_sync]
+    errors: [StageNotReady, ContinuityFailure, CoverageInsufficient, TakeRejected]
+    tests: [continuity_across_take, bounded_take_budget, selective_reshoot_window, world_snapshot_binding]
+  M34:
+    package: m34_global_optimization
+    contracts: [ProductionStateVector, ParetoPoint, CriticalPath, ProofState, ResourcePlan, OptimizationDecision]
+    services: [GlobalProductionOptimizer, ProofReuseOptimizer, HardwareResourceOrchestrator, FailureEconomicsService, ProductionDigitalTwin]
+    ports: [ExecutionGraphPort, HardwarePort, BenchmarkPort, EvidencePort]
+    flow: [observe_state, compute_critical_path, carry_forward_valid_proofs, simulate_routes, choose_pareto_action, execute_or_recommend, measure_outcome]
+    errors: [NoFeasibleOptimization, ProofStateUnknown, ResourcePlanConflict]
+    tests: [proof_reuse, hard_gate_preserved, vram_plan, recovery_without_full_restart]
+  M35:
+    package: m35_adaptive_experience
+    contracts: [ExperienceIR, AudienceContext, CreativeInvariantLock, AdaptiveVariant, ExperimentPlan, ExperienceEvaluation]
+    services: [AdaptiveCreativeCompiler, PersonalizationPolicyService, AccessibilityCompiler, ExperimentService, ExperienceOptimizer]
+    ports: [MasterProductionPort, ConsentPolicyPort, DeliveryMetricsPort]
+    flow: [load_master, resolve_allowed_context, lock_invariants, compile_derivative, validate_accessibility_policy, experiment_if_approved, learn_without_mutating_master]
+    errors: [PersonalizationPolicyViolation, CreativeInvariantViolation, ExperimentInvalid, PrivacyBoundaryViolation]
+    tests: [master_immutable, unauthorized_signal_rejected, accessibility_derivative, experiment_variable_isolated]
+  M36:
+    package: m36_neural_appearance
+    contracts: [AppearanceIR, MaterialObservation, NeuralMaterial, AnalyticMaterial, LightingEstimate, AppearanceDerivative, AppearanceEvaluation]
+    services: [MaterialDecompositionService, NeuralMaterialService, AnalyticDistillationService, LightingReconstructionService, RuntimeAppearanceCompiler]
+    ports: [MaterialInferencePort, RendererPort, DccPort, AppearanceEvaluator]
+    flow: [ingest_observations, decompose_appearance, infer_material, reconstruct_lighting, distill_if_useful, compile_runtime_derivative, round_trip_evaluate]
+    errors: [MaterialAmbiguity, LightingReconstructionFailure, DistillationLossExceeded, RuntimeAppearanceFailure]
+    tests: [appearance_round_trip, neural_to_analytic_loss_bound, relighting_consistency, runtime_budget]
+stop_condition: M28-M36 contracts are implementation-oriented and preserve module boundaries across delivery, R&D, DCC, creative direction, world simulation, virtual production, optimization, adaptation and neural appearance.
