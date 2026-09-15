@@ -1,0 +1,70 @@
+version: 1
+status: PREPROGRAMMING_CANON
+stack_adr: docs/adr/ADR-0010-IMPLEMENTATION-STACK-AND-MONOREPO.md
+root: packages/py/ugas/modules
+shared_file_contract:
+  domain.py: canonical entities/value objects/invariants only
+  contracts.py: typed commands/results/events and validation boundaries
+  ports.py: external capability protocols; no vendor SDK imports
+  service.py: application orchestration; CODEX-TASK slots only where executable logic remains
+  errors.py: typed domain/application failures and retryability metadata
+  __init__.py: public module API only
+  tests/test_contracts.py: focused contract/invariant tests
+  tests/test_service.py: focused orchestration tests with fake ports
+codex_comment_fields: [WHAT, INPUT, OUTPUT, INVARIANTS, ERRORS, TEST, DONE]
+modules:
+  M01: {slug: product_production_os, owns: [production_graph, state_machine, recipes, snapshots, invalidation, scheduling]}
+  M02: {slug: hardware_intelligence, owns: [hardware_profile, capability_probe, resource_budget, hardware_routing]}
+  M03: {slug: model_intelligence, owns: [model_profile, capability_registry, qualification, model_routing]}
+  M04: {slug: multimodal_ir, owns: [ir_document, modality_contracts, transformations, validation]}
+  M05: {slug: asset_dna, owns: [asset_identity, dna_versions, continuity_traits, lineage_keys]}
+  M06: {slug: digital_humans, owns: [human_identity, appearance, performance_identity, consent_bindings]}
+  M07: {slug: image_studio, owns: [image_jobs, conditioning, generation_routes, image_evidence]}
+  M08: {slug: video_studio, owns: [video_jobs, shot_state, temporal_generation, video_evidence]}
+  M09: {slug: animation_studio, owns: [motion_state, animation_jobs, retargeting, motion_validation]}
+  M10: {slug: spatial_3d, owns: [spatial_assets, master_derivatives, perceptual_lod, runtime_visual_signature]}
+  M11: {slug: voice_studio, owns: [voice_identity, speech_jobs, performance_voice, voice_evidence]}
+  M12: {slug: music_studio, owns: [music_intent, composition_jobs, stems, music_evidence]}
+  M13: {slug: sound_studio, owns: [sound_intent, sfx_foley_ambience, audio_scene, sound_evidence]}
+  M14: {slug: narrative_canon, owns: [canon, characters, worlds, beats, continuity_constraints]}
+  M15: {slug: faceless_content, owns: [channel_recipe, content_factory, packaging, episode_state]}
+  M16: {slug: ads_synthetic_ugc, owns: [campaign_creative, ad_variants, claim_constraints, ugc_recipes]}
+  M17: {slug: brand_ip, owns: [brand_system, identity_rules, ip_assets, brand_validation]}
+  M18: {slug: localization, owns: [locale_state, translation_adaptation, dubbing_subtitles, locale_quality]}
+  M19: {slug: quality_court, owns: [quality_dimensions, judges, aggregation, acceptance_decision]}
+  M20: {slug: repair_engine, owns: [defect_localization, repair_plan, selective_repair, revalidation]}
+  M21: {slug: render_cost, owns: [cost_model, render_plan, route_economics, failure_adjusted_cost]}
+  M22: {slug: memory_rag, owns: [memory_entry, retrieval, project_context, evidence_retrieval]}
+  M23: {slug: provenance_c2pa, owns: [provenance_record, rights_lineage, credentials, audit_chain]}
+  M24: {slug: security, owns: [policy_enforcement, secret_boundaries, threat_controls, security_evidence]}
+  M25: {slug: storage_cache, owns: [artifact_store, cache_keys, retention, locality]}
+  M26: {slug: dashboard_observability, owns: [telemetry_projection, dashboard_state, alerts, production_twin_views]}
+  M27: {slug: agent_runtime, owns: [agent_contract, bounded_tools, delegation, agent_execution]}
+  M28: {slug: delivery, owns: [delivery_master, exporters, platform_packages, delivery_validation]}
+  M29: {slug: technology_foundry, owns: [candidate_registry, golden_shards, benchmark, qualification_decision]}
+  M30: {slug: dcc_automation, owns: [dcc_ir, scene_transactions, blender_worker, procedural_compiler, runtime_export]}
+  M31: {slug: creative_director, owns: [creative_intent, creative_state, direction_tournament, cross_modal_coherence]}
+  M32: {slug: world_simulation, owns: [world_state, causal_graph, temporal_simulation, branches, synthetic_scenarios]}
+  M33: {slug: virtual_production, owns: [production_session, stage_management, cinematography, takes, continuity, editorial]}
+  M34: {slug: global_optimization, owns: [critical_path, pareto_routing, proof_reuse, resource_orchestration, optimization_twin]}
+  M35: {slug: adaptive_experience, owns: [experience_ir, adaptive_derivatives, accessibility, experiments, feedback]}
+  M36: {slug: neural_appearance, owns: [appearance_ir, inverse_rendering, neural_materials, relighting, material_distillation]}
+
+invariants:
+  - canonical intent is provider independent
+  - every mutation has lineage and evidence expectations
+  - hard quality security rights gates cannot be traded for speed
+  - unchanged proofs carry forward by fingerprint
+  - provider adapters are replaceable
+  - new technologies require M29 qualification
+  - no module may silently assume more hardware than M02 reports
+  - Codex may not redesign ownership during implementation
+
+codex_ready_definition:
+  - module tree materialized
+  - exact TODO contracts present
+  - dependency imports bounded
+  - focused tests present
+  - Context Pack names READ MODIFY CREATE DO_NOT_TOUCH
+  - Test Impact Graph present
+  - acceptance and evidence conditions explicit
