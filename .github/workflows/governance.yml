@@ -1,0 +1,84 @@
+name: Governance
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  governance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+
+      - name: Verify exact-head checkout
+        shell: bash
+        env:
+          EXPECTED_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          ACTUAL_SHA="$(git rev-parse HEAD)"
+          test "$ACTUAL_SHA" = "$EXPECTED_SHA"
+          echo "EXACT_HEAD_OK=$ACTUAL_SHA"
+
+      - name: Verify canonical source pack
+        shell: bash
+        run: |
+          set -euo pipefail
+          required=(
+            README.md
+            AGENTS.md
+            docs/checkpoint/CURRENT.md
+            docs/SOURCE-HIERARCHY.md
+            docs/PROJECT-OVERVIEW.md
+            docs/REQUIREMENTS.md
+            docs/SCOPE.md
+            docs/ARCHITECTURE.md
+            docs/SECURITY.md
+            docs/TEST-BENCHMARK-PLAN.md
+            docs/DEPLOYMENT.md
+            docs/BACKLOG.md
+            docs/DEFINITION-OF-DONE.md
+            docs/decisions/DECISIONS-LEDGER.md
+            docs/contracts/DATA-MODEL.md
+            docs/contracts/API-CONTRACTS.md
+            docs/contracts/INTEGRATION-CONTRACTS.md
+            docs/UI-UX.md
+            docs/MIGRATION-RECOVERY.md
+            docs/modules/INDEX.md
+            .engineering/gef/GEF-POLICY.md
+            .engineering/gef/GEF-EXECUTION-PROTOCOL.md
+            .engineering/gef/GEF-REVIEW-PROTOCOL.md
+            .engineering/gef/GEF-EVIDENCE-SPEC.md
+            .engineering/gef/GEF-PROJECT-PROFILE.json
+            .engineering/templates/WORK-ORDER-TEMPLATE.md
+            .engineering/templates/CONTEXT-LOCK-TEMPLATE.json
+            .engineering/templates/CORRECTION-DELTA-TEMPLATE.md
+            .engineering/templates/EVIDENCE-BUNDLE-TEMPLATE.json
+            .engineering/templates/HEDS-REVIEW-TEMPLATE.md
+          )
+          for f in "${required[@]}"; do test -s "$f" || { echo "missing/empty: $f"; exit 1; }; done
+
+      - name: Validate governance JSON contracts
+        run: |
+          python -m json.tool .engineering/gef/GEF-PROJECT-PROFILE.json >/dev/null
+          python -m json.tool .engineering/templates/CONTEXT-LOCK-TEMPLATE.json >/dev/null
+          python -m json.tool .engineering/templates/EVIDENCE-BUNDLE-TEMPLATE.json >/dev/null
+          for f in .engineering/context-locks/*.json; do python -m json.tool "$f" >/dev/null; done
+
+      - name: Verify UGAS canonical integrity invariants
+        shell: bash
+        run: |
+          set -euo pipefail
+          module_count="$(find docs/modules -maxdepth 1 -type f -regextype posix-extended -regex '.*/[0-9]{2}-.*\.md' | wc -l | tr -d ' ')"
+          index_count="$(grep -E '^\| M[0-9]{2} \|' docs/modules/INDEX.md | wc -l | tr -d ' ')"
+          test "$module_count" -eq "$index_count" || { echo "Module index/spec mismatch: index=$index_count specs=$module_count"; exit 1; }
+          test "$module_count" -ge 29 || { echo "Expected at least 29 module specs, got $module_count"; exit 1; }
+          grep -Fq "**Repository:** KayzenRoot/ugas-v2" docs/checkpoint/CURRENT.md
+          grep -q "ADR-0013" docs/decisions/DECISIONS-LEDGER.md
+          echo "UGAS V2 Governance: OK"

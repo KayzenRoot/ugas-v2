@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "1.0",
+  "workOrder": "UGASV2-WO-0001",
+  "repository": "KayzenRoot/ugas-v2",
+  "baseSha": "8a7807848f79cacbb8cf3d0df9c46c489a0cbfec",
+  "branch": "governance/UGASV2-WO-0001-gef-heds-bootstrap",
+  "taskClass": "T3",
+  "contextRadius": "C3",
+  "risk": "STANDARD",
+  "criticalSources": [
+    "docs/checkpoint/CURRENT.md",
+    "docs/SOURCE-HIERARCHY.md",
+    "docs/decisions/DECISIONS-LEDGER.md",
+    "docs/SCOPE.md",
+    "docs/DEFINITION-OF-DONE.md",
+    "docs/ARCHITECTURE.md",
+    "docs/REQUIREMENTS.md",
+    ".github/workflows/source-pack-integrity.yml"
+  ],
+  "acceptedDecisions": [
+    "canonical UGAS V2 source hierarchy remains authoritative",
+    "accepted ADRs are not overwritten by bootstrap",
+    "provider-independent core remains authoritative",
+    "hardware-agnostic adaptive compute remains authoritative",
+    "quality-before-acceptance remains authoritative",
+    "user-authorized operating-mode decision is HYBRID: Project Brain/GEF + Git governance + deterministic CLI/automation + Skills + selective MCP adapters, pending final HEDS promotion"
+  ],
+  "allowedPaths": [
+    ".engineering/**",
+    ".github/workflows/governance.yml",
+    "docs/planning/UGAS-V2-OPERATING-MODE-DECISION.md"
+  ],
+  "forbiddenPaths": [
+    "src/**",
+    "apps/**",
+    "docs/modules/**",
+    "docs/adr/**",
+    "docs/checkpoint/CURRENT.md",
+    "docs/decisions/DECISIONS-LEDGER.md"
+  ],
+  "correctionDelta": ".engineering/corrections/UGASV2-WO-0001-CR-001.md",
+  "status": "SOURCE_MATCH"
+}

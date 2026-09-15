@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "1.0",
+  "workOrder": "UGASV2-WO-XXXX",
+  "repository": "KayzenRoot/ugas-v2",
+  "baseSha": "<exact-base-sha>",
+  "branch": "<branch>",
+  "taskClass": "T0|T1|T2|T3",
+  "contextRadius": "C0|C1|C2|C3|C4",
+  "risk": "LOW|STANDARD|ELEVATED|HIGH_ASSURANCE",
+  "criticalSources": [],
+  "acceptedDecisions": [],
+  "allowedPaths": [],
+  "forbiddenPaths": [],
+  "status": "SOURCE_MATCH|SOURCE_CONFLICT"
+}
