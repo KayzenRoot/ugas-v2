@@ -1,0 +1,88 @@
+version: 1
+status: PREPROGRAMMING_SPEC_COMPLETE
+wave: 1
+modules: M01-M09
+purpose: >
+  Give Codex exact domain objects, ports, orchestration order, invariants, errors and focused proof targets.
+  Codex implements prepared contracts; it does not redesign them.
+global_rules:
+  - canonical intent is provider independent
+  - ids are immutable and versioned objects use fingerprints
+  - provider failures never mutate accepted canonical state
+  - every mutation emits lineage/evidence
+  - test only affected dependency cone
+  - adapters cannot weaken quality, rights, security or identity locks
+modules:
+  M01:
+    package: m01_product_production_os
+    contracts: [ProjectId, ProductionId, GraphNodeId, GraphEdge, NodeState, ProductionGraph, ExecutionPlan, ArtifactRef, AcceptanceDecision]
+    services: [ProductionGraphService, StateTransitionService, InvalidationService, ExecutionPlanningService]
+    ports: [MetadataRepository, EventBus, EvidenceSink, Clock]
+    flow: [validate_command, load_graph, enforce_state_transition, compute_dependency_delta, persist_transaction, emit_events, write_evidence]
+    errors: [InvalidTransition, DependencyCycle, StaleGraphVersion, InvariantViolation]
+    tests: [state_machine_contract, deterministic_invalidation, graph_cycle_rejection, accepted_artifact_lineage]
+  M02:
+    package: m02_hardware_intelligence
+    contracts: [HardwareProfile, GpuProfile, CpuProfile, MemoryProfile, ResourceEnvelope, CapabilityProbe, ResourceLease]
+    services: [HardwareProbeService, ResourceEnvelopeService, LeasePlanner]
+    ports: [SystemProbe, GpuTelemetry, ResourceLeaseStore]
+    flow: [probe, normalize, fingerprint, derive_envelope, publish_capabilities]
+    errors: [ProbeUnavailable, UnsupportedDevice, ResourcePressure, LeaseConflict]
+    tests: [stable_hardware_fingerprint, vram_budget_enforced, degraded_probe_is_explicit]
+  M03:
+    package: m03_model_intelligence
+    contracts: [ModelProfile, CapabilityVector, BenchmarkResult, RouteCandidate, RouteDecision, QualificationState]
+    services: [ModelRegistryService, CapabilityMatcher, RouteSelector, QualificationService]
+    ports: [ModelRegistry, BenchmarkStore, ProviderCapabilityProbe]
+    flow: [load_task_requirements, filter_qualified, score_capability_residual, apply_hardware_envelope, rank_routes, explain_decision]
+    errors: [NoQualifiedRoute, CapabilityMismatch, BenchmarkStale, ProviderUnavailable]
+    tests: [unqualified_model_rejected, deterministic_route_tiebreak, hardware_constraint_applied]
+  M04:
+    package: m04_multimodal_ir
+    contracts: [IRDocument, IRNode, IRReference, Modality, Constraint, IntentLock, IRVersion]
+    services: [IRCompiler, IRValidator, IRMigrationService]
+    ports: [IRRepository, SchemaRegistry]
+    flow: [parse_intent, normalize_modalities, bind_constraints, validate_references, fingerprint, persist]
+    errors: [InvalidIR, BrokenReference, UnsupportedIRVersion, LockedIntentMutation]
+    tests: [round_trip_ir, lock_preservation, deterministic_fingerprint]
+  M05:
+    package: m05_asset_dna
+    contracts: [AssetDNA, IdentityTrait, AppearanceTrait, StructuralTrait, VariationBoundary, DNAFingerprint]
+    services: [AssetDNAService, IdentityConsistencyService, VariationCompiler]
+    ports: [DNARepository, SimilarityEvaluator]
+    flow: [load_identity, apply_allowed_variation, enforce_locked_traits, fingerprint, emit_derivative_lineage]
+    errors: [IdentityDrift, ForbiddenVariation, MissingCanonicalDNA]
+    tests: [locked_trait_preserved, allowed_variation_changes_fingerprint, identity_drift_rejected]
+  M06:
+    package: m06_digital_humans
+    contracts: [HumanIdentity, FaceState, BodyState, WardrobeState, VoiceBinding, PerformanceState, ConsentBinding]
+    services: [DigitalHumanService, IdentityBindingService, PerformanceStateService]
+    ports: [HumanAssetStore, ConsentRegistry, FaceEvaluator, BodyEvaluator]
+    flow: [resolve_identity, verify_consent, bind_face_body_voice, apply_performance_state, validate_identity, persist_derivative]
+    errors: [ConsentMissing, IdentityMismatch, VoiceBindingViolation, HumanQualityFailure]
+    tests: [consent_required, identity_persists_across_take, unauthorized_voice_change_rejected]
+  M07:
+    package: m07_image
+    contracts: [ImageIntent, ImageGenerationPlan, ImageCandidate, ImageRegion, ImageEvaluation, ImageMaster]
+    services: [ImagePlanningService, ImageGenerationService, ImageSelectionService]
+    ports: [ImageProvider, ImageEvaluator, ArtifactStore]
+    flow: [compile_ir, choose_route, generate_bounded_candidates, evaluate, select_or_repair, commit_master]
+    errors: [GenerationFailure, CandidateExhausted, QualityRejected, ProviderContractViolation]
+    tests: [candidate_budget_enforced, provider_swap_preserves_intent, rejected_candidate_not_master]
+  M08:
+    package: m08_video
+    contracts: [VideoIntent, ShotPlan, TemporalConstraint, VideoCandidate, FrameWindow, VideoEvaluation, VideoMaster]
+    services: [VideoPlanningService, VideoGenerationService, TemporalConsistencyService]
+    ports: [VideoProvider, VideoEvaluator, FrameRepairPort]
+    flow: [compile_shots, bind_temporal_constraints, choose_route, generate_take, evaluate_temporal_quality, repair_window_or_accept]
+    errors: [TemporalDrift, ShotGenerationFailure, FrameWindowInvalid, VideoQualityRejected]
+    tests: [temporal_lock_preserved, selective_window_repair, full_regeneration_requires_reason]
+  M09:
+    package: m09_animation
+    contracts: [MotionIntent, SkeletonBinding, MotionClip, MotionConstraint, RetargetPlan, AnimationEvaluation]
+    services: [MotionPlanningService, RetargetService, AnimationValidationService]
+    ports: [MotionProvider, RigAdapter, AnimationEvaluator]
+    flow: [resolve_skeleton, compile_motion, generate_or_import_clip, retarget, validate_contacts_and_identity, commit_clip]
+    errors: [SkeletonMismatch, RetargetFailure, ContactViolation, MotionQualityRejected]
+    tests: [retarget_preserves_semantics, contact_constraint_enforced, invalid_skeleton_rejected]
+stop_condition: All M01-M09 entries have contracts, services, ports, ordered flow, typed errors and focused tests.
