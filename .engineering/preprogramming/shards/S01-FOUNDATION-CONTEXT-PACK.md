@@ -1,9 +1,13 @@
 # S01 Foundation Context Pack
 
-Status: CODEX PREPARED CANDIDATE
+Status: CODEX READY AFTER S00 PROVEN
+Authority: MODULE-MAP-FROZEN-v1 + frozen kernel
 
 ## Mission
 Implement only M01-M05 foundation contracts already prepared in the repository. Architecture discovery is out of scope.
+
+## Mandatory kernel boundary
+Consume canonical project/fingerprint, failure, Evidence Graph, Adapter Qualification and observability semantics from `packages/py/ugas/kernel/**`. Do not create competing proof states, retry taxonomies or adapter qualification models. Compatibility bridges may wrap legacy module types without broad rewrites.
 
 ## Mental model
 M04 owns canonical multimodal intent. M01 owns production lifecycle/graph/state/invalidation. M05 owns persistent asset identity and variation boundaries. M02 owns measured hardware/resource envelopes. M03 owns qualified model capability and route decisions. Provider implementations remain adapters.
@@ -11,32 +15,23 @@ M04 owns canonical multimodal intent. M01 owns production lifecycle/graph/state/
 ## Golden foundation path
 `IRDocument -> ProductionGraph -> AssetDNA -> ResourceEnvelope -> RouteDecision`
 
-The path must be deterministic for identical canonical inputs and registered capability state. Each transition must be explainable and evidence-addressable.
+Identical canonical inputs and registered capability state must produce deterministic decisions and evidence-addressable transitions.
 
-## Module implementation contracts
-### M04 first
-Implement validation, lock preservation, reference integrity, version/fingerprint semantics and migration boundary. Do not embed provider prompts as canonical intent.
+## Implementation order
+M04: validation, lock preservation, reference integrity, version/fingerprint semantics and migration boundary.
+M01: graph invariants, legal transitions, cycle rejection, deterministic invalidation and transaction-safe persistence boundary.
+M05: immutable identity, locked traits, allowed variation and derivative fingerprints.
+M02: normalized hardware profile, stable fingerprint, resource envelope and lease planning; unknown telemetry stays unknown.
+M03: qualified model registry, capability residual matching, hardware filtering, deterministic route ranking and explanation.
 
-### M01 second
-Implement graph node/edge invariants, legal state transitions, cycle rejection, deterministic invalidation and transaction-safe persistence boundary. Acceptance requires an AcceptanceDecision and artifact lineage.
+## Context budget
+READ: AGENTS.md, Codex policy, S00 evidence/fingerprint, S01 manifest, this pack, M01-M05 prepared targets and kernel contracts they directly use.
+MODIFY: M01-M05 target paths and narrow compatibility bridges proven necessary by focused tests.
+DO NOT TOUCH: M06+, provider SDKs, dashboard, CI/release, model downloads, GPU setup, unrelated tests.
+Repository-wide search is forbidden by default.
 
-### M05 third
-Implement immutable canonical identity, locked traits, explicit allowed variation and derivative fingerprints. A variation cannot silently rewrite canonical DNA.
+## Test/evidence law
+A0 syntax/import/static. A1 focused module contracts. A2 only Golden Foundation and compatibility bridges actually changed. Reuse S00 proof unless its fingerprint dependency changed. Record changed files, exact commands/results, carried/invalidated proofs, remaining CODEX-TASKs and exact HEAD.
 
-### M02 fourth
-Implement normalized hardware profile, stable fingerprint, resource envelope and lease planning. Missing telemetry must produce explicit degraded/unknown state, never invented capacity.
-
-### M03 fifth
-Implement qualified model registry, capability residual matching, hardware filtering, deterministic route ranking/tie-break and decision explanation. Unqualified candidates cannot become production routes.
-
-## Cross-module dependency rules
-M01 may reference M04 identifiers/contracts through a narrow shared boundary, not import provider details. M05 attaches identity references to production/artifact semantics without taking graph ownership. M03 consumes an M02 resource envelope and task/capability requirements, but M02 knows nothing about model vendors. No circular imports among M01-M05.
-
-## Failure semantics
-Validation/policy/invariant failures are non-retryable unless new input/state is supplied. Transient capability/probe/provider failures may be retryable. A retry must use an idempotency/correlation boundary and cannot duplicate a committed mutation.
-
-## Evidence
-For each completed module record touched files, focused commands, passing tests, carried-forward proofs, invalidated proofs, remaining CODEX-TASKs and any contract mismatch. Do not replace evidence with prose confidence.
-
-## STOP
-Stop after the Golden foundation path and focused tests pass. Do not continue into media modules.
+## STOP CONDITION
+Stop after Golden Foundation and focused evidence pass, or after documenting one concrete blocker. Do not continue into S02.
