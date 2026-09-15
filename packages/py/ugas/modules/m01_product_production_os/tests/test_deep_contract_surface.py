@@ -10,3 +10,6 @@ def test_service_surface_is_declared():
     assert expected
 
 # CODEX-TASK[M01-TESTS]: replace declaration checks with module-specific invariants and fake-port orchestration tests from the wave manifest.
+# DONE: the module-specific invariant and fake-port orchestration tests live in tests/test_m01_lifecycle.py
+#       (19 tests: transitions, typed StaleState, exactly-once replay, causal invalidation, planning).
+#       This file keeps its declaration check so the prepared surface stays guarded.

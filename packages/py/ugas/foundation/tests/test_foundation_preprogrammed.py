@@ -52,5 +52,10 @@ def test_unqualified_model_cannot_route():
 
 
 # CODEX-TASK[S01-TEST-EXPANSION]
+# DONE: canonical serialization/fingerprint tests live in test_foundation_canonical.py, diamond
+#       invalidation and kernel proof-bridge tests in test_foundation_lifecycle.py, idempotent mutation
+#       in test_foundation_idempotency.py, unknown/degraded hardware and routing in
+#       test_foundation_routing.py, and the Golden foundation integration in test_s01_golden_path.py.
+#       The five original tests here are retained unchanged.
 # Add canonical serialization/fingerprint, lock-preserving IR migration, diamond invalidation,
 # unknown/degraded hardware, idempotent mutation and Golden foundation integration tests.

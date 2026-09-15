@@ -77,10 +77,9 @@ def model_fits_hardware(model: ModelProfile, hardware: ResourceEnvelope) -> bool
 
 
 # CODEX-TASK[S01-INVALIDATION]
-# WHAT: add deterministic downstream invalidation traversal from changed graph nodes.
-# INPUT: validated ProductionGraph + changed node ids.
-# OUTPUT: stable tuple of affected node ids excluding unaffected ancestors/siblings.
-# INVARIANTS: deterministic order; accepted proof invalidated only when dependency cone intersects change.
-# ERRORS: unknown changed node fails explicitly.
-# TEST: diamond graph, sibling isolation, repeated call determinism.
-# DONE: traversal tests pass and no persistence/provider dependency is introduced.
+# DONE: the deterministic downstream traversal lives in the sibling module invalidation.py as
+#       downstream_invalidation/unaffected_node_ids, which already implements exactly this contract
+#       (ascending-order traversal, unknown changed node raises, no persistence or provider dependency).
+#       Deliberately not duplicated here: invariants.py is imported BY invalidation.py, so re-implementing the
+#       traversal in this module would either duplicate the logic or introduce an import cycle.
+#       Tests: test_foundation_lifecycle.py covers the diamond graph, sibling isolation and repeat determinism.

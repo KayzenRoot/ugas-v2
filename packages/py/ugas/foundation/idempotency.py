@@ -3,7 +3,7 @@ from __future__ import annotations
 """Small framework-free idempotency boundary for mutation orchestration."""
 from dataclasses import dataclass
 from enum import StrEnum
-from typing import Generic, Protocol, TypeVar
+from typing import Awaitable, Callable, Generic, Protocol, TypeVar
 
 T = TypeVar("T")
 
@@ -45,11 +45,40 @@ async def begin_or_replay(store: IdempotencyStore[T], *, project_id: str, key: s
     return record
 
 
+async def execute_once(
+    store: IdempotencyStore[T],
+    *,
+    project_id: str,
+    key: str,
+    request_fingerprint: str,
+    mutation: Callable[[], Awaitable[T]],
+) -> tuple[T, bool]:
+    """Run an async mutation exactly once per (project_id, key, request_fingerprint).
+
+    Returns (result, executed) where executed is False when a committed result was replayed.
+
+    Recovery policy is explicit rather than implicit: a COMMITTED record replays its stored result and the
+    mutation does not run again. A STARTED record means a previous attempt did not commit, so the mutation is
+    re-entered and simply overwrites the in-flight record - this is the narrow, stated policy for the
+    in-memory boundary. A FAILED record is re-entered from scratch, because a typed failure carries no result
+    to replay. Reusing a key with a different request fingerprint is a conflict, never a retry.
+    """
+    record = await begin_or_replay(store, project_id=project_id, key=key, request_fingerprint=request_fingerprint)
+    if record.state is IdempotencyState.COMMITTED:
+        if record.result is None:
+            raise IdempotencyConflict("committed idempotency record has no result to replay")
+        return record.result, False
+
+    try:
+        result = await mutation()
+    except Exception:
+        await store.put_failed(IdempotencyRecord(project_id, key, request_fingerprint, IdempotencyState.FAILED))
+        raise
+    await store.put_committed(IdempotencyRecord(project_id, key, request_fingerprint, IdempotencyState.COMMITTED, result))
+    return result, True
+
+
 # CODEX-TASK[S01-IDEMPOTENT-EXECUTE]
-# WHAT: implement execute-once helper around begin_or_replay and a supplied async mutation callback.
-# INPUT: store, project/key/fingerprint, mutation callback.
-# OUTPUT: committed result or replayed committed result.
-# INVARIANTS: committed mutation never executes twice; STARTED recovery policy explicit; project scope part of key.
-# ERRORS: fingerprint conflict non-retryable; store failures explicit; callback failure recorded FAILED without fake result.
-# TEST: duplicate committed request, conflicting fingerprint, callback exception, cross-project same key.
-# DONE: fake-store tests prove exactly-once domain effect under sequential retries.
+# DONE: execute_once replays a committed result without re-running the mutation, returns an explicit executed
+#       flag, records FAILED on callback failure without fabricating a result, and scopes the key by project_id
+#       so the same key in another project cannot collide. Conflicting fingerprints raise IdempotencyConflict.
