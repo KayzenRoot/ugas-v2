@@ -4,6 +4,16 @@
   "repository": "KayzenRoot/ugas-v2",
   "promptMode": "GEF_V1",
   "reviewMode": "HEDS_DELTA",
+  "operatingMode": "HYBRID",
+  "operatingModeDecision": "docs/planning/UGAS-V2-OPERATING-MODE-DECISION.md",
+  "controlPlane": {
+    "brain": "PROJECT_BRAIN_GEF",
+    "executor": "CODEX_BOUNDED_EXECUTOR",
+    "canonicalTruth": "GIT_REPOSITORY",
+    "proceduralLayer": "SKILLS",
+    "toolIntegrationLayer": "SELECTIVE_MCP_ADAPTERS",
+    "deterministicPrimitiveLayer": "CLI_AUTOMATION"
+  },
   "sourcePackRoot": "docs",
   "checkpoint": "docs/checkpoint/CURRENT.md",
   "decisionsLedger": "docs/decisions/DECISIONS-LEDGER.md",
@@ -17,5 +27,8 @@
   "failClosedUnknown": true,
   "sameWorkOrderCorrections": true,
   "noAdvanceBeforeApproval": true,
-  "qualityEvidenceRequiredForProductionAssets": true
+  "qualityEvidenceRequiredForProductionAssets": true,
+  "codexMinimumEffort": true,
+  "monolithicMcpGovernanceForbidden": true,
+  "v1ReuseRequiresQualification": true
 }
