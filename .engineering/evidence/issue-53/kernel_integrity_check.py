@@ -31,10 +31,13 @@ ok = True
 
 import ugas  # noqa: E402
 
-resolved = list(getattr(ugas, "__path__", []) or [])
-print(f"UGAS_RESOLVED_TO={resolved}")
-if not any("ugas-v2" in p for p in resolved):
-    print("FATAL: 'ugas' does not resolve to the UGAS V2 checkout; see ENV-01 in the evidence bundle.")
+resolved = [pathlib.Path(p).resolve() for p in (getattr(ugas, "__path__", []) or [])]
+print(f"UGAS_RESOLVED_TO={[str(p) for p in resolved]}")
+print(f"REPO_ROOT={REPO}")
+# The invariant is that 'ugas' resolves INSIDE this checkout, whatever the clone directory is named.
+# A shadowing UGAS V1 editable install resolves to a path outside REPO and is caught here.
+if not resolved or not all(REPO in p.parents or p == REPO for p in resolved):
+    print("FATAL: 'ugas' does not resolve inside this checkout; see ENV-01 in the evidence bundle.")
     sys.exit(2)
 
 for name in KERNEL_MODULES:

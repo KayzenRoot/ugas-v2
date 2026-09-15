@@ -596,8 +596,19 @@
       "detail": "independent HEDS delta review of this exact head"
     }
   ],
+  "reproduction": {
+    "method": "fresh clone of the pushed publication branch into an unrelated directory, then run both shipped scripts",
+    "verifiedHead": "a6c58b361c202400dc79337a8efad6a2138dab11",
+    "cloneCommand": "git clone --branch chore/issue-53-first-codex-sync-materialize https://github.com/KayzenRoot/ugas-v2.git <fresh-dir>",
+    "result": "PASS",
+    "fingerprintsMatchedRecordedValues": true,
+    "observed": "A0 468/468, A1 kernel 5/5, A1 surfaces 324/324, smoke PASS, both fingerprints byte-identical to this bundle, KERNEL_INTEGRITY=PASS, clone worktree stayed clean",
+    "note": "this attestation binds to verifiedHead; any later commit on the branch invalidates it and must be re-verified"
+  },
   "resolvedFindings": [
-    "REVIEW-53-01 no executor evidence published -> resolved by this bundle plus the PR and Issue #53 comment carrying REMOTE_HEAD/LOCAL_HEAD/branch/worktree/generator results/paths/collisions/Python version/preflight/untouched confirmation/S00_READINESS."
+    "REVIEW-53-01 no executor evidence published -> resolved by this bundle plus the PR and Issue #53 comment carrying REMOTE_HEAD/LOCAL_HEAD/branch/worktree/generator results/paths/collisions/Python version/preflight/untouched confirmation/S00_READINESS.",
+    "DEFECT-01 kernel_integrity_check.py asserted the checkout directory was literally named 'ugas-v2', so it reported FATAL in any clone under a different name. Found by the fresh-clone reproduction test, corrected to assert that 'ugas' resolves inside the repository root derived from __file__. Negative control retained: under python 3.12 the corrected check still detects the UGAS V1 shadowing and exits 2.",
+    "DEFECT-02 fingerprints were initially computed over working-tree bytes, which are CRLF on Windows under core.autocrlf=true while the committed blobs are LF, so the values would not reproduce on Linux. Found by a replica check, corrected to hash committed blob content."
   ],
   "openFindings": [
     {

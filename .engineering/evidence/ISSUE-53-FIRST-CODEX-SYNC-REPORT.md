@@ -103,6 +103,26 @@ The kernel A1 test was intentionally **not** executed as a pytest run: the autho
 syntax and import only, and WO-S00 owns that gate. `test_kernel_readiness.py` was verified to import and
 expose its three test functions on the correct interpreter.
 
+## Independent reproduction
+
+Both scripts above were re-run from a **fresh clone of the pushed branch into an unrelated directory**
+(`git clone --branch chore/issue-53-first-codex-sync-materialize ... <fresh-dir>`), verifying the
+evidence does not depend on this workstation's checkout path or local state:
+
+- clone head: `a6c58b361c202400dc79337a8efad6a2138dab11`
+- `A0 468/468`, `A1 kernel 5/5`, `A1 surfaces 324/324`, `M01_FAKE_PORT_SMOKE=PASS`
+- both fingerprints byte-identical to the values recorded in this bundle
+- `KERNEL_INTEGRITY=PASS`; the clone's worktree stayed clean after the runs
+
+The reproduction test caught two defects in the evidence tooling itself, both corrected before this
+publication and recorded as `DEFECT-01`/`DEFECT-02` in the machine bundle: a hardcoded checkout-directory
+assertion, and working-tree-based fingerprints that would not reproduce on Linux.
+
+## Lines of evidence that must be re-verified if the head moves
+
+The reproduction attestation binds to the head that was cloned. Any commit added to this branch
+invalidates it and requires a re-run.
+
 ## Untouched-canonical proof
 
 1. `git status --porcelain -uall | grep -v '^??'` → 0 tracked modifications, deletions or renames.
