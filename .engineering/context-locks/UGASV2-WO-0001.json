@@ -22,11 +22,13 @@
     "accepted ADRs are not overwritten by bootstrap",
     "provider-independent core remains authoritative",
     "hardware-agnostic adaptive compute remains authoritative",
-    "quality-before-acceptance remains authoritative"
+    "quality-before-acceptance remains authoritative",
+    "user-authorized operating-mode decision is HYBRID: Project Brain/GEF + Git governance + deterministic CLI/automation + Skills + selective MCP adapters, pending final HEDS promotion"
   ],
   "allowedPaths": [
     ".engineering/**",
-    ".github/workflows/governance.yml"
+    ".github/workflows/governance.yml",
+    "docs/planning/UGAS-V2-OPERATING-MODE-DECISION.md"
   ],
   "forbiddenPaths": [
     "src/**",
@@ -36,5 +38,6 @@
     "docs/checkpoint/CURRENT.md",
     "docs/decisions/DECISIONS-LEDGER.md"
   ],
+  "correctionDelta": ".engineering/corrections/UGASV2-WO-0001-CR-001.md",
   "status": "SOURCE_MATCH"
 }
