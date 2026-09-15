@@ -1,0 +1,45 @@
+version: 1
+status: CODEX_PREPARED_CANDIDATE
+policy: execute one shard at a time; architecture is pre-decided; expand context only on evidenced contract mismatch.
+shards:
+  S06_PLATFORM_TRUST:
+    modules: [M22,M23,M24,M25]
+    dependency_read: [M01,M04,M05]
+    implementation_order: [M24,M25,M23,M22]
+    golden_path: AuthorizedRequest -> ArtifactFingerprint -> ProvenanceRecord -> ScopedMemoryEntry -> ContextPack
+    invariants: [least_privilege, secrets_by_reference_only, content_addressed_artifacts, complete_lineage, project_memory_isolation]
+    tests: [authorization_audit, secret_boundary, cache_integrity, rights_block_promotion, project_scope_retrieval]
+    forbidden: [secret_in_domain_payload, cross_project_memory_leak, unresolved_rights_promotion, cache_as_source_of_truth]
+  S07_CONTROL_AGENTS_DELIVERY:
+    modules: [M26,M27,M28]
+    dependency_read: [M01,M23,M24]
+    implementation_order: [M26,M27,M28]
+    golden_path: RealtimeEvent -> DashboardProjection -> governed ControlCommand/AgentTask -> DeliveryPackage -> DeliveryReceipt
+    invariants: [dashboard_reflects_canonical_state, agent_tools_minimal, agent_loop_budgeted, delivery_has_provenance, controls_authorized]
+    tests: [realtime_projection, command_authorization, minimal_tool_grant, loop_budget, delivery_validation]
+    forbidden: [agent_self_grant, unaudited_control, delivery_without_lineage]
+  S08_RD_DCC:
+    modules: [M29,M30]
+    dependency_read: [M02,M03,M19,M23]
+    implementation_order: [M29,M30]
+    golden_path: TechnologyCandidate -> QualificationDecision -> AdapterRequirement -> DccIR -> DccTransaction -> DccResult -> QualityDossier
+    invariants: [new_technology_candidate_until_qualified, license_security_hardware_evidence_required, dcc_transaction_checkpointed, rollback_on_failure, provider_specifics_behind_adapter]
+    tests: [unqualified_candidate_not_dependency, benchmark_evidence_required, semantic_selector, transaction_rollback, headless_contract]
+    forbidden: [technology_by_hype, GUI_manual_dependency, silent_scene_mutation]
+  S09_CREATIVE_WORLD_STUDIO:
+    modules: [M31,M32,M33]
+    dependency_read: [M14,M19,M30]
+    implementation_order: [M31,M32,M33]
+    golden_path: CreativeIntentKernel -> DirectionBrief -> WorldSnapshot -> ProductionSessionIR -> StageState -> bounded Takes -> EditCandidate
+    invariants: [creative_locks_hard, pixels_not_world_truth, world_snapshots_versioned, production_bound_to_snapshot, bounded_take_budget, selective_reshoot]
+    tests: [creative_authority_boundary, snapshot_branch_isolation, world_causality, take_continuity, selective_reshoot]
+    forbidden: [silent_canon_rewrite, pixels_as_canonical_world_state, unlimited_take_generation]
+  S10_OPTIMIZATION_EXPERIENCE_APPEARANCE:
+    modules: [M34,M35,M36]
+    dependency_read: [M19,M21,M23,M29]
+    implementation_order: [M34,M36,M35]
+    golden_path: ProductionStateVector -> OptimizationDecision -> AppearanceDerivative -> accepted Master -> AdaptiveVariant -> ExperimentEvidence
+    invariants: [optimize_time_to_accepted_artifact, hard_gates_constraints, master_immutable_under_personalization, privacy_boundary, neural_material_distillation_loss_bounded, proof_reuse]
+    tests: [pareto_hard_gate, proof_reuse, appearance_round_trip, runtime_material_budget, unauthorized_signal_rejected, isolated_experiment_variable]
+    forbidden: [engagement_over_rights, personalization_mutates_master, neural_material_promoted_without_qualification, full_regeneration_without_causal_reason]
+execution_rule: each shard gets its own bounded future Work Order and evidence bundle; this pack completes M22-M36 planning for Codex assembly.
