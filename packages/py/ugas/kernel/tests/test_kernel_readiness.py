@@ -1,7 +1,7 @@
 from ugas.kernel.adapter_qualification import AdapterQualification,AdapterState,assert_usable
 from ugas.kernel.evidence_graph import EvidenceGraph,EvidenceNode,ProofState,invalidate,validate_graph
 from ugas.kernel.observability import FailureRecord,validate_failure
-from ugas.kernel.envelopes import FailureKind
+from ugas.kernel.primitives import ErrorKind
 
 def test_evidence_invalidation_is_causal_not_global():
     g=EvidenceGraph("p",(
@@ -19,7 +19,7 @@ def test_adapter_requires_qualification_and_evidence():
     else: raise AssertionError("candidate adapter must fail closed")
 
 def test_policy_rejection_cannot_be_retryable():
-    r=FailureRecord("f","p","trace","op",FailureKind.POLICY_REJECTION,True,"rights_denied","evidence")
+    r=FailureRecord("f","p","trace","op",ErrorKind.POLICY_REJECTION,True,"rights_denied","evidence")
     try: validate_failure(r)
     except ValueError as exc: assert "non-retryable" in str(exc)
     else: raise AssertionError("must fail")
