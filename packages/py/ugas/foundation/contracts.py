@@ -7,7 +7,10 @@ but must not redesign ownership or replace these with provider-specific objects.
 """
 from dataclasses import dataclass, field
 from enum import StrEnum
+import json
 from typing import Any, Mapping
+
+from .fingerprinting import FINGERPRINT_FIELD, content_fingerprint, content_payload
 
 
 class NodeState(StrEnum):
@@ -134,11 +137,44 @@ class RouteDecision(Fingerprinted):
     requirements_fingerprint: str
 
 
+def canonical_dict(contract: Any) -> Any:
+    """Stable JSON-compatible representation of a foundation contract.
+
+    Enum values are normalized through canonical_value, mapping keys are sorted and sequences keep their
+    declared order, so mapping key order cannot affect the result. Unsupported and non-finite values raise
+    CanonicalizationError instead of producing a partially serialized object.
+    """
+    return content_payload(contract)
+
+
+def canonical_json(contract: Any) -> str:
+    """Canonical JSON text for a contract, excluding declared fingerprint fields."""
+    return json.dumps(canonical_dict(contract), ensure_ascii=False, sort_keys=True, separators=(",", ":"), allow_nan=False)
+
+
+def content_fingerprint_of(contract: Any) -> str:
+    """Fingerprint a contract should declare for its current semantic content."""
+    return content_fingerprint(contract)
+
+
+def fingerprint_matches(contract: Any) -> bool:
+    """True when the contract's declared fingerprint matches its semantic content."""
+    return getattr(contract, FINGERPRINT_FIELD, None) == content_fingerprint_of(contract)
+
+
+def assert_fingerprint(contract: Any) -> None:
+    """Reject a contract whose declared fingerprint does not match its content.
+
+    A stale declared fingerprint is a correctness defect, not a formatting detail: every downstream cache,
+    proof carry-forward and invalidation decision keys off it.
+    """
+    declared = getattr(contract, FINGERPRINT_FIELD, None)
+    actual = content_fingerprint_of(contract)
+    if declared != actual:
+        raise ValueError(f"declared fingerprint does not match content: declared={declared!r} actual={actual!r}")
+
+
 # CODEX-TASK[S01-CONTRACT-SERIALIZATION]
-# WHAT: add deterministic canonical serialization helpers used by fingerprinting.
-# INPUT: only immutable foundation dataclasses above.
-# OUTPUT: stable JSON-compatible representation with enum values normalized.
-# INVARIANTS: mapping key order cannot affect fingerprint; no provider objects; no secrets.
-# ERRORS: unsupported values fail explicitly.
-# TEST: same semantic object => same canonical bytes/fingerprint.
-# DONE: serialization/fingerprint tests pass without external dependencies.
+# DONE: canonical_dict/canonical_json delegate to the shared canonicalizer so enum normalization, key sorting
+#       and unsupported-value rejection live in exactly one place; assert_fingerprint ties a contract's
+#       declared fingerprint to its semantic content.
