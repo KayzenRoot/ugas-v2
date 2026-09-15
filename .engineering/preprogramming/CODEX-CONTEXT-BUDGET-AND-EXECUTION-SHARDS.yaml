@@ -1,0 +1,55 @@
+version: 1
+status: ACTIVE
+objective: minimize Codex context, search and rerun waste while preserving engineering evidence.
+default_context_budget:
+  mandatory_reads:
+    - AGENTS.md
+    - .engineering/gef/CODEX-PREPROGRAMMED-IMPLEMENTATION-POLICY.md
+    - current Work Order
+    - current Context Pack
+    - target module contracts_deep.py
+    - target module ports_deep.py
+    - target module services_deep.py
+    - target module errors_deep.py
+    - target module focused tests
+  optional_reads: only files named by dependency cone or after a documented contract mismatch
+  repository_wide_search: forbidden_by_default
+execution_shards:
+  S00_SYNC:
+    purpose: sync repository and materialize preprogrammed tree only
+    modules: []
+  S01_FOUNDATION:
+    modules: [M01,M02,M03,M04,M05]
+    reason: production graph, hardware, model routing, IR and identity primitives
+  S02_CORE_MEDIA:
+    modules: [M06,M07,M08,M09,M10]
+    reason: humans, image, video, animation and spatial assets
+  S03_AUDIO_NARRATIVE:
+    modules: [M11,M12,M13,M14]
+  S04_CONTENT_BRAND:
+    modules: [M15,M16,M17,M18]
+  S05_QUALITY_REPAIR:
+    modules: [M19,M20,M21]
+  S06_PLATFORM_TRUST:
+    modules: [M22,M23,M24,M25]
+  S07_CONTROL_AGENTS_DELIVERY:
+    modules: [M26,M27,M28]
+  S08_RD_DCC:
+    modules: [M29,M30]
+  S09_CREATIVE_WORLD_STUDIO:
+    modules: [M31,M32,M33]
+  S10_OPTIMIZATION_EXPERIENCE_APPEARANCE:
+    modules: [M34,M35,M36]
+per_task_rules:
+  max_primary_modules: 2
+  max_dependency_modules_read_by_default: 3
+  test_order: [A0_static_schema, A1_focused_unit_contract, A2_impacted_integration, A3_promotion_only]
+  retry_rule: smallest_failed_scope_first
+  full_suite: only deliberate promotion checkpoint or broad dependency change
+  evidence: record commands, affected files, proof reuse, invalidated proofs, unresolved blockers
+codex_stop_conditions:
+  - requested bounded implementation complete
+  - focused tests pass or blocker is evidenced
+  - no unauthorized architecture changes
+  - no unresolved CODEX-TASK inside requested scope unless explicitly reported
+  - Evidence Bundle written
