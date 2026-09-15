@@ -20,6 +20,12 @@ import sys
 REPO = pathlib.Path(__file__).resolve().parents[3]
 KERNEL = REPO / "packages" / "py" / "ugas" / "kernel"
 
+# Immutable historical baseline for WO-S00. Pinned deliberately: deriving this from a branch ref such as
+# origin/planning/m01-replan would let the "before" fingerprint drift whenever the canonical branch advances,
+# which would silently invalidate every historical before/after comparison recorded in the evidence bundle.
+PINNED_BASE_SHA = "f0d3eadbd822b4a59966a38a4f2df3ad92c3d3d1"
+EXPECTED_BEFORE_FINGERPRINT = "99899c814e933c3cc29343fda5dc54ef3c06efa9ed05083b3c506a2b7a07c4a9"
+
 failures: list[str] = []
 
 
@@ -96,13 +102,23 @@ def kernel_paths(rev: str | None) -> list[str]:
 
 
 current = kernel_paths(None)
-print(f"KERNEL_FINGERPRINT_AFTER={fingerprint(current)}  (files={len(current)})")
-base_rev = subprocess.run(
-    ["git", "rev-parse", "origin/planning/m01-replan"], cwd=REPO, capture_output=True, text=True
-).stdout.strip()
-base_paths = kernel_paths(base_rev)
-print(f"KERNEL_FINGERPRINT_BEFORE={fingerprint(base_paths, rev=base_rev)}  (files={len(base_paths)})")
-print(f"KERNEL_FINGERPRINT_BASE_REV={base_rev}")
+after = fingerprint(current)
+print(f"KERNEL_FINGERPRINT_AFTER={after}  (files={len(current)})")
+
+# Historical baseline comes from the pinned SHA only. Fail loudly if that object is not present locally,
+# rather than silently substituting a branch ref or skipping the comparison.
+probe = subprocess.run(["git", "cat-file", "-e", f"{PINNED_BASE_SHA}^{{commit}}"], cwd=REPO, capture_output=True)
+if probe.returncode != 0:
+    print(f"FATAL: pinned base commit {PINNED_BASE_SHA} is unavailable in this repository.")
+    print("       Fetch it explicitly, or restore the pinned object, before trusting any historical comparison.")
+    sys.exit(2)
+print(f"PINNED_BASE_SHA={PINNED_BASE_SHA}")
+base_paths = kernel_paths(PINNED_BASE_SHA)
+before = fingerprint(base_paths, rev=PINNED_BASE_SHA)
+print(f"KERNEL_FINGERPRINT_BEFORE={before}  (files={len(base_paths)})")
+gate("PINNED_BASE_RESOLVES", True, f"{PINNED_BASE_SHA} is a commit in this repository")
+gate("BEFORE_FINGERPRINT_MATCHES_PINNED", before == EXPECTED_BEFORE_FINGERPRINT,
+     f"expected {EXPECTED_BEFORE_FINGERPRINT}")
 
 # ---- verdict -------------------------------------------------------------
 if failures:

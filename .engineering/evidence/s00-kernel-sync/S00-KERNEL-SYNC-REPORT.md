@@ -10,17 +10,56 @@ Execution date: 2026-09-15
 - Head SHA (correction commit under attestation): `453de252177dddf33b5d03e69c100c118ebc3c3b`
 - Superseded reviewed head: `b4a8e629a7e7677e2c5d94ab65517e74fe693936` (HEDS verdict: CORRECTION REQUIRED)
 - Branch: `feat/wo-s00-kernel-sync` (PR #55)
-- Files changed vs base: 6 under `packages/py/ugas/kernel/`; correction delta revised 4 of them
+- Implementation scope: 6 paths under `packages/py/ugas/kernel/` (4 modified, 2 added); 0 implementation paths outside the kernel package
+- Total PR scope: 10 paths — the 6 implementation/test paths plus 4 governed evidence paths under `.engineering/evidence/s00-kernel-sync/`
 - Tests: A0 + A1 + A2 green; mutation 14/14; A3 hosted CI and A4 HEDS review pending
 - Lint / type / build: NOT_REQUIRED — no lint, type-check or packaging configuration exists
 - Integration / E2E: NOT_REQUIRED — zero in-repo importers of `ugas.kernel` outside its own tests
-- Security: bounded claim proven — no secrets handled, no privileged or irreversible action, writes confined to `packages/py/ugas/kernel/`
+- Security: bounded claim proven — no secrets handled or exposed, no privileged or irreversible action, no unrelated paths touched (implementation paths outside the kernel package: 0). The PR does additionally carry 4 governed evidence files under `.engineering/evidence/s00-kernel-sync/`.
 - Benchmarks: none — no GPU, model, provider or hardware activation
 - Proposed Checkpoint Delta: none — an executor does not propose checkpoint advancement
 - Executor self-review: only the correction scope changed; `primitives.py` and `envelopes.py` untouched; S01 not started
 - Independent audit verdict: PENDING
 
-## S00-CR-001 correction delta
+## S00-CR-002 correction delta (evidence integrity only)
+
+The HEDS review of `31ed2044` returned CORRECTION REQUIRED for four evidence-integrity findings. **No kernel
+behaviour changed** — the delta is confined to `.engineering/evidence/s00-kernel-sync/**`, and the retry
+allow-list, recursive secret boundary and fail-closed lineage behaviour specifically were not reopened.
+
+### EVID-SCHEMA-01 — GEF evidence-spec compliance
+
+The bundle was missing two fields required by `.engineering/gef/GEF-EVIDENCE-SPEC.md`: `projectFingerprint` and
+`decisions`. Both are now present, and `projectFingerprint` uses the same recipe and directory set as the
+Issue #53 bundle so the gates are comparable. Every executed test and gate entry now carries an explicit
+`command`, `status` and `exitCode`. The two gates that were not executed (A3 hosted CI, A4 HEDS review) carry
+`exitCode: null` with the reason recorded rather than a fabricated code. `NOT_REQUIRED` sections stay explicit
+(`lint`, `typecheck`, `build`, `integration`).
+
+### EVID-SCOPE-02 — false scope statement
+
+The bundle previously claimed "all changed paths are under `packages/py/ugas/kernel/`; zero paths outside it",
+and the security evidence repeated that claim. That was **false for the PR as a whole**, which carries four
+governed evidence files in addition to the kernel work. The bundle now separates `implementationScope` (6 paths,
+all kernel) from `totalPrScope` (10 paths = 6 implementation + 4 evidence), records
+`implementationPathsOutsideKernel: 0`, and the security claim is limited to what is actually true: no unrelated
+paths touched.
+
+### EVID-REPRO-03 — historical baseline depended on a moving ref
+
+`verify_kernel_sync.py` derived the historical baseline from `origin/planning/m01-replan`, so the "before"
+fingerprint would silently drift once the canonical branch advanced. It now reads the immutable constant
+`PINNED_BASE_SHA=f0d3eadbd822b4a59966a38a4f2df3ad92c3d3d1`, asserts the BEFORE fingerprint equals `99899c81...`,
+and exits 2 with a clear message if that commit is unavailable instead of substituting another revision. Verified
+by a negative control in a shallow clone lacking the pinned commit.
+
+### EVID-STALE-04 — stale counts and fingerprints
+
+The `acceptance` entry for "kernel A0/A1 green" still said `30/30` (superseded by 37), and `fingerprintRecipe`
+still referenced the superseded digest `cc97b4b1...`. Both corrected to `37/37` and `a66daa1b...`. A full sweep
+for superseded counts, SHAs and fingerprints across the bundle and report found no others.
+
+## S00-CR-001 correction delta (kernel behaviour)
 
 The HEDS review of `b4a8e629` returned CORRECTION REQUIRED with three MEDIUM findings. All three concerned
 fail-open behaviour, and all three are corrected. The review also confirmed as valid: base/head relationship,
@@ -90,8 +129,24 @@ MUTATION_SCORE=14/14
 
 | Fingerprint | Value |
 |---|---|
-| kernel contract **before** (base, 6 files) | `99899c814e933c3cc29343fda5dc54ef3c06efa9ed05083b3c506a2b7a07c4a9` |
+| kernel contract **before** (pinned base, 6 files) | `99899c814e933c3cc29343fda5dc54ef3c06efa9ed05083b3c506a2b7a07c4a9` |
 | kernel contract **after** (head, 8 files) | `a66daa1b059bcb87158b69fbb8117e75c315c9ae0ddc233e1c90a1a7a38c3611` |
+| `projectFingerprint` (canonical surfaces at head, 22 files) | `6e3696e63cc45cef42e422696a24516a88df3f71aee98465225bc243ff1e976b` |
+| `projectFingerprintAtBase` (canonical surfaces at pinned base, 20 files) | `a6aee211d94d22dc86210c7ba7e7681518c20d3f4774a02387c0385e0e5d4478` |
+
+Cross-gate continuity check: `projectFingerprintAtBase` is byte-identical to the `projectFingerprint` published
+in the Issue #53 bundle (`a6aee211...`). That independently confirms the recipe is stable across gates and that
+the canonical surfaces outside the kernel were untouched by WO-S00; the head value differs only because the
+kernel gained two files.
+
+### Historical baseline is pinned, not branch-derived
+
+`verify_kernel_sync.py` reads the historical baseline from the immutable constant
+`PINNED_BASE_SHA=f0d3eadbd822b4a59966a38a4f2df3ad92c3d3d1` and asserts the BEFORE fingerprint equals
+`99899c81...`. It previously derived the baseline from `origin/planning/m01-replan`, which would let the
+before/after comparison silently drift whenever the canonical branch advanced. If the pinned object is absent
+the script exits 2 with a clear message instead of substituting another revision — verified by a negative
+control in a shallow clone that lacks that commit.
 
 The recipe was verified to reproduce a direct committed-blob digest exactly, so it is platform-stable.
 CRLF normalisation is required because the repository runs `core.autocrlf=true` with no `.gitattributes`.
