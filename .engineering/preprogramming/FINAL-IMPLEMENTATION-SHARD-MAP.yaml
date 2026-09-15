@@ -1,0 +1,49 @@
+version: 1
+status: FROZEN_FOR_CODEX_PREPARATION
+module_map: M01-M40
+execution_order:
+  - S00_KERNEL_SYNC
+  - S01_FOUNDATION
+  - S02_CORE_MEDIA
+  - S03_AUDIO_NARRATIVE
+  - S04_CONTENT_BRAND
+  - S05_QUALITY_REPAIR
+  - S06_PLATFORM_TRUST
+  - S07_CONTROL_AGENTS_DELIVERY
+  - S08_RD_DCC
+  - S09_CREATIVE_WORLD_STUDIO
+  - S10_OPTIMIZATION_EXPERIENCE_APPEARANCE
+  - S11_RUNTIME
+  - S12_MODEL_FACTORY
+  - S13_EXTENSION_SDK
+  - S14_DISTRIBUTED_FABRIC
+shards:
+  S00_KERNEL_SYNC:
+    modules: []
+    owns: [packages/py/ugas/kernel]
+    stop: kernel_A1_green_and_contract_fingerprint_recorded
+  S01_FOUNDATION: {modules: [M01,M02,M03,M04,M05], stop: foundation_golden_slice_proven}
+  S02_CORE_MEDIA: {modules: [M06,M07,M08,M09,M10], stop: cross_modal_golden_slice_proven}
+  S03_AUDIO_NARRATIVE: {modules: [M11,M12,M13,M14], stop: audio_narrative_golden_slice_proven}
+  S04_CONTENT_BRAND: {modules: [M15,M16,M17,M18], stop: content_brand_golden_slice_proven}
+  S05_QUALITY_REPAIR: {modules: [M19,M20,M21], stop: quality_repair_economics_slice_proven}
+  S06_PLATFORM_TRUST: {modules: [M22,M23,M24,M25], stop: trust_slice_proven}
+  S07_CONTROL_AGENTS_DELIVERY: {modules: [M26,M27,M28], stop: governed_delivery_slice_proven}
+  S08_RD_DCC: {modules: [M29,M30], stop: qualified_headless_dcc_slice_proven}
+  S09_CREATIVE_WORLD_STUDIO: {modules: [M31,M32,M33], stop: world_to_take_slice_proven}
+  S10_OPTIMIZATION_EXPERIENCE_APPEARANCE: {modules: [M34,M35,M36], stop: constrained_appearance_route_slice_proven}
+  S11_RUNTIME: {modules: [M37], stop: runtime_compile_reference_adapter_proven}
+  S12_MODEL_FACTORY: {modules: [M38], stop: sealed_eval_and_promotion_slice_proven}
+  S13_EXTENSION_SDK: {modules: [M39], stop: sandbox_negative_fixtures_proven}
+  S14_DISTRIBUTED_FABRIC: {modules: [M40], stop: lease_checkpoint_recovery_slice_proven}
+context_budget:
+  mandatory: [AGENTS.md, CODEX-PREPROGRAMMED-IMPLEMENTATION-POLICY.md, current_work_order, current_context_pack, kernel_contracts, shard_targets]
+  max_primary_modules: 2
+  max_dependency_modules: 3
+  repository_wide_search: forbidden_by_default
+test_policy:
+  A0: static_schema_syntax
+  A1: focused_unit_contract
+  A2: impacted_integration_eval
+  A3: promotion_only
+  law: test_what_changed_reuse_what_did_not
